@@ -30,6 +30,22 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/*⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣠⡤⢶⣶⠖⢲⣶⠀⠀⠀⠀⠀⠀⠀⠀⣼⠋⠉⠉⢹⣷⠖⣶⠖⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡤⠶⠚⠋⠉⢹⣿⡏⡀⣼⡇⠀⣿⡏⠀⠀⠀⠀⠀⠀⠀⢰⠇⠀⠀⢠⣿⣿⣴⣿⣤⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢰⠏⠁⠀⠀⠀⠀⢐⣿⣿⣀⣰⣿⣶⣾⣿⣥⠤⠴⠖⠒⠒⠚⣿⡿⠶⠿⠿⣿⣿⠋⠉⠉⣿⣏⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢀⡟⠀⠀⠀⣀⣠⣴⣾⣿⠿⠛⠛⠋⢹⡿⠀⠀⠀⠀⠀⠀⠀⢰⣿⠁⠀⠀⢰⣿⠇⠀⠀⢸⡿⠀⠀⠀⠀⠀⠉⢹⣿⠀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣼⣁⣤⣶⣿⠿⠟⢻⣿⡟⠀⠀⠀⢀⣿⣁⣀⣤⣴⡶⠀⠀⠀⣾⣇⣀⣀⣤⣾⡟⠀⠀⢀⣿⠷⠶⠶⠶⠆⠀⠀⣾⡿⠋⠁⠀⢀⠉⠑⢦⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢠⡿⠟⠋⠁⠀⠀⠀⣾⣿⠁⠀⠀⠀⣼⠟⠛⠉⠉⠀⠀⠀⠀⣸⣿⠿⠿⠿⠛⠋⠀⠀⠀⣸⣯⣤⣤⣀⡀⠀⠀⢰⡏⠀⣼⠏⠀⣾⣧⠀⠈⣇⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⡟⠀⠀⠀⠀⠀⠀⢰⣿⠇⠀⠀⠀⢰⡟⠀⣀⣀⣤⠀⠀⠀⢀⡿⠁⠀⠀⠀⠀⠀⠀⠀⣰⡿⠁⠀⠈⠉⠀⠀⢀⣿⡄⠀⠋⢀⣾⠟⠁⠀⣰⡟⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣸⠁⠀⠀⠀⣀⣤⣶⣿⡏⠀⠀⠀⠀⣾⠿⠛⠛⠉⠁⠀⠀⢀⣾⠇⠀⢀⣀⣀⣀⣀⣤⣾⣿⣇⣀⣀⣀⣠⣤⣴⡿⣏⣻⣦⣴⣿⣷⣀⣠⣴⣿⣁⣀⣠⣤⣀⠀⠀⠀
+⠀⠀⠀⠀⢠⠇⣀⣴⣶⣿⣿⠿⠛⠉⠀⠀⠀⠀⣼⠇⠀⠀⠀⠀⢀⣠⣴⣿⣿⣩⠭⠭⠖⠲⣬⣭⢡⣶⢰⢿⣧⣶⣰⢿⡏⠁⢠⡟⡽⣭⣭⣭⣭⡽⢭⣽⢿⣿⣍⣵⣶⣜⢷⣄⠀
+⠀⠀⠀⠀⠾⢿⣿⠿⠛⠉⠀⠀⠀⠀⠀⠀⢀⣼⡿⢀⣠⣤⣶⡾⠿⠛⠉⣿⡕⣿⣣⡴⠲⣼⣿⣵⣟⣳⣶⣿⣿⣿⡟⣾⣥⣤⣿⣸⠁⣿⣷⣶⡗⢠⣿⣿⣿⣯⣋⠾⣽⣾⣗⣽⠇
+⠀⠀⠀⣴⠞⠉⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⡿⠛⠻⠟⠛⠉⠀⠀⠀⠀⣼⠇⣿⣿⣿⣿⡟⢻⢿⣿⣿⣿⣿⣿⡿⣿⣴⣷⣌⣛⣣⠿⢿⣿⣿⡿⢿⣿⣟⣽⣿⣷⡿⣞⣿⣇⡾⠁⠀
+⠀⠀⢠⠇⠀⠀⠀⠀⠀⠀⠀⣠⣴⣿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣸⢿⣻⣹⣿⢃⡏⢸⠛⡿⣻⣭⢹⣿⢋⣿⣋⣿⣟⡟⢠⣿⣿⣿⠃⡾⡿⣿⣿⣿⣿⢣⣿⡟⣼⠃⠀⠀
+⠀⠀⡟⠀⠀⠀⠀⠀⣀⣴⣾⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡾⣣⡿⠿⣿⣻⡏⣾⣟⣩⣴⣇⡽⣷⠿⣷⣿⣾⣿⡞⡿⠁⣾⣿⣿⠏⣸⣽⣧⣿⡿⣞⡿⣎⢣⣻⡇⠀⠀⠀
+⠀⣸⠀⠀⠀⣀⣴⣾⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣟⣽⠷⣖⣒⣒⡲⢼⣛⣯⣷⣘⣿⣯⣵⠧⠽⣦⣭⣿⣙⣓⣚⣿⣿⣓⣒⣋⣛⣃⣘⣻⡽⢾⣝⠾⣽⠃⠀⠀⠀
+⢠⠇⣀⣴⣾⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣯⡼⠞⠛⠉⠁⠉⠙⠷⠟⠀⠘⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠀⠀⠀⠙⠿⠏⠀⠀⠀⠀*/
+
 package org.firstinspires.ftc.teamcode;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
@@ -44,7 +60,53 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
- * GIT GUD
+ *⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⡤⠴⠖⠛⠛⠉⠉⠉⢉⣽⣷⣤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣤⠤⠴⠒⠚⠛⠛⠛⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣾⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⡤⠶⠶⠛⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡹⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣀⡴⠚⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣤⣴⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⢻⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢀⡜⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣤⣤⣤⣤⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣸⠃⠀⠀⠀⠀⠘⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⣛⣯⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠘⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⡶⠬⣝⣶⣶⠖⠁⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⣿⣿⡿⠛⠉⣉⣭⢿⡛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠛⢿⡆⠸⣿⠓⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⠀⠀⡞⡇⢹⠀⣷⠈⣿⣿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⢸⣷⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢻⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡾⠿⠿⠿⢿⡆⠀⢧⢱⣸⣧⣻⣇⢻⣿⡎⣿⣿⣿⣿⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣦⣿⣿⠀⣼⢀⣀⣼⠇⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡼⠋⠀⠠⣤⣀⠀⢻⡄⡟⢿⣿⡛⠉⠙⣞⣿⣇⢸⣿⣿⠿⢿⣁⣀⣇⣻⣿⣿⣿⣿⣿⣿⣿⠿⣦⣭⡭⣭⠏⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢇⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀⠀⠈⢿⣦⠀⢣⢳⠀⣈⣙⣦⡀⢿⣽⣿⠾⠋⠁⣀⣴⣿⣿⠿⣿⣿⣿⣿⣿⣿⡿⣝⠶⣤⠙⢾⡅⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢸⡄⠀⠀⠀⠀⠀⠀⠀⠀⠘⡇⠀⠀⠀⡄⢈⣿⡇⢸⡄⢣⢻⣿⠿⠛⣿⠁⣠⣤⣾⣟⣩⣴⣿⣿⣿⣿⣿⣿⣿⠻⣦⡻⣄⡀⣦⢈⣁⢹⡆⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣠⣾⣃⣾⣿⣧⠾⠗⠋⢉⣀⣤⣴⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣾⣿⣿⣿⢸⡆⢿⠿⣇⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢸⡓⠲⢦⠤⠶⠶⠶⠶⡶⠖⠒⠛⢉⣉⣉⣠⣼⡶⠶⠿⠛⠉⣡⣾⠿⣫⣴⣿⠿⢿⣏⢉⣛⣿⣿⣿⣿⣿⠟⣿⣿⣿⣿⣿⣿⡇⠸⣆⣉⣠⡀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣸⡷⠤⠼⠤⣤⣤⠤⠴⠷⠶⠟⠛⠛⠛⠋⠉⠀⠀⢀⣠⣶⡿⢋⣵⣿⣿⡟⢿⣶⡤⠽⠼⣿⣿⣿⣿⣿⡏⢀⣿⣿⣿⣿⣿⣿⡳⢤⣬⣽⣯⣤⣤⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢀⡼⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣶⣿⡿⣛⣵⣿⢿⣿⣤⣽⣿⠟⣛⣯⣽⣿⢻⣿⣿⣿⣿⣇⣼⣿⣿⣿⣿⣿⣿⣏⠛⢲⡔⠛⠉⠀⠀⠀⠀⣠
+⠀⠀⠀⠀⠀⣠⠟⠁⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣤⣶⣾⣿⣿⣿⣿⣯⣵⣿⣿⣿⣷⣾⢿⠿⣿⡿⣽⡇⢀⣼⣽⣿⣿⣿⣿⣿⡟⠙⣿⣿⣿⣿⢿⡟⢿⣇⠀⢧⠀⠀⠀⣀⡶⠋⠉
+⠀⠀⠀⣀⡾⠋⠀⠀⠀⠐⠒⠶⠶⠿⠿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⡿⢍⣿⣋⣵⡿⢾⣀⣈⡽⠷⠞⠉⠉⠉⣿⣿⣿⣿⣿⣇⣼⣿⣿⠏⣿⣈⢷⡈⢿⣆⡘⢦⣀⡶⠋⢀⣴⣾
+⠀⢀⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣴⣾⠟⢛⣫⣴⣿⣿⣿⣯⣤⣾⡿⠟⠛⠳⣾⠫⠁⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⠛⠋⢓⣼⣿⣿⣿⣿⣾⣏⠉⣴⡟⠀⣴⣿⣿⣿
+⣶⠟⠁⠀⠀⠀⠀⠀⣀⣤⣤⣶⣿⠿⠛⣋⣡⣴⣾⣿⣿⣿⣿⣿⣿⠉⠉⡽⠁⠀⠀⠀⠈⠂⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣧⢀⣴⣿⠃⢿⠟⠛⠛⠛⠻⢷⣼⣠⣾⣿⣿⣿⣿
+⠁⠀⣀⣠⣤⣶⡶⠿⠟⢋⣉⣡⡴⠶⠛⠉⠉⢹⣿⣿⣿⣿⠿⠿⢿⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣾⣿⠀⣶⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿
+⠾⠛⠛⢉⣉⣤⡶⠶⠟⠛⠉⠁⠀⠀⠀⠀⠀⠸⣿⣿⠋⠁⠀⠀⣼⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⡴⠶⠛⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢳⡜⡆⠀⠀⠀⣏⠀⠀⣠⣤⣴⡶⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⢻⣿⣿⣿⣿⣿⣿⣿⡿⠟⠉⣩
+⡛⠛⠒⠒⠲⠶⠤⠤⠤⠴⠶⠒⠒⠒⠚⠛⠛⠉⣉⣧⡘⠀⠀⠀⠈⠙⠛⠿⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⡿⢸⣿⣿⣿⣿⣿⡆⠘⣿⣿⣿⣿⣿⠟⠃⠀⣠⣾⣿
+⡇⠀⠀⣶⣶⣶⣶⣶⣦⣦⣤⣤⣤⣶⣶⠶⠶⠿⢛⣉⣷⡀⠀⠀⠀⠀⠀⣀⣀⣐⣤⣤⣤⣄⣀⣀⠀⠀⠀⠀⠀⣼⣿⣿⡟⣱⣿⣿⣿⣿⣿⣿⣧⠀⢿⣿⣿⣿⠋⠀⢀⣾⣿⣿⣿
+⣷⠀⠀⢿⣿⣍⣄⣀⣀⣀⣀⣠⣤⣤⣤⣶⣶⣾⣿⣿⣿⣿⡄⠀⠀⠀⢸⠟⠉⠛⠋⠉⠉⠉⠉⠉⠁⠀⠀⠀⢠⣿⡿⢋⣼⡟⠁⣿⣿⣿⣿⣿⣿⡀⢸⣿⣿⡇⠀⠀⣼⣿⣿⣿⡇
+⣿⡀⠀⢸⣿⣿⣤⣤⣤⣤⣤⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠀⠀⠀⢡⡀⣠⣤⣤⣤⣤⣤⡴⠃⠀⠀⢀⡿⢋⣴⣿⣿⠁⠠⣿⣿⣿⠋⠉⠙⣇⢸⣿⣿⠀⠀⠀⣿⣿⣿⣿⣿
+⣿⡇⠀⢸⡛⣩⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠻⠿⠛⠛⠻⠿⠋⠀⠀⠀⢀⣾⣶⣿⣿⣿⡇⠀⠀⣿⣿⣿⠀⠀⠀⢻⠈⣿⣿⠀⠀⠀⣿⣿⣿⣿⣿
+⣿⡇⠀⠀⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠛⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⠟⠉⣿⠁⠀⠀⣿⣿⣿⣆⠀⠀⢸⡇⣿⣿⡆⠀⠀⣿⣿⣿⣿⠿
+⣿⣿⠀⠀⣿⠿⠿⠾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠈⢳⡀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣿⡿⠋⠁⠀⢠⠏⠀⠀⠀⢻⣿⣿⣿⡄⠀⢸⣧⣿⣿⣧⠀⠀⢿⣿⣿⣿⣄
+⣿⣿⡀⠀⢻⣀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠈⢿⣦⣤⣤⣤⣤⣤⣶⣿⡟⠋⠀⠀⠀⠀⡞⠀⠀⠀⠀⢸⣿⣿⣿⣿⣦⣸⢹⣿⣿⠟⢧⠀⠀⢻⣿⣿⣿
+⣿⣿⡇⠀⢸⣿⣿⡏⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⢸⡟⢿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⡞⠀⢀⣀⣀⣀⣀⣿⣿⣿⣿⣿⣿⣾⣿⡏⠀⠈⣷⣄⠀⠙⣿⣿
+⣿⣿⡇⠀⢸⣿⣿⡇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⣿⠀⠀⢸⣧⡀⠉⠛⠋⠁⠀⠀⠀⠀⠀⢀⡞⠀⠀⣿⠀⠀⠀⣀⣁⣀⣀⣈⣉⣭⣽⣿⠁⠀⢸⣿⣿⣷⣦⣿⢿
+⣿⣿⡇⠀⢸⣿⣿⣇⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⢸⠀⠀⢸⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⢠⡞⠀⠀⠀⡏⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⢸⣿⣿⣿⣿⣿⣿
+⠛⠉⠉⠉⠉⠉⢁⣠⣴⣿⣿⣿⣿⠛⠿⣿⣿⣿⣿⠃⠀⠀⠀⣠⡿⠀⠀⢸⡿⠈⠻⣿⡿⠁⠀⠀⢠⡼⠋⠀⠀⠀⢀⠇⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⢀⡼⠛⠁⠀⣹⣿⣿
+⠀⢀⣠⣴⣾⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠙⠿⢿⣤⣀⣀⡀⠀⠀⠀⠀⢸⡇⠀⠀⠉⠀⠀⣠⠞⠉⠀⠀⠀⣀⣠⠾⡄⠀⢸⣿⣿⣿⠟⣋⣡⣿⣿⣿⣿⠟⠁⠀⢀⣴⣾⣿⣿⡿
+⣴⣿⣿⣿⣿⣿⣿⡿⣋⡽⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠳⣦⣄⠀⠸⠃⠀⠀⢀⣴⢊⣀⣀⣠⠴⠖⠚⠉⠁⢠⠇⠠⠟⢫⣿⠿⣺⣷⣿⣿⣿⡿⠃⠀⠀⣰⣿⣿⡿⠛⠉⠀
+⣿⣿⣿⣿⣿⣿⣧⡞⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠃⠀⢀⡴⠚⠋⠉⠉⠉⠉⠀⠀⠀⠀⢀⣴⠏⠀⠀⣠⣿⢣⣾⣿⣿⣿⣿⣿⠇⠀⠀⢸⣿⣿⠏⠀⠀⠀⠀
+⣿⣿⣿⣿⠟⣾⠿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⠀⣰⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣾⣿⡟⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⣿⣿⡿⣤⣀⣀⣠⣾
+⣿⣿⣿⠟⣾⣿⠀⠹⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡿⠁⠀⠀⡴⢿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⣿⣿⠀⣿⣿⣿⣿⣯
+⣿⣿⣿⢰⣿⣿⣷⡀⠱⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡼⠁⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⢹⣿⡄⣿⣿⣿⢿⣿
+⣿⣿⠋⣼⣿⢿⡀⢳⡄⠹⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡞⠀⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⢷⡄⠀⠈⣿⣿⣾⣿⡇⠀⠈
+⣿⠏⣼⣿⡏⠀⣷⡀⠹⡄⠘⣦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠋⠀⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⢱⡄⠀⠈⠻⣿⣿⣿⡀⠀
+⡏⢸⣿⣿⡇⠀⠈⣇⠀⠑⠄⠈⢿⣓⠦⣀⠀⠀⠀⠀⠀⣸⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡞⠀⠀⠀⠀⣀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⢸⣿⣦⣀⡀⠙⣿⣿⣇⡀
+ * Nicu Nicu Very Nice Ceaser-Chan
  * This file includes a teleop (driver-controlled) file for the goBILDA® StarterBot for the
  * 2025-2026 FIRST® Tech Challenge season DECODE™. It leverages a differential/Skid-Steer
  * system for robot mobility, one high-speed motor driving two "launcher wheels", and two servos
@@ -57,6 +119,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * applied to the motor directly.
  * Since the dynamics of a launcher wheel system varies greatly from those of most other FTC mechanisms,
  * we will also need to adjust the "PIDF" coefficients with some that are a better fit for our application.
+ *Watashi no na wa "Kira yoshikage" nenrei 33-sai jitaku wa moriōchō hokutō-bu no bessō chitai ni ari
+ *  ... kekkon wa shite inai ... shigoto wa "kameyūchēn-ten" no kaishain de mainichi osokutomo yoru 8-ji
+ *  made on tabak wa suwanai sake wa tashinamu teido yoru 11 tokiniha yuka ni tsuki kanarazu 8-jikan wa
+ * suimin o toru yō ni shite iru ... nerumae ni atatakai miruku o nomi 20-bu hodo no sutoretchi de karada
+ *  o hogushite kara yuka niukuk to hotondo sa ... akanbō no yō ni hirō ya sutoresu o nokosazu ni asa-me o
+ *  samaseru nda ... kenkōshinda demo ijō nashi to iwa reta yo
  */
 
 @TeleOp(name = "StarterBotTeleopMecanums", group = "StarterBot")
@@ -71,6 +139,7 @@ public class StarterBotTeleopMecanums extends OpMode {
      * to read the current speed of the motor and apply more or less power to keep it at a constant
      * velocity. Here we are setting the target, and minimum velocity that the launcher should run
      * at. The minimum velocity is a threshold for determining when to fire.
+     * YES! YES! YES! YES!
      */
     final double LAUNCHER_TARGET_VELOCITY = 1125;
     final double LAUNCHER_MIN_VELOCITY = 1075;
@@ -158,7 +227,7 @@ public class StarterBotTeleopMecanums extends OpMode {
          */
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        /*
+        /* ZA WARUDO
          * Setting zeroPowerBehavior to BRAKE enables a "brake mode". This causes the motor to
          * slow down much faster when it is coasting. This creates a much more controllable
          * drivetrain. As the robot stops much quicker.
@@ -193,7 +262,7 @@ public class StarterBotTeleopMecanums extends OpMode {
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit START
      */
     @Override
-    public void init_loop() {
+    public void init_loop() { /*Korewa Requiem Da*/
     }
 
     /*
@@ -216,6 +285,39 @@ public class StarterBotTeleopMecanums extends OpMode {
          * work to drive the robot forward, and when you move the right joystick left and right
          * both motors work to rotate the robot. Combinations of these inputs can be used to create
          * more complex maneuvers.
+         *
+         *⣿⠖⠀⠀⠀⠀⠀⠙⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⡿⠀⠀⢸⣿⣿⣿⠟⠀⠀⠙⢿⢷⣦⡋⢒⡿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀
+⢋⣾⣿⣆⠀⠀⠀⠀⠈⠻⣿⡇⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⡇⠀⠀⣽⣿⡟⠁⠀⠀⠀⠀⠀⠘⢿⣿⣢⣀⣙⡇⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣤⠄⠀⠀⠀⠀⠛⠇⠀⠀⠀⠀⠀⠀⠈⠿⢿⠟⠀⠀⢸⣿⠋⠀⠀⢀⣴⣿⣿⣦⡀⠀⢻⣿⡤⡀⣷⠀⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⠁⠀⢀⣴⣿⣿⣿⠿⠋⠉⠉⠈⣿⣿⡟⢸⢀⡾⣦⠀⠀⠀⠀⠀
+⣿⣿⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⣠⣿⡿⠛⠉⠀⠀⠈⢻⣿⣇⠀⣿⣿⡸⣾⠠⠘⢷⡄⠀⠀⠀
+⣎⢿⣿⣿⣿⣿⣿⣿⣷⣥⣀⡀⠀⠀⠀⠀⠀⠀⣷⣾⣗⢤⡀⡿⠟⠀⣸⡏⣰⡆⠀⠀⠀⠀⠀⣿⡿⢃⣬⣿⣿⣷⢻⡄⠢⠘⣦⠀⠀⠀
+⣿⡞⣿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣷⣦⣤⣤⣄⠀⡏⣿⣿⣿⡳⣌⡒⠾⢰⣿⣿⣦⠀⠀⠀⠀⠀⢈⣴⣶⣛⣿⣿⣿⣿⣧⢀⡿⠀⠀⠀⠀
+⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠙⠛⠛⠟⠋⢠⣿⢸⣿⣿⣷⣮⣭⣻⣿⣿⣿⢉⣩⣤⣤⣴⣾⠟⠋⠉⣹⣿⢸⣿⣿⣿⡆⣿⡇⠀⠀⠀
+⣿⠆⢠⡶⣠⣶⣶⣶⣦⣤⣴⢶⣴⣦⣄⣀⣴⡿⠋⣾⣿⣿⠿⠟⣿⠟⠉⠉⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⣿⣿⡼⣿⣿⡜⢸⢿⠀⠀⠀⠀
+⡻⡆⣐⢰⣿⡿⠿⠛⠋⠀⠀⠀⠀⣶⣶⠍⣿⡿⣈⠴⣿⠉⠀⡈⢄⠉⠱⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⡇⣾⣿⡇⢀⣿⠀⠀⠀⠀
+⢹⠃⣶⣿⣇⢒⣴⣿⠀⠀⠀⠀⠀⢸⠟⣰⣿⠏⠀⠀⣿⢀⠎⡠⢂⢂⠀⠘⢿⣿⣿⣶⣥⡂⢄⣀⣠⣽⣿⣿⠇⠿⣿⡇⢸⡿⠀⠀⠀⠀
+⠜⡜⣿⣿⣦⣜⢿⣿⣦⣀⠀⠀⢀⣴⣾⣿⠋⠀⠀⠀⣿⡟⢠⢳⣥⣷⣷⣶⣌⣿⣿⣿⣿⣿⣷⣬⣟⣿⣿⣿⡏⣿⣿⣶⢻⠀⣷⣄⡀⠀
+⡟⢦⡩⣽⣿⣿⣶⣶⣤⣤⣤⣶⣿⡿⠋⠀⠀⠀⠀⢰⣿⡇⣧⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⢻⣿⣿⢰⢸⣿⣿⣧⠀
+⢧⢢⠳⡜⣿⣿⣿⣿⡛⡛⠋⠉⠉⠀⠀⠀⠀⠀⠀⢠⣿⣷⣿⣿⣿⣿⡟⠋⣿⡟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣺⣿⣿⠸⠨⣿⣿⣿⣷
+⠘⡎⣵⢱⡹⣿⣿⣿⣿⣎⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠻⠿⠛⠿⣿⠀⠟⢠⣾⣿⣿⣿⣿⣿⣿⣿⡟⠸⣮⣽⣿⣿⡇⠁⢸⣿⣿⣿
+⠀⢻⡁⠎⣷⡹⣿⣿⣿⣷⡑⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⡿⢋⣴⣿⣟⣿⣿⣿⣧⣟⠁⣾⣿⣿
+⠀⠀⠻⣮⡨⠥⣙⢿⣿⣿⣿⣆⢡⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠿⢟⣿⣿⣿⠟⣫⣴⣿⣿⡿⢻⣿⣿⣿⣿⡗⠀⣻⣿⣿
+⠀⠀⠀⠈⠙⠿⣷⣦⡻⣿⣿⣿⣷⣝⢆⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⣴⣾⡿⠛⢛⣵⣾⣿⣿⠋⣴⡿⣿⣿⣿⡿⡗⠀⢠⡄⠹⣿
+⠀⠀⠀⠀⠀⡠⣂⣄⠀⠈⠻⣿⣿⣿⣧⡱⣄⠀⠀⠀⠀⣠⣾⣿⡿⠟⠛⠛⣩⣤⣴⣶⣿⣿⣿⠟⣖⣾⣿⡇⣿⣿⣿⣻⡇⠀⣿⢰⡄⢹
+⠀⠀⠀⣠⢞⢕⣿⣟⣥⣀⠀⠈⠻⣿⣿⣿⣄⠄⠀⠠⢤⣤⣤⣶⣿⣿⣿⣿⣿⡿⠟⠛⠉⠁⠀⠠⢿⡟⣿⡿⣿⣿⣿⡇⠀⣻⡇⣿⡇⡈
+⠀⣠⡾⣣⢱⢻⠇⠝⣋⣕⣴⡴⡀⠈⠻⣿⣿⣿⣦⠀⠀⠙⠙⠛⠶⠶⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠈⢷⣿⣿⢻⣿⣿⡏⠀⡈⣿⢲⡯⣺
+⣴⣿⠟⣌⠱⡯⡅⢸⣯⢬⣽⣕⢓⡐⠀⠈⠻⢿⣿⣷⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⡷⣹⣿⣿⣿⡏⠀⢀⣿⡃⣿⡩
+⡿⢡⢺⢨⡢⣼⣇⣧⢥⣭⣊⣾⣎⠡⠘⠄⠀⠀⠉⠻⣿⣿⣷⣦⣀⠀⡀⡄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⢻⡿⠁⣈⢼⣿⠂⣷⠌⣸
+⢠⣼⠧⢡⣾⡿⣿⢸⡺⣷⣷⢎⣾⠘⢑⡐⡀⡀⠀⡀⠀⠉⠽⣿⣿⣿⣿⣿⣶⣴⣶⣶⣶⣦⣤⣂⣀⣴⠿⠋⠠⡨⠃⠈⠃⢿⡷⣰⣿⢿
+⣾⣿⣥⣭⣾⣸⣿⣦⠈⢎⣛⣣⣿⡧⣠⢈⠀⠨⠀⠢⠠⡀⢀⠀⣑⠨⡋⢟⢛⢿⡻⣿⣿⠿⠟⠛⠉⣤⣤⡧⣐⢄⡐⠀⢠⣐⢹⣿⣿⣿
+         *  /\_______/\
+         * /           \
+         * | <O>   <O> |
+         * |           |
+         * |    ___    |
+         * \           /
+         *  |         |
          */
         mecanumDrive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
@@ -254,7 +356,7 @@ public class StarterBotTeleopMecanums extends OpMode {
         /* the denominator is the largest motor power (absolute value) or 1
          * This ensures all the powers maintain the same ratio,
          * but only if at least one is out of the range [-1, 1]
-         */
+         *逃げるんだよ*/
         double denominator = Math.max(Math.abs(forward) + Math.abs(strafe) + Math.abs(rotate), 1);
 
         leftFrontPower = (forward + strafe + rotate) / denominator;
@@ -276,13 +378,13 @@ public class StarterBotTeleopMecanums extends OpMode {
                     launchState = LaunchState.SPIN_UP;
                 }
                 break;
-            case SPIN_UP:
+            case SPIN_UP: /*TUSKO ACTO 4*/
                 launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
                 if (launcher.getVelocity() > LAUNCHER_MIN_VELOCITY) {
                     launchState = LaunchState.LAUNCH;
                 }
                 break;
-            case LAUNCH:
+            case LAUNCH: /*MAIDO IN HEAVEN*/
                 leftFeeder.setPower(FULL_SPEED);
                 rightFeeder.setPower(FULL_SPEED);
                 feederTimer.reset();
@@ -298,3 +400,18 @@ public class StarterBotTeleopMecanums extends OpMode {
         }
     }
 }
+/*⣿⣿⣿⣿⣿⣿⣿⡿⡛⠟⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠿⠨⡀⠄⠄⡘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⠿⢁⠼⠊⣱⡃⠄⠈⠹⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⡿⠛⡧⠁⡴⣦⣔⣶⣄⢠⠄⠄⠹⣿⣿⣿⣿⣿⣿⣿⣤⠭⠏⠙⢿⣿⣿⣿⣿⣿
+⣿⡧⠠⠠⢠⣾⣾⣟⠝⠉⠉⠻⡒⡂⠄⠙⠻⣿⣿⣿⣿⣿⡪⠘⠄⠉⡄⢹⣿⣿⣿⣿
+⣿⠃⠁⢐⣷⠉⠿⠐⠑⠠⠠⠄⣈⣿⣄⣱⣠⢻⣿⣿⣿⣿⣯⠷⠈⠉⢀⣾⣿⣿⣿⣿
+⣿⣴⠤⣬⣭⣴⠂⠇⡔⠚⠍⠄⠄⠁⠘⢿⣷⢈⣿⣿⣿⣿⡧⠂⣠⠄⠸⡜⡿⣿⣿⣿
+⣿⣇⠄⡙⣿⣷⣭⣷⠃⣠⠄⠄⡄⠄⠄⠄⢻⣿⣿⣿⣿⣿⣧⣁⣿⡄⠼⡿⣦⣬⣰⣿
+⣿⣷⣥⣴⣿⣿⣿⣿⠷⠲⠄⢠⠄⡆⠄⠄⠄⡨⢿⣿⣿⣿⣿⣿⣎⠐⠄⠈⣙⣩⣿⣿
+⣿⣿⣿⣿⣿⣿⢟⠕⠁⠈⢠⢃⢸⣿⣿⣶⡘⠑⠄⠸⣿⣿⣿⣿⣿⣦⡀⡉⢿⣧⣿⣿
+⣿⣿⣿⣿⡿⠋⠄⠄⢀⠄⠐⢩⣿⣿⣿⣿⣦⡀⠄⠄⠉⠿⣿⣿⣿⣿⣿⣷⣨⣿⣿⣿
+⣿⣿⣿⡟⠄⠄⠄⠄⠄⠋⢀⣼⣿⣿⣿⣿⣿⣿⣿⣶⣦⣀⢟⣻⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⡆⠆⠄⠠⡀⡀⠄⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⡿⡅⠄⠄⢀⡰⠂⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿*/
+/*TO BE CONTINUED*/
