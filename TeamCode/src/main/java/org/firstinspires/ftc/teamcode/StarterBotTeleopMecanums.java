@@ -30,7 +30,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣠⡤⢶⣶⠖⢲⣶⠀⠀⠀⠀⠀⠀⠀⠀⣼⠋⠉⠉⢹⣷⠖⣶⠖⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+/*⠀https://downloads.khinsider.com/game-soundtracks/album/jojo-s-bizarre-adventure-2nd-season-op/01.%2520BLOODY%2520STREAM.mp3⠀⠀
+ *⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣠⡤⢶⣶⠖⢲⣶⠀⠀⠀⠀⠀⠀⠀⠀⣼⠋⠉⠉⢹⣷⠖⣶⠖⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡤⠶⠚⠋⠉⢹⣿⡏⡀⣼⡇⠀⣿⡏⠀⠀⠀⠀⠀⠀⠀⢰⠇⠀⠀⢠⣿⣿⣴⣿⣤⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⢰⠏⠁⠀⠀⠀⠀⢐⣿⣿⣀⣰⣿⣶⣾⣿⣥⠤⠴⠖⠒⠒⠚⣿⡿⠶⠿⠿⣿⣿⠋⠉⠉⣿⣏⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⢀⡟⠀⠀⠀⣀⣠⣴⣾⣿⠿⠛⠛⠋⢹⡿⠀⠀⠀⠀⠀⠀⠀⢰⣿⠁⠀⠀⢰⣿⠇⠀⠀⢸⡿⠀⠀⠀⠀⠀⠉⢹⣿⠀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -60,52 +61,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
- *⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⡤⠴⠖⠛⠛⠉⠉⠉⢉⣽⣷⣤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣤⠤⠴⠒⠚⠛⠛⠛⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣾⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⡤⠶⠶⠛⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡹⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⣀⡴⠚⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣤⣴⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⢻⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢀⡜⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣤⣤⣤⣤⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⣸⠃⠀⠀⠀⠀⠘⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⣛⣯⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁⠘⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⡶⠬⣝⣶⣶⠖⠁⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⣿⣿⡿⠛⠉⣉⣭⢿⡛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠛⢿⡆⠸⣿⠓⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⠀⠀⡞⡇⢹⠀⣷⠈⣿⣿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⢸⣷⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢻⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡾⠿⠿⠿⢿⡆⠀⢧⢱⣸⣧⣻⣇⢻⣿⡎⣿⣿⣿⣿⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣦⣿⣿⠀⣼⢀⣀⣼⠇⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡼⠋⠀⠠⣤⣀⠀⢻⡄⡟⢿⣿⡛⠉⠙⣞⣿⣇⢸⣿⣿⠿⢿⣁⣀⣇⣻⣿⣿⣿⣿⣿⣿⣿⠿⣦⣭⡭⣭⠏⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢇⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀⠀⠈⢿⣦⠀⢣⢳⠀⣈⣙⣦⡀⢿⣽⣿⠾⠋⠁⣀⣴⣿⣿⠿⣿⣿⣿⣿⣿⣿⡿⣝⠶⣤⠙⢾⡅⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢸⡄⠀⠀⠀⠀⠀⠀⠀⠀⠘⡇⠀⠀⠀⡄⢈⣿⡇⢸⡄⢣⢻⣿⠿⠛⣿⠁⣠⣤⣾⣟⣩⣴⣿⣿⣿⣿⣿⣿⣿⠻⣦⡻⣄⡀⣦⢈⣁⢹⡆⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⢷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣠⣾⣃⣾⣿⣧⠾⠗⠋⢉⣀⣤⣴⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣾⣿⣿⣿⢸⡆⢿⠿⣇⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⢸⡓⠲⢦⠤⠶⠶⠶⠶⡶⠖⠒⠛⢉⣉⣉⣠⣼⡶⠶⠿⠛⠉⣡⣾⠿⣫⣴⣿⠿⢿⣏⢉⣛⣿⣿⣿⣿⣿⠟⣿⣿⣿⣿⣿⣿⡇⠸⣆⣉⣠⡀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⣸⡷⠤⠼⠤⣤⣤⠤⠴⠷⠶⠟⠛⠛⠛⠋⠉⠀⠀⢀⣠⣶⡿⢋⣵⣿⣿⡟⢿⣶⡤⠽⠼⣿⣿⣿⣿⣿⡏⢀⣿⣿⣿⣿⣿⣿⡳⢤⣬⣽⣯⣤⣤⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢀⡼⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣶⣿⡿⣛⣵⣿⢿⣿⣤⣽⣿⠟⣛⣯⣽⣿⢻⣿⣿⣿⣿⣇⣼⣿⣿⣿⣿⣿⣿⣏⠛⢲⡔⠛⠉⠀⠀⠀⠀⣠
-⠀⠀⠀⠀⠀⣠⠟⠁⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣤⣶⣾⣿⣿⣿⣿⣯⣵⣿⣿⣿⣷⣾⢿⠿⣿⡿⣽⡇⢀⣼⣽⣿⣿⣿⣿⣿⡟⠙⣿⣿⣿⣿⢿⡟⢿⣇⠀⢧⠀⠀⠀⣀⡶⠋⠉
-⠀⠀⠀⣀⡾⠋⠀⠀⠀⠐⠒⠶⠶⠿⠿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⡿⢍⣿⣋⣵⡿⢾⣀⣈⡽⠷⠞⠉⠉⠉⣿⣿⣿⣿⣿⣇⣼⣿⣿⠏⣿⣈⢷⡈⢿⣆⡘⢦⣀⡶⠋⢀⣴⣾
-⠀⢀⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣴⣾⠟⢛⣫⣴⣿⣿⣿⣯⣤⣾⡿⠟⠛⠳⣾⠫⠁⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⠛⠋⢓⣼⣿⣿⣿⣿⣾⣏⠉⣴⡟⠀⣴⣿⣿⣿
-⣶⠟⠁⠀⠀⠀⠀⠀⣀⣤⣤⣶⣿⠿⠛⣋⣡⣴⣾⣿⣿⣿⣿⣿⣿⠉⠉⡽⠁⠀⠀⠀⠈⠂⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣧⢀⣴⣿⠃⢿⠟⠛⠛⠛⠻⢷⣼⣠⣾⣿⣿⣿⣿
-⠁⠀⣀⣠⣤⣶⡶⠿⠟⢋⣉⣡⡴⠶⠛⠉⠉⢹⣿⣿⣿⣿⠿⠿⢿⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣾⣿⠀⣶⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿
-⠾⠛⠛⢉⣉⣤⡶⠶⠟⠛⠉⠁⠀⠀⠀⠀⠀⠸⣿⣿⠋⠁⠀⠀⣼⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⡴⠶⠛⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢳⡜⡆⠀⠀⠀⣏⠀⠀⣠⣤⣴⡶⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⢻⣿⣿⣿⣿⣿⣿⣿⡿⠟⠉⣩
-⡛⠛⠒⠒⠲⠶⠤⠤⠤⠴⠶⠒⠒⠒⠚⠛⠛⠉⣉⣧⡘⠀⠀⠀⠈⠙⠛⠿⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⡿⢸⣿⣿⣿⣿⣿⡆⠘⣿⣿⣿⣿⣿⠟⠃⠀⣠⣾⣿
-⡇⠀⠀⣶⣶⣶⣶⣶⣦⣦⣤⣤⣤⣶⣶⠶⠶⠿⢛⣉⣷⡀⠀⠀⠀⠀⠀⣀⣀⣐⣤⣤⣤⣄⣀⣀⠀⠀⠀⠀⠀⣼⣿⣿⡟⣱⣿⣿⣿⣿⣿⣿⣧⠀⢿⣿⣿⣿⠋⠀⢀⣾⣿⣿⣿
-⣷⠀⠀⢿⣿⣍⣄⣀⣀⣀⣀⣠⣤⣤⣤⣶⣶⣾⣿⣿⣿⣿⡄⠀⠀⠀⢸⠟⠉⠛⠋⠉⠉⠉⠉⠉⠁⠀⠀⠀⢠⣿⡿⢋⣼⡟⠁⣿⣿⣿⣿⣿⣿⡀⢸⣿⣿⡇⠀⠀⣼⣿⣿⣿⡇
-⣿⡀⠀⢸⣿⣿⣤⣤⣤⣤⣤⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠀⠀⠀⢡⡀⣠⣤⣤⣤⣤⣤⡴⠃⠀⠀⢀⡿⢋⣴⣿⣿⠁⠠⣿⣿⣿⠋⠉⠙⣇⢸⣿⣿⠀⠀⠀⣿⣿⣿⣿⣿
-⣿⡇⠀⢸⡛⣩⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠻⠿⠛⠛⠻⠿⠋⠀⠀⠀⢀⣾⣶⣿⣿⣿⡇⠀⠀⣿⣿⣿⠀⠀⠀⢻⠈⣿⣿⠀⠀⠀⣿⣿⣿⣿⣿
-⣿⡇⠀⠀⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠛⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⠟⠉⣿⠁⠀⠀⣿⣿⣿⣆⠀⠀⢸⡇⣿⣿⡆⠀⠀⣿⣿⣿⣿⠿
-⣿⣿⠀⠀⣿⠿⠿⠾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠈⢳⡀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣿⡿⠋⠁⠀⢠⠏⠀⠀⠀⢻⣿⣿⣿⡄⠀⢸⣧⣿⣿⣧⠀⠀⢿⣿⣿⣿⣄
-⣿⣿⡀⠀⢻⣀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠈⢿⣦⣤⣤⣤⣤⣤⣶⣿⡟⠋⠀⠀⠀⠀⡞⠀⠀⠀⠀⢸⣿⣿⣿⣿⣦⣸⢹⣿⣿⠟⢧⠀⠀⢻⣿⣿⣿
-⣿⣿⡇⠀⢸⣿⣿⡏⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⢸⡟⢿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⡞⠀⢀⣀⣀⣀⣀⣿⣿⣿⣿⣿⣿⣾⣿⡏⠀⠈⣷⣄⠀⠙⣿⣿
-⣿⣿⡇⠀⢸⣿⣿⡇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⣿⠀⠀⢸⣧⡀⠉⠛⠋⠁⠀⠀⠀⠀⠀⢀⡞⠀⠀⣿⠀⠀⠀⣀⣁⣀⣀⣈⣉⣭⣽⣿⠁⠀⢸⣿⣿⣷⣦⣿⢿
-⣿⣿⡇⠀⢸⣿⣿⣇⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⢸⠀⠀⢸⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⢠⡞⠀⠀⠀⡏⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⢸⣿⣿⣿⣿⣿⣿
-⠛⠉⠉⠉⠉⠉⢁⣠⣴⣿⣿⣿⣿⠛⠿⣿⣿⣿⣿⠃⠀⠀⠀⣠⡿⠀⠀⢸⡿⠈⠻⣿⡿⠁⠀⠀⢠⡼⠋⠀⠀⠀⢀⠇⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⢀⡼⠛⠁⠀⣹⣿⣿
-⠀⢀⣠⣴⣾⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠙⠿⢿⣤⣀⣀⡀⠀⠀⠀⠀⢸⡇⠀⠀⠉⠀⠀⣠⠞⠉⠀⠀⠀⣀⣠⠾⡄⠀⢸⣿⣿⣿⠟⣋⣡⣿⣿⣿⣿⠟⠁⠀⢀⣴⣾⣿⣿⡿
-⣴⣿⣿⣿⣿⣿⣿⡿⣋⡽⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠳⣦⣄⠀⠸⠃⠀⠀⢀⣴⢊⣀⣀⣠⠴⠖⠚⠉⠁⢠⠇⠠⠟⢫⣿⠿⣺⣷⣿⣿⣿⡿⠃⠀⠀⣰⣿⣿⡿⠛⠉⠀
-⣿⣿⣿⣿⣿⣿⣧⡞⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠃⠀⢀⡴⠚⠋⠉⠉⠉⠉⠀⠀⠀⠀⢀⣴⠏⠀⠀⣠⣿⢣⣾⣿⣿⣿⣿⣿⠇⠀⠀⢸⣿⣿⠏⠀⠀⠀⠀
-⣿⣿⣿⣿⠟⣾⠿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⠀⣰⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣾⣿⡟⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⣿⣿⡿⣤⣀⣀⣠⣾
-⣿⣿⣿⠟⣾⣿⠀⠹⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡿⠁⠀⠀⡴⢿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⣿⣿⠀⣿⣿⣿⣿⣯
-⣿⣿⣿⢰⣿⣿⣷⡀⠱⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡼⠁⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⢹⣿⡄⣿⣿⣿⢿⣿
-⣿⣿⠋⣼⣿⢿⡀⢳⡄⠹⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡞⠀⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⢷⡄⠀⠈⣿⣿⣾⣿⡇⠀⠈
-⣿⠏⣼⣿⡏⠀⣷⡀⠹⡄⠘⣦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠋⠀⠀⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⢱⡄⠀⠈⠻⣿⣿⣿⡀⠀
-⡏⢸⣿⣿⡇⠀⠈⣇⠀⠑⠄⠈⢿⣓⠦⣀⠀⠀⠀⠀⠀⣸⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡞⠀⠀⠀⠀⣀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⢸⣿⣦⣀⡀⠙⣿⣿⣇⡀
+ *
  * Nicu Nicu Very Nice Ceaser-Chan
  * This file includes a teleop (driver-controlled) file for the goBILDA® StarterBot for the
  * 2025-2026 FIRST® Tech Challenge season DECODE™. It leverages a differential/Skid-Steer
@@ -119,12 +75,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * applied to the motor directly.
  * Since the dynamics of a launcher wheel system varies greatly from those of most other FTC mechanisms,
  * we will also need to adjust the "PIDF" coefficients with some that are a better fit for our application.
- *Watashi no na wa "Kira yoshikage" nenrei 33-sai jitaku wa moriōchō hokutō-bu no bessō chitai ni ari
- *  ... kekkon wa shite inai ... shigoto wa "kameyūchēn-ten" no kaishain de mainichi osokutomo yoru 8-ji
- *  made on tabak wa suwanai sake wa tashinamu teido yoru 11 tokiniha yuka ni tsuki kanarazu 8-jikan wa
- * suimin o toru yō ni shite iru ... nerumae ni atatakai miruku o nomi 20-bu hodo no sutoretchi de karada
- *  o hogushite kara yuka niukuk to hotondo sa ... akanbō no yō ni hirō ya sutoresu o nokosazu ni asa-me o
- *  samaseru nda ... kenkōshinda demo ijō nashi to iwa reta yo
+ *
  */
 
 @TeleOp(name = "StarterBotTeleopMecanums", group = "StarterBot")
@@ -152,7 +103,9 @@ public class StarterBotTeleopMecanums extends OpMode {
     private DcMotorEx launcher = null;
     private CRServo leftFeeder = null;
     private CRServo rightFeeder = null;
-
+    private DcMotor intake = null;;
+    private DcMotor intake2 = null;;
+    private CRServo bingBong = null;;
     ElapsedTime feederTimer = new ElapsedTime();
 
     /*
@@ -185,7 +138,10 @@ public class StarterBotTeleopMecanums extends OpMode {
     double rightFrontPower;
     double leftBackPower;
     double rightBackPower;
-
+    boolean lastAState = false;
+    boolean intakeOn = false;
+    boolean lastYstate = false;
+    boolean launcherOn = false;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -205,7 +161,9 @@ public class StarterBotTeleopMecanums extends OpMode {
         launcher = hardwareMap.get(DcMotorEx.class, "launcher");
         leftFeeder = hardwareMap.get(CRServo.class, "left_feeder");
         rightFeeder = hardwareMap.get(CRServo.class, "right_feeder");
-
+        intake = hardwareMap.get(DcMotor.class, "intake");
+        intake2 = hardwareMap.get(DcMotor.class, "intake2");
+        bingBong = hardwareMap.get(CRServo.class, "bingBong");
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
          * because the axles point in opposite directions. Pushing the left stick forward
@@ -217,7 +175,7 @@ public class StarterBotTeleopMecanums extends OpMode {
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-
+        launcher.setDirection(DcMotor.Direction.FORWARD);
         /*
          * Here we set our launcher to the RUN_USING_ENCODER runmode.
          * If you notice that you have no control over the velocity of the motor, it just jumps
@@ -286,31 +244,6 @@ public class StarterBotTeleopMecanums extends OpMode {
          * both motors work to rotate the robot. Combinations of these inputs can be used to create
          * more complex maneuvers.
          *
-         *⣿⠖⠀⠀⠀⠀⠀⠙⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⡿⠀⠀⢸⣿⣿⣿⠟⠀⠀⠙⢿⢷⣦⡋⢒⡿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀
-⢋⣾⣿⣆⠀⠀⠀⠀⠈⠻⣿⡇⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⡇⠀⠀⣽⣿⡟⠁⠀⠀⠀⠀⠀⠘⢿⣿⣢⣀⣙⡇⠀⠀⠀⠀⠀⠀⠀⠀
-⣿⣿⣿⣿⣿⣤⠄⠀⠀⠀⠀⠛⠇⠀⠀⠀⠀⠀⠀⠈⠿⢿⠟⠀⠀⢸⣿⠋⠀⠀⢀⣴⣿⣿⣦⡀⠀⢻⣿⡤⡀⣷⠀⠀⠀⠀⠀⠀⠀⠀
-⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⠁⠀⢀⣴⣿⣿⣿⠿⠋⠉⠉⠈⣿⣿⡟⢸⢀⡾⣦⠀⠀⠀⠀⠀
-⣿⣿⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⣠⣿⡿⠛⠉⠀⠀⠈⢻⣿⣇⠀⣿⣿⡸⣾⠠⠘⢷⡄⠀⠀⠀
-⣎⢿⣿⣿⣿⣿⣿⣿⣷⣥⣀⡀⠀⠀⠀⠀⠀⠀⣷⣾⣗⢤⡀⡿⠟⠀⣸⡏⣰⡆⠀⠀⠀⠀⠀⣿⡿⢃⣬⣿⣿⣷⢻⡄⠢⠘⣦⠀⠀⠀
-⣿⡞⣿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣷⣦⣤⣤⣄⠀⡏⣿⣿⣿⡳⣌⡒⠾⢰⣿⣿⣦⠀⠀⠀⠀⠀⢈⣴⣶⣛⣿⣿⣿⣿⣧⢀⡿⠀⠀⠀⠀
-⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠙⠛⠛⠟⠋⢠⣿⢸⣿⣿⣷⣮⣭⣻⣿⣿⣿⢉⣩⣤⣤⣴⣾⠟⠋⠉⣹⣿⢸⣿⣿⣿⡆⣿⡇⠀⠀⠀
-⣿⠆⢠⡶⣠⣶⣶⣶⣦⣤⣴⢶⣴⣦⣄⣀⣴⡿⠋⣾⣿⣿⠿⠟⣿⠟⠉⠉⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⣿⣿⡼⣿⣿⡜⢸⢿⠀⠀⠀⠀
-⡻⡆⣐⢰⣿⡿⠿⠛⠋⠀⠀⠀⠀⣶⣶⠍⣿⡿⣈⠴⣿⠉⠀⡈⢄⠉⠱⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⡇⣾⣿⡇⢀⣿⠀⠀⠀⠀
-⢹⠃⣶⣿⣇⢒⣴⣿⠀⠀⠀⠀⠀⢸⠟⣰⣿⠏⠀⠀⣿⢀⠎⡠⢂⢂⠀⠘⢿⣿⣿⣶⣥⡂⢄⣀⣠⣽⣿⣿⠇⠿⣿⡇⢸⡿⠀⠀⠀⠀
-⠜⡜⣿⣿⣦⣜⢿⣿⣦⣀⠀⠀⢀⣴⣾⣿⠋⠀⠀⠀⣿⡟⢠⢳⣥⣷⣷⣶⣌⣿⣿⣿⣿⣿⣷⣬⣟⣿⣿⣿⡏⣿⣿⣶⢻⠀⣷⣄⡀⠀
-⡟⢦⡩⣽⣿⣿⣶⣶⣤⣤⣤⣶⣿⡿⠋⠀⠀⠀⠀⢰⣿⡇⣧⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⢻⣿⣿⢰⢸⣿⣿⣧⠀
-⢧⢢⠳⡜⣿⣿⣿⣿⡛⡛⠋⠉⠉⠀⠀⠀⠀⠀⠀⢠⣿⣷⣿⣿⣿⣿⡟⠋⣿⡟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣺⣿⣿⠸⠨⣿⣿⣿⣷
-⠘⡎⣵⢱⡹⣿⣿⣿⣿⣎⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠻⠿⠛⠿⣿⠀⠟⢠⣾⣿⣿⣿⣿⣿⣿⣿⡟⠸⣮⣽⣿⣿⡇⠁⢸⣿⣿⣿
-⠀⢻⡁⠎⣷⡹⣿⣿⣿⣷⡑⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⡿⢋⣴⣿⣟⣿⣿⣿⣧⣟⠁⣾⣿⣿
-⠀⠀⠻⣮⡨⠥⣙⢿⣿⣿⣿⣆⢡⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠿⢟⣿⣿⣿⠟⣫⣴⣿⣿⡿⢻⣿⣿⣿⣿⡗⠀⣻⣿⣿
-⠀⠀⠀⠈⠙⠿⣷⣦⡻⣿⣿⣿⣷⣝⢆⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⣴⣾⡿⠛⢛⣵⣾⣿⣿⠋⣴⡿⣿⣿⣿⡿⡗⠀⢠⡄⠹⣿
-⠀⠀⠀⠀⠀⡠⣂⣄⠀⠈⠻⣿⣿⣿⣧⡱⣄⠀⠀⠀⠀⣠⣾⣿⡿⠟⠛⠛⣩⣤⣴⣶⣿⣿⣿⠟⣖⣾⣿⡇⣿⣿⣿⣻⡇⠀⣿⢰⡄⢹
-⠀⠀⠀⣠⢞⢕⣿⣟⣥⣀⠀⠈⠻⣿⣿⣿⣄⠄⠀⠠⢤⣤⣤⣶⣿⣿⣿⣿⣿⡿⠟⠛⠉⠁⠀⠠⢿⡟⣿⡿⣿⣿⣿⡇⠀⣻⡇⣿⡇⡈
-⠀⣠⡾⣣⢱⢻⠇⠝⣋⣕⣴⡴⡀⠈⠻⣿⣿⣿⣦⠀⠀⠙⠙⠛⠶⠶⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠈⢷⣿⣿⢻⣿⣿⡏⠀⡈⣿⢲⡯⣺
-⣴⣿⠟⣌⠱⡯⡅⢸⣯⢬⣽⣕⢓⡐⠀⠈⠻⢿⣿⣷⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⡷⣹⣿⣿⣿⡏⠀⢀⣿⡃⣿⡩
-⡿⢡⢺⢨⡢⣼⣇⣧⢥⣭⣊⣾⣎⠡⠘⠄⠀⠀⠉⠻⣿⣿⣷⣦⣀⠀⡀⡄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⢻⡿⠁⣈⢼⣿⠂⣷⠌⣸
-⢠⣼⠧⢡⣾⡿⣿⢸⡺⣷⣷⢎⣾⠘⢑⡐⡀⡀⠀⡀⠀⠉⠽⣿⣿⣿⣿⣿⣶⣴⣶⣶⣶⣦⣤⣂⣀⣴⠿⠋⠠⡨⠃⠈⠃⢿⡷⣰⣿⢿
-⣾⣿⣥⣭⣾⣸⣿⣦⠈⢎⣛⣣⣿⡧⣠⢈⠀⠨⠀⠢⠠⡀⢀⠀⣑⠨⡋⢟⢛⢿⡻⣿⣿⠿⠟⠛⠉⣤⣤⡧⣐⢄⡐⠀⢠⣐⢹⣿⣿⣿
          *  /\_______/\
          * /           \
          * | <O>   <O> |
@@ -325,14 +258,31 @@ public class StarterBotTeleopMecanums extends OpMode {
          * Here we give the user control of the speed of the launcher motor without automatically
          * queuing a shot.
          */
+        if (gamepad2.y && !lastYstate)
+            launcherOn = true;
         if (gamepad2.y) {
             launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
-        } else if (gamepad2.b) { // stop flywheel
+        } else {
             launcher.setVelocity(STOP_SPEED);
+        }
+        if (gamepad2.left_bumper) {
+            bingBong.setPower(.1);
+        } else if (gamepad2.right_bumper) {
+            bingBong.setPower(-.1);
+        }
+        if (gamepad2.a && !lastAState){
+            intakeOn = true;
+        }
+        if (intakeOn) {
+            intake.setPower(1);
+            intake2.setPower(1);
+        } else {
+            intake.setPower(0);
+            intake2.setPower(0);
         }
 
         /*
-         * Now we call our "Launch" function.
+         * Now we call our "Launch" function. 
          */
         launch(gamepad1.rightBumperWasPressed());
 
@@ -342,6 +292,9 @@ public class StarterBotTeleopMecanums extends OpMode {
         telemetry.addData("State", launchState);
         telemetry.addData("motorSpeed", launcher.getVelocity());
 
+
+        lastAState = gamepad2.a;
+        lastYstate = gamepad2.y;
     }
 
     /*
