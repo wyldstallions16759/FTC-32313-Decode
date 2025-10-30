@@ -280,7 +280,13 @@ public class StarterBotTeleopMecanums extends OpMode {
             intake.setPower(0);
             intake2.setPower(0);
         }
-
+        if (gamepad2.dpad_down) {
+            rightFeeder.setPower(1);
+            leftFeeder.setPower(1);
+        } else {
+            rightFeeder.setPower(0);
+            leftFeeder.setPower(0);
+        }
         /*
          * Now we call our "Launch" function. 
          */
