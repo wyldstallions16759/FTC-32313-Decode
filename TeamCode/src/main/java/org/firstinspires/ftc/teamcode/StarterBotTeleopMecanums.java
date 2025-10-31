@@ -154,15 +154,16 @@ public class StarterBotTeleopMecanums extends OpMode {
          * to 'get' must correspond to the names assigned during the robot configuration
          * step.
          */
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
-        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        launcher = hardwareMap.get(DcMotorEx.class, "launcher");
-        leftFeeder = hardwareMap.get(CRServo.class, "left_feeder");
-        rightFeeder = hardwareMap.get(CRServo.class, "right_feeder");
-        intake = hardwareMap.get(DcMotor.class, "intake");
-        intake2 = hardwareMap.get(DcMotor.class, "intake2");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive"); // extension hub 2
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive"); // control hub 1
+        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive"); // extension hub 1
+        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive"); // control hub 2
+        launcher = hardwareMap.get(DcMotorEx.class, "launcher"); // control hub 0
+        leftFeeder = hardwareMap.get(CRServo.class, "left_feeder"); //extension hub 0
+        rightFeeder = hardwareMap.get(CRServo.class, "right_feeder"); //extension hub 1
+        intake = hardwareMap.get(DcMotor.class, "intake"); //control hub 3
+        intake2 = hardwareMap.get(DcMotor.class, "intake2"); // extension hub 0
+        bingBong = hardwareMap.get(CRServo.class, "bingBong");
         bingBong = hardwareMap.get(CRServo.class, "bingBong");
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -208,7 +209,8 @@ public class StarterBotTeleopMecanums extends OpMode {
          * Much like our drivetrain motors, we set the left feeder servo to reverse so that they
          * both work to feed the ball into the robot.
          */
-        leftFeeder.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFeeder.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFeeder.setDirection(DcMotorSimple.Direction.REVERSE);
 
         /*
          * Tell the driver that initialization is complete.
