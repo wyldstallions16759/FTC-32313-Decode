@@ -74,7 +74,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * "RUN_USING_ENCODER". This contrasts to the default "RUN_WITHOUT_ENCODER" where you control the power
  * applied to the motor directly.
  * Since the dynamics of a launcher wheel system varies greatly from those of most other FTC mechanisms,
- * we will also need to adjust the "PIDF" coefficients with some that are a better fit for our application.
+ * we will also need to adjust the "PDiddy" coefficients with some that are a better fit for our application.
  *
  */
 
@@ -92,7 +92,7 @@ public class StarterBotTeleopMecanums extends OpMode {
      * at. The minimum velocity is a threshold for determining when to fire.
      * YES! YES! YES! YES!
      */
-    final double LAUNCHER_TARGET_VELOCITY = 1125;
+    final double LAUNCHER_TARGET_VELOCITY = 2125; //Green Wheel Speed DO NOT CHANGE IT ISNT THE LAUNCHER
     final double LAUNCHER_MIN_VELOCITY = 1075;
 
     // Declare OpMode members.
@@ -104,8 +104,7 @@ public class StarterBotTeleopMecanums extends OpMode {
     private CRServo leftFeeder = null;
     private CRServo rightFeeder = null;
     private DcMotor intake = null;;
-    private DcMotor intake2 = null;;
-    private CRServo bingBong = null;;
+
     ElapsedTime feederTimer = new ElapsedTime();
 
     /*
@@ -154,17 +153,16 @@ public class StarterBotTeleopMecanums extends OpMode {
          * to 'get' must correspond to the names assigned during the robot configuration
          * step.
          */
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive"); // extension hub 2
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive"); // control hub 1
-        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive"); // extension hub 1
-        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive"); // control hub 2
-        launcher = hardwareMap.get(DcMotorEx.class, "launcher"); // control hub 0
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "frontright");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "frontleft");
+        leftBackDrive = hardwareMap.get(DcMotor.class, "backleft");
+        rightBackDrive = hardwareMap.get(DcMotor.class, "backright");
+        launcher = hardwareMap.get(DcMotorEx.class, "launcher"); // extension hub 1
         leftFeeder = hardwareMap.get(CRServo.class, "left_feeder"); //extension hub 0
         rightFeeder = hardwareMap.get(CRServo.class, "right_feeder"); //extension hub 1
-        intake = hardwareMap.get(DcMotor.class, "intake"); //control hub 3
-        intake2 = hardwareMap.get(DcMotor.class, "intake2"); // extension hub 0
-        bingBong = hardwareMap.get(CRServo.class, "bingBong");
-        bingBong = hardwareMap.get(CRServo.class, "bingBong");
+        intake = hardwareMap.get(DcMotor.class, "intakeMotor"); //control hub 3
+
+
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
          * because the axles point in opposite directions. Pushing the left stick forward
@@ -222,7 +220,7 @@ public class StarterBotTeleopMecanums extends OpMode {
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit START
      */
     @Override
-    public void init_loop() { /*Korewa Requiem Da*/
+    public void init_loop() {
     }
 
     /*
@@ -254,41 +252,84 @@ public class StarterBotTeleopMecanums extends OpMode {
          * \           /
          *  |         |
          */
-        mecanumDrive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        mecanumDrive();
 
         /*
          * Here we give the user control of the speed of the launcher motor without automatically
-         * queuing a shot.
-         */
-        if (gamepad2.y && !lastYstate)
+         * queuing a shot. */
+
+
+        // Pressing the Y button makes the Launcher turn on
+        // Pressing the Y button again makes the Launcher turn off
+        // lastYstate is whether or not the launcher is on
+        if (gamepad2.right_bumper && !lastYstate)
             launcherOn = true;
-        if (gamepad2.y) {
-            launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
+        if (gamepad2.right_bumper) {
+            launcher.setVelocity(1400);
         } else {
             launcher.setVelocity(STOP_SPEED);
         }
-        if (gamepad2.left_bumper) {
-            bingBong.setPower(.1);
-        } else if (gamepad2.right_bumper) {
-            bingBong.setPower(-.1);
-        }
-        if (gamepad2.a && !lastAState){
-            intakeOn = true;
-        }
-        if (intakeOn) {
-            intake.setPower(1);
-            intake2.setPower(1);
-        } else {
-            intake.setPower(0);
-            intake2.setPower(0);
-        }
-        if (gamepad2.dpad_down) {
+
+
+
+        // Pressing the A button makes the intake Motors turn on
+        // Pressing the A button again makes the intake Motors turn off
+        // lastAstate is whether or not the intake Motors are on
+
+         if (gamepad2.left_bumper) {
+             intake.setPower(-1);
+         }else if (gamepad2.x){
+             intake.setPower(1);
+         }else{
+             intake.setPower(0);
+         }
+        if (gamepad2.b){
+
             rightFeeder.setPower(1);
             leftFeeder.setPower(1);
-        } else {
+        } else if(gamepad2.x){
+            rightFeeder.setPower(-1);
+            leftFeeder.setPower(-1);
+        }else {
             rightFeeder.setPower(0);
             leftFeeder.setPower(0);
         }
+
+//        if (gamepad2.x) {
+//            intake.setPower(1);
+//            rightFeeder.setPower(-1);
+//            leftFeeder.setPower(-1);
+//        }else {
+//            intake.setPower(0);
+//            rightFeeder.setPower(0);
+//            leftFeeder.setPower(0);
+//        }
+//            intakeOn = !intakeOn;
+//        }
+//        if (intakeOn) {
+//            intake.setPower(-1);
+//        } else {
+//            intake.setPower(0);
+//        }
+        // Holding down the dpad_down button makes the feeder turn on
+        // Releasing the dpad_down button makes the feeder turn off
+
+        // Holding down the dpad_left button makes the green flywheel go in reverse
+        // Releasing the dpad_left button makes the green flywheel stop
+
+//        if (gamepad2.dpad_left) {
+//            leftFrontDrive.setPower(1);
+//        }
+//        if (gamepad2.dpad_up) {
+//            rightFrontDrive.setPower(1);
+//        }
+//        if (gamepad2.dpad_right) {
+//            rightBackDrive.setPower(1);
+//        }
+//        if (gamepad2.dpad_down) {
+//            leftBackDrive.setPower(1    );
+//        }
+
         /*
          * Now we call our "Launch" function. 
          */
@@ -300,9 +341,13 @@ public class StarterBotTeleopMecanums extends OpMode {
         telemetry.addData("State", launchState);
         telemetry.addData("motorSpeed", launcher.getVelocity());
 
+        telemetry.addData("A is pressed", gamepad2.a);
+        telemetry.addData("Last a state", lastAState);
+
 
         lastAState = gamepad2.a;
-        lastYstate = gamepad2.y;
+        lastYstate = gamepad2.right_bumper;
+        telemetry.update();
     }
 
     /*
@@ -310,26 +355,42 @@ public class StarterBotTeleopMecanums extends OpMode {
      */
     @Override
     public void stop() {
+        mecanumDrive();
     }
 
-    void mecanumDrive(double forward, double strafe, double rotate){
+    void mecanumDrive(){
 
-        /* the denominator is the largest motor power (absolute value) or 1
-         * This ensures all the powers maintain the same ratio,
-         * but only if at least one is out of the range [-1, 1]
-         *逃げるんだよ*/
-        double denominator = Math.max(Math.abs(forward) + Math.abs(strafe) + Math.abs(rotate), 1);
+        double max;
 
-        leftFrontPower = (forward + strafe + rotate) / denominator;
-        rightFrontPower = (forward - strafe - rotate) / denominator;
-        leftBackPower = (forward - strafe + rotate) / denominator;
-        rightBackPower = (forward + strafe - rotate) / denominator;
+        // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
+        double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+        double lateral =  gamepad1.left_stick_x;
+        double yaw     =  gamepad1.right_stick_x;
 
-        leftFrontDrive.setPower(leftFrontPower);
-        rightFrontDrive.setPower(rightFrontPower);
-        leftBackDrive.setPower(leftBackPower);
-        rightBackDrive.setPower(rightBackPower);
+        // Combine the joystick requests for each axis-motion to determine each wheel's power.
+        // Set up a variable for each drive wheel to save the power level for telemetry.
+        double frontLeftPower  = axial + lateral + yaw;
+        double frontRightPower = axial - lateral - yaw;
+        double backLeftPower   = axial - lateral + yaw;
+        double backRightPower  = axial + lateral - yaw;
 
+        // Normalize the values so no wheel power exceeds 100%
+        // This ensures that the robot maintains the desired motion.
+        max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
+        max = Math.max(max, Math.abs(backLeftPower));
+        max = Math.max(max, Math.abs(backRightPower));
+
+        if (max > 1.0) {
+            frontLeftPower  /= max;
+            frontRightPower /= max;
+            backLeftPower   /= max;
+            backRightPower  /= max;
+        }
+
+        leftFrontDrive.setPower(frontLeftPower);
+        rightFrontDrive.setPower(frontRightPower);
+        leftBackDrive.setPower(backLeftPower);
+        rightBackDrive.setPower(backRightPower);
     }
 
     void launch(boolean shotRequested) {
@@ -339,13 +400,13 @@ public class StarterBotTeleopMecanums extends OpMode {
                     launchState = LaunchState.SPIN_UP;
                 }
                 break;
-            case SPIN_UP: /*TUSKO ACTO 4*/
-                launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
+            case SPIN_UP:
+                launcher.setVelocity(1000);
                 if (launcher.getVelocity() > LAUNCHER_MIN_VELOCITY) {
                     launchState = LaunchState.LAUNCH;
                 }
                 break;
-            case LAUNCH: /*MAIDO IN HEAVEN*/
+            case LAUNCH:
                 leftFeeder.setPower(FULL_SPEED);
                 rightFeeder.setPower(FULL_SPEED);
                 feederTimer.reset();
