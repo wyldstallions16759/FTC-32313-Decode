@@ -51,6 +51,7 @@ package org.firstinspires.ftc.teamcode;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -58,6 +59,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -82,7 +84,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //@Disabled
 public class StarterBotTeleopMecanums extends OpMode {
     final double FEED_TIME_SECONDS = 0.20; //The feeder servos run this long when a shot is requested.
-    final double STOP_SPEED = 0.0; //We send this power to the servos when we want them to stop.
+    final double STOP_SPEED = 0.5; //We send this power to the servos when we want them to stop.
     final double FULL_SPEED = 1.0;
 
     /*
@@ -101,9 +103,10 @@ public class StarterBotTeleopMecanums extends OpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightBackDrive = null;
     private DcMotorEx launcher = null;
-    private CRServo leftFeeder = null;
-    private CRServo rightFeeder = null;
-    private DcMotor intake = null;;
+    private Servo leftFeeder = null;
+    private Servo rightFeeder = null;
+    private DcMotor intakeMotor = null;
+    private GoBildaPinpointDriver pinpoint = null;
 
     ElapsedTime feederTimer = new ElapsedTime();
 
@@ -153,14 +156,14 @@ public class StarterBotTeleopMecanums extends OpMode {
          * to 'get' must correspond to the names assigned during the robot configuration
          * step.
          */
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "frontright");
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "frontleft");
-        leftBackDrive = hardwareMap.get(DcMotor.class, "backleft");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "backright");
-        launcher = hardwareMap.get(DcMotorEx.class, "launcher"); // extension hub 1
-        leftFeeder = hardwareMap.get(CRServo.class, "left_feeder"); //extension hub 0
-        rightFeeder = hardwareMap.get(CRServo.class, "right_feeder"); //extension hub 1
-        intake = hardwareMap.get(DcMotor.class, "intakeMotor"); //control hub 3
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
+        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
+        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        launcher = hardwareMap.get(DcMotorEx.class, "shooter"); // extension hub 1
+        leftFeeder = hardwareMap.get(Servo.class, "left_feeder"); //extension hub 0
+        rightFeeder = hardwareMap.get(Servo.class, "right_feeder"); //extension hub 1
+        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor"); //control hub 3
 
 
         /*
@@ -198,8 +201,6 @@ public class StarterBotTeleopMecanums extends OpMode {
         /*
          * set Feeders to an initial value to initialize the servo controller
          */
-        leftFeeder.setPower(STOP_SPEED);
-        rightFeeder.setPower(STOP_SPEED);
 
         launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(300, 0, 0, 10));
 
@@ -207,8 +208,6 @@ public class StarterBotTeleopMecanums extends OpMode {
          * Much like our drivetrain motors, we set the left feeder servo to reverse so that they
          * both work to feed the ball into the robot.
          */
-        leftFeeder.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFeeder.setDirection(DcMotorSimple.Direction.REVERSE);
 
         /*
          * Tell the driver that initialization is complete.
@@ -264,7 +263,7 @@ public class StarterBotTeleopMecanums extends OpMode {
         // lastYstate is whether or not the launcher is on
         if (gamepad2.right_bumper && !lastYstate)
             launcherOn = true;
-        if (gamepad2.right_bumper) {
+        if (gamepad2.right_trigger > 0.5) {
             launcher.setVelocity(1400);
         } else {
             launcher.setVelocity(STOP_SPEED);
@@ -276,23 +275,23 @@ public class StarterBotTeleopMecanums extends OpMode {
         // Pressing the A button again makes the intake Motors turn off
         // lastAstate is whether or not the intake Motors are on
 
-         if (gamepad2.left_bumper) {
-             intake.setPower(-1);
+         if (gamepad2.left_trigger > 0.02) {
+             intakeMotor.setPower(-gamepad2.left_trigger);
          }else if (gamepad2.x){
-             intake.setPower(1);
+             intakeMotor.setPower(1);
          }else{
-             intake.setPower(0);
+             intakeMotor.setPower(0);
          }
-        if (gamepad2.b){
+        if (gamepad2.a){
 
-            rightFeeder.setPower(1);
-            leftFeeder.setPower(1);
+            rightFeeder.setPosition(0);
+            leftFeeder.setPosition(1);
         } else if(gamepad2.x){
-            rightFeeder.setPower(-1);
-            leftFeeder.setPower(-1);
+            rightFeeder.setPosition(1);
+            leftFeeder.setPosition(0);
         }else {
-            rightFeeder.setPower(0);
-            leftFeeder.setPower(0);
+            rightFeeder.setPosition(0.5);
+            leftFeeder.setPosition(0.5);
         }
 
 //        if (gamepad2.x) {
@@ -333,7 +332,6 @@ public class StarterBotTeleopMecanums extends OpMode {
         /*
          * Now we call our "Launch" function. 
          */
-        launch(gamepad1.rightBumperWasPressed());
 
         /*
          * Show the state and motor powers
@@ -407,16 +405,16 @@ public class StarterBotTeleopMecanums extends OpMode {
                 }
                 break;
             case LAUNCH:
-                leftFeeder.setPower(FULL_SPEED);
-                rightFeeder.setPower(FULL_SPEED);
+                leftFeeder.setPosition(1);
+                rightFeeder.setPosition(0);
                 feederTimer.reset();
                 launchState = LaunchState.LAUNCHING;
                 break;
             case LAUNCHING:
                 if (feederTimer.seconds() > FEED_TIME_SECONDS) {
                     launchState = LaunchState.IDLE;
-                    leftFeeder.setPower(STOP_SPEED);
-                    rightFeeder.setPower(STOP_SPEED);
+                    leftFeeder.setPosition(STOP_SPEED);
+                    rightFeeder.setPosition(STOP_SPEED);
                 }
                 break;
         }
