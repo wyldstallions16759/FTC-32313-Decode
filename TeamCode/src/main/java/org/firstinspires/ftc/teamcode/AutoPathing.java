@@ -13,6 +13,8 @@ import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
@@ -30,11 +32,10 @@ public class AutoPathing extends OpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightBackDrive = null;
     private DcMotorEx launcher = null;
-    private CRServo leftFeeder = null;
-    private CRServo rightFeeder = null;
+    private Servo leftFeeder = null;
+    private Servo rightFeeder = null;
     private DcMotor intake = null;
     private GoBildaPinpointDriver pinpoint = null;
-
     ElapsedTime feederTimer = new ElapsedTime();
 
     /*
@@ -71,6 +72,8 @@ public class AutoPathing extends OpMode {
     boolean intakeOn = false;
     boolean lastYstate = false;
     boolean launcherOn = false;
+
+    Timer ShooterTimer = new Timer();
     public enum PathState {
         //
         // START POSITION - END POSITION
@@ -118,6 +121,43 @@ public class AutoPathing extends OpMode {
 
                 //check is follower done it's path?
                 if (!follower.isBusy()) {
+                    ShooterTimer.resetTimer();
+                    if (ShooterTimer.getElapsedTimeSeconds() > 10.5) {
+                        shooterSubsystem.feedBall();
+
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 6.0) {
+                        shooterSubsystem.startShooter();
+                        shooterSubsystem.stopFeed();
+
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 4.75) {
+                        shooterSubsystem.feedBall();
+
+
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 4.5) {
+                        shooterSubsystem.stopShooter();
+
+
+
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 3.0) {
+                        shooterSubsystem.feedBall();
+
+
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 2.5) {
+                        shooterSubsystem.startShooter();
+
+
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 2) {
+                        shooterSubsystem.stopFeed();
+
+
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 0) {
+                        shooterSubsystem.feedBall();
+
+
+                    } else {
+                        shooterSubsystem.stopFeed();
+                        shooterSubsystem.stopShooter();
+                    }
                     shooterSubsystem.startShooter();
                     telemetry.addLine("Done Path 1!");
                     follower.followPath(driveStartPosShootPos, true);
@@ -155,6 +195,7 @@ public class AutoPathing extends OpMode {
     shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
     buildPaths();
     follower.setPose(startPose);
+
 
     }
     public void start() {

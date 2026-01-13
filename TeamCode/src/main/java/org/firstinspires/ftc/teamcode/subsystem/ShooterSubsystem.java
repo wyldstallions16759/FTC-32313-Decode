@@ -20,9 +20,10 @@ public class ShooterSubsystem {
     boolean shooterOn = false;
     Telemetry telemetry;
     private ElapsedTime timer = new ElapsedTime();
+
     public ShooterSubsystem(HardwareMap hardwareMap, Telemetry telemetry){
     shooter = hardwareMap.get(DcMotorEx.class, "shooter");
-    intake = hardwareMap.get(DcMotor.class, "intake");
+    intake = hardwareMap.get(DcMotor.class, "intakeMotor");
         this.telemetry = telemetry;
         rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
         leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
@@ -31,43 +32,27 @@ public class ShooterSubsystem {
 
 
     public void startShooter(){
-        timer.reset();
         shooter.setVelocity(1250);
         shooterOn = true;
-        while (shooterOn) {
-            if (timer.milliseconds() > 3250) {
-                timer.reset();
-                intake.setPower(-0.5);
-                leftFeeder.setPosition(0.5);
-                rightFeeder.setPosition(0.5);
-
-            }
-            if (timer.milliseconds() > 1750) {
-                shooter.setVelocity(1300);
-                leftFeeder.setPosition(1);
-                rightFeeder.setPosition(0);
-                intake.setPower(-1);
-            }
-            }
 
 
-        telemetry.addLine("CALLED START SHOOTER");
+        telemetry.addLine(" START SHOOTER");
     }
-    public void stopShooter(){
-        timer.reset();
-        shooter.setPower(0);
+    public void feedBall(){
+        leftFeeder.setPosition(1);
+        rightFeeder.setPosition(0);
+        intake.setPower(-1);
+    }
+    public void stopFeed(){
         leftFeeder.setPosition(0.5);
         rightFeeder.setPosition(0.5);
-        intake.setPower(0);
+        intake.setPower(-0.5);
+    }
+    public void stopShooter(){
+        shooter.setPower(0);
         shooterOn = false;
     }
-    public void toggleShooter(){
-        if (shooterOn){
-            stopShooter();
-        }else{
-            startShooter();
-        }
-    }
+
     public void setShooter(boolean on){
         if (on){
             startShooter();
