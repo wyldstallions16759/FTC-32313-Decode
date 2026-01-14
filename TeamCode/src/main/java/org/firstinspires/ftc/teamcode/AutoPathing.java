@@ -8,6 +8,7 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -37,6 +38,7 @@ public class AutoPathing extends OpMode {
     private DcMotor intake = null;
     private GoBildaPinpointDriver pinpoint = null;
     ElapsedTime feederTimer = new ElapsedTime();
+
 
     /*
      * TECH TIP: State Machines
@@ -80,7 +82,8 @@ public class AutoPathing extends OpMode {
         // DRIVE > MOVEMENT STATE
         // SHOOT > ATTEMPT TO SCORE THE ARTIFACT
         DRIVE_STARTPOS_SHOOT_POS,
-        SHOOT_PRELOAD,
+        FEED_BALL_1,
+
 
         DRIVE_SHOOT_END
 
@@ -113,45 +116,47 @@ public class AutoPathing extends OpMode {
         switch(pathState){
             case DRIVE_STARTPOS_SHOOT_POS:
                 follower.followPath(driveStartPosShootPos, true);
-                setPathState(PathState.SHOOT_PRELOAD); /*it goes to the public void down there and changes
+                setPathState(PathState.FEED_BALL_1); /*it goes to the public void down there and changes
                  the variable pathState and resets the timer that we want to reset every time we set a new path */
                 break;
-            case SHOOT_PRELOAD:
+            case FEED_BALL_1:
                 //TODO add logic to flywheel shooter
 
                 //check is follower done it's path?
                 if (!follower.isBusy()) {
-                    ShooterTimer.resetTimer();
-                    if (ShooterTimer.getElapsedTimeSeconds() > 10.5) {
+                    opModeTimer.resetTimer();
+                    if (ShooterTimer.getElapsedTimeSeconds() > 10.5 && ShooterTimer.getElapsedTimeSeconds()< 15) {
                         shooterSubsystem.feedBall();
 
-                    } else if (ShooterTimer.getElapsedTimeSeconds() > 6.0) {
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 6.0 && ShooterTimer.getElapsedTimeSeconds()<10.0) {
                         shooterSubsystem.startShooter();
                         shooterSubsystem.stopFeed();
 
-                    } else if (ShooterTimer.getElapsedTimeSeconds() > 4.75) {
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 4.75 && ShooterTimer.getElapsedTimeSeconds()<6.0) {
                         shooterSubsystem.feedBall();
 
 
-                    } else if (ShooterTimer.getElapsedTimeSeconds() > 4.5) {
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 4.5 && ShooterTimer.getElapsedTimeSeconds()<5) {
                         shooterSubsystem.stopShooter();
 
 
 
-                    } else if (ShooterTimer.getElapsedTimeSeconds() > 3.0) {
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 3.0 && ShooterTimer.getElapsedTimeSeconds()<4.5) {
                         shooterSubsystem.feedBall();
 
 
-                    } else if (ShooterTimer.getElapsedTimeSeconds() > 2.5) {
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 2.5 && ShooterTimer.getElapsedTimeSeconds()<3.0) {
                         shooterSubsystem.startShooter();
 
 
-                    } else if (ShooterTimer.getElapsedTimeSeconds() > 2) {
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 2 && ShooterTimer.getElapsedTimeSeconds()<2.5) {
                         shooterSubsystem.stopFeed();
 
 
-                    } else if (ShooterTimer.getElapsedTimeSeconds() > 0) {
-                        shooterSubsystem.feedBall();
+                    } else if (ShooterTimer.getElapsedTimeSeconds() > 0 && ShooterTimer.getElapsedTimeSeconds()<2) {
+                        leftFeeder.setPosition(1);
+                        rightFeeder.setPosition(0);
+                        intake.setPower(-1);
 
 
                     } else {
@@ -187,6 +192,8 @@ public class AutoPathing extends OpMode {
 
 
     public void init() {
+        leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
+        rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
     pathState = PathState.DRIVE_STARTPOS_SHOOT_POS;
     pathTimer = new Timer();
     opModeTimer = new Timer();
@@ -199,14 +206,12 @@ public class AutoPathing extends OpMode {
 
     }
     public void start() {
-        opModeTimer.resetTimer();
         setPathState(pathState);
     }
     public void loop() {
 
     follower.update();
     statePathUpdate();
-
 
     telemetry.addData("path state",pathState.toString());
     telemetry.addData("x", follower.getPose().getX());
