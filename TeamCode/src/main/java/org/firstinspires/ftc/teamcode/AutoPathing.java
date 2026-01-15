@@ -105,9 +105,9 @@ public class AutoPathing extends OpMode {
 
 
     private final Pose startPose = new Pose(22.0523882, 123.82126348, Math.toRadians(145));
-    private final Pose ShootingPose = new Pose(52.893682588597834,101.6764252, Math.toRadians(145));
+    private final Pose ShootingPose = new Pose(52.893682588597834,101.6764252, Math.toRadians(143.5));
     private final Pose GatherPose1 = new Pose(55.88003521901827,85.10895883777242, Math.toRadians(180));
-    private final Pose GatherPose2 = new Pose(15.497358573629768,84.63174114021572,Math.toRadians(180));
+    private final Pose GatherPose2 = new Pose(19.27358573629768,84.63174114021572,Math.toRadians(180));
     private final Pose endPose = new Pose(39.433414043583554,86.75544794188859, Math.toRadians(145));
 
     private PathChain driveStartPosShootPos, driveShootPosGatherPos1, driveGatherPos1GatherPos2, driveGatherPos2ShootPos, driveShootPosendPos;
@@ -146,120 +146,136 @@ public class AutoPathing extends OpMode {
                 break;
             case PRIME_SHOOTER_1:
                 if (!follower.isBusy()) {
-
+                    pathTimer.resetTimer();
                     shooterSubsystem.startShooter();
+                    setPathState(PathState.SHOOT_BALL_1);
                 }
-                setPathState(PathState.SHOOT_BALL_1);
+
                 break;
 
             case SHOOT_BALL_1:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 1.5) {
+                if (launcher.getVelocity() > 1375) {
                     shooterSubsystem.feedBall();
+                    setPathState(PathState.STOP_FEED_1);
                 }
-                setPathState(PathState.STOP_FEED_1);
+
                 break;
             case STOP_FEED_1:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2.75) {
-                    shooterSubsystem.stopFeed();
-                }
-                setPathState(PathState.START_FEED_2);
-                break;
-            case START_FEED_2:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 3.5) {
-                    shooterSubsystem.feedBall();
-                }
-                setPathState(PathState.STOP_FEED_2);
-                break;
-            case STOP_FEED_2:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5.25) {
-                    shooterSubsystem.stopFeed();
-                }
-                setPathState(PathState.START_FEED_3);
-                break;
-            case START_FEED_3:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5.75) {
-                    shooterSubsystem.feedBall();
-                }
-                setPathState(PathState.STOP_FEED_3);
-                break;
-            case STOP_FEED_3:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 7.5) {
+                if (pathTimer.getElapsedTimeSeconds() > 7.5) {
                     shooterSubsystem.stopFeed();
                     shooterSubsystem.stopShooter();
+                    setPathState(PathState.DRIVE_SHOOT_GATHERPOSE_1);
                 }
-                setPathState(PathState.DRIVE_SHOOT_GATHERPOSE_1);
-                //check is follower done it's path?
 
                 break;
-            case DRIVE_SHOOT_GATHERPOSE_1:
-                pathTimer.resetTimer();
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 1) {
-                    follower.followPath(driveShootPosGatherPos1);
-                    telemetry.addLine("Done Gather Pose 1");
-
+            /*case START_FEED_2:
+                if (pathTimer.getElapsedTimeSeconds() > 3.0) {
+                    shooterSubsystem.feedBall();
+                    setPathState(PathState.STOP_FEED_2);
                 }
-                setPathState(PathState.DRIVE_GATHERPOSE_1_GATHERPOSE_2);
+
+                break;
+            case STOP_FEED_2:
+                if (pathTimer.getElapsedTimeSeconds() > 4.5) {
+                    shooterSubsystem.stopFeed();
+                    setPathState(PathState.START_FEED_3);
+                }
+
+                break;
+            case START_FEED_3:
+                if (pathTimer.getElapsedTimeSeconds() > 5.25) {
+                    shooterSubsystem.feedBall();
+                    setPathState(PathState.STOP_FEED_3);
+                }
+
+                break;
+            case STOP_FEED_3:
+                if (pathTimer.getElapsedTimeSeconds() > 6.75) {
+                    shooterSubsystem.stopFeed();
+                    shooterSubsystem.stopShooter();
+                    setPathState(PathState.DRIVE_SHOOT_GATHERPOSE_1);
+                }
+
+                //check is follower done it's path?
+
+                break;*/
+            case DRIVE_SHOOT_GATHERPOSE_1:
+
+                if (!follower.isBusy()) {
+                    follower.followPath(driveShootPosGatherPos1, true);
+                    telemetry.addLine("Done Gather Pose 1");
+                    setPathState(PathState.DRIVE_GATHERPOSE_1_GATHERPOSE_2);
+                    pathTimer.resetTimer();
+                }
+
                 break;
             case DRIVE_GATHERPOSE_1_GATHERPOSE_2:
                 if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 3) {
-                    follower.followPath(driveGatherPos1GatherPos2);
+                    follower.followPath(driveGatherPos1GatherPos2, true);
                     telemetry.addLine("Done Gather Pose 2");
+                    setPathState(PathState.DRIVE_GATHERPOSE_2_SHOOT);
                 }
-                setPathState(PathState.DRIVE_GATHERPOSE_2_SHOOT);
+
                     break;
             case DRIVE_GATHERPOSE_2_SHOOT:
 
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 6) {
-                    follower.followPath(driveGatherPos2ShootPos);
+                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5) {
+                    follower.followPath(driveGatherPos2ShootPos, true);
                     telemetry.addLine("Done Shoot Pos 2");
+                    setPathState(PathState.PRIME_SHOOTER_4);
                 }
 
-                setPathState(PathState.PRIME_SHOOTER_4);
+
                 break;
             case PRIME_SHOOTER_4:
-                if (!follower.isBusy()) {
                     pathTimer.resetTimer();
                     shooterSubsystem.startShooter();
-                }
                 setPathState(PathState.SHOOT_BALL_4);
                 break;
 
             case SHOOT_BALL_4:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 1.5) {
+                if (launcher.getVelocity() > 1375) {
+                    pathTimer.resetTimer();
                     shooterSubsystem.feedBall();
+                    setPathState(PathState.STOP_FEED_4);
                 }
-                setPathState(PathState.STOP_FEED_4);
+
                 break;
             case STOP_FEED_4:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2.75) {
+                if (pathTimer.getElapsedTimeSeconds() > 7.5) {
                     shooterSubsystem.stopFeed();
+                    setPathState(PathState.DRIVE_SHOOT_ENDPOS);
                 }
-                setPathState(PathState.START_FEED_5);
+
                 break;
             case START_FEED_5:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 3.5) {
+                if (pathTimer.getElapsedTimeSeconds() > 3.5) {
                     shooterSubsystem.feedBall();
+                    setPathState(PathState.STOP_FEED_5);
                 }
-                setPathState(PathState.STOP_FEED_5);
+
                 break;
             case STOP_FEED_5:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5.25) {
+                if (pathTimer.getElapsedTimeSeconds() > 5.25) {
                     shooterSubsystem.stopFeed();
+                    setPathState(PathState.START_FEED_6);
                 }
-                setPathState(PathState.START_FEED_6);
+
                 break;
             case START_FEED_6:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5.75) {
+                if (pathTimer.getElapsedTimeSeconds() > 5.75) {
                     shooterSubsystem.feedBall();
+                    setPathState(PathState.STOP_FEED_6);
                 }
-                setPathState(PathState.STOP_FEED_6);
+
                 break;
             case STOP_FEED_6:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 7.5) {
+                if (pathTimer.getElapsedTimeSeconds() > 7.5) {
                     shooterSubsystem.stopFeed();
                     shooterSubsystem.stopShooter();
+                    setPathState(PathState.DRIVE_SHOOT_ENDPOS);
                 }
-                setPathState(PathState.DRIVE_SHOOT_ENDPOS);
+
                 break;
             case DRIVE_SHOOT_ENDPOS:
                 if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 10.0) {
@@ -282,6 +298,7 @@ public class AutoPathing extends OpMode {
     public void init() {
         leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
         rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
+        launcher = hardwareMap.get(DcMotorEx.class, "shooter");
     pathState = PathState.DRIVE_STARTPOS_SHOOT_POS;
     pathTimer = new Timer();
     opModeTimer = new Timer();
@@ -300,7 +317,7 @@ public class AutoPathing extends OpMode {
 
     follower.update();
     statePathUpdate();
-
+    telemetry.addData("velocity", launcher.getVelocity());
     telemetry.addData("path state",pathState.toString());
     telemetry.addData("x", follower.getPose().getX());
     telemetry.addData("y", follower.getPose().getY());
@@ -309,5 +326,6 @@ public class AutoPathing extends OpMode {
     telemetry.addData("changed", true);
     telemetry.addData("Path timer", pathTimer.getElapsedTimeSeconds());
     telemetry.update();
+
     }
 }
