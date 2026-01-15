@@ -97,7 +97,7 @@ public class AutoPathing extends OpMode {
 
 
 
-        DRIVE_SHOOT_END
+        DRIVE_SHOOT_ENDPOS
 
     }
 
@@ -107,9 +107,10 @@ public class AutoPathing extends OpMode {
     private final Pose startPose = new Pose(22.0523882, 123.82126348, Math.toRadians(145));
     private final Pose ShootingPose = new Pose(52.893682588597834,101.6764252, Math.toRadians(145));
     private final Pose GatherPose1 = new Pose(55.88003521901827,85.10895883777242, Math.toRadians(180));
-    private final Pose GatherPose2 = new Pose(15.497358573629768,84.63174114021572,Math.toRadians(180));        ;
+    private final Pose GatherPose2 = new Pose(15.497358573629768,84.63174114021572,Math.toRadians(180));
+    private final Pose endPose = new Pose(39.433414043583554,86.75544794188859, Math.toRadians(145));
 
-    private PathChain driveStartPosShootPos, driveShootPosGatherPos1, driveGatherPos1GatherPos2, driveGatherPos2ShootPos;
+    private PathChain driveStartPosShootPos, driveShootPosGatherPos1, driveGatherPos1GatherPos2, driveGatherPos2ShootPos, driveShootPosendPos;
 
     private ShooterSubsystem shooterSubsystem;
     public void buildPaths() {
@@ -129,6 +130,10 @@ public class AutoPathing extends OpMode {
         driveGatherPos2ShootPos = follower.pathBuilder()
                 .addPath(new BezierLine(GatherPose2,ShootingPose))
                 .setLinearHeadingInterpolation(GatherPose2.getHeading(), ShootingPose.getHeading())
+                .build();
+        driveShootPosendPos = follower.pathBuilder()
+                .addPath(new BezierLine(ShootingPose,endPose))
+                .setLinearHeadingInterpolation(ShootingPose.getHeading(), endPose.getHeading())
                 .build();
     }
 
@@ -254,8 +259,12 @@ public class AutoPathing extends OpMode {
                     shooterSubsystem.stopFeed();
                     shooterSubsystem.stopShooter();
                 }
-
+                setPathState(PathState.DRIVE_SHOOT_ENDPOS);
                 break;
+            case DRIVE_SHOOT_ENDPOS:
+                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 10.0) {
+                    follower.followPath(driveShootPosendPos);
+                }
             default:
                 telemetry.addLine("No State Commanded");
                 break;
