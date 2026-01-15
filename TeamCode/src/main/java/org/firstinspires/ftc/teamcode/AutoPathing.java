@@ -1,26 +1,19 @@
 package org.firstinspires.ftc.teamcode;
 
-import androidx.annotation.NonNull;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
-import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.pedropathing.util.Timer;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.subsystem.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 
 @Autonomous
@@ -230,7 +223,7 @@ public class AutoPathing extends OpMode {
                 if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 1.5) {
                     shooterSubsystem.feedBall();
                 }
-                setPathState(PathState.STOP_FEED_3);
+                setPathState(PathState.STOP_FEED_4);
                 break;
             case STOP_FEED_4:
                 if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2.75) {
