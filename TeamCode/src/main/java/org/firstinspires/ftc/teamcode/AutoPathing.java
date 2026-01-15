@@ -210,6 +210,14 @@ public class AutoPathing extends OpMode {
                 setPathState(PathState.DRIVE_GATHERPOSE_2_SHOOT);
                     break;
             case DRIVE_GATHERPOSE_2_SHOOT:
+
+                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 6) {
+                    follower.followPath(driveGatherPos2ShootPos);
+                    telemetry.addLine("Done Shoot Pos 2");
+                }
+
+                setPathState(PathState.PRIME_SHOOTER_4);
+                break;
             case PRIME_SHOOTER_4:
                 if (!follower.isBusy()) {
                     pathTimer.resetTimer();
