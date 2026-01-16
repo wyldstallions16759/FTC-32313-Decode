@@ -9,10 +9,7 @@ import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.pedropathing.util.Timer;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 
@@ -20,19 +17,7 @@ import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 public class AUTOREDTRIANGLE extends OpMode {
 
     private Follower follower;
-    private Timer pathTimer, opModeTimer;
-
-    private DcMotor leftFrontDrive = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor leftBackDrive = null;
-    private DcMotor rightBackDrive = null;
     private DcMotorEx launcher = null;
-    private Servo leftFeeder = null;
-    private Servo rightFeeder = null;
-    private DcMotor intake = null;
-    private GoBildaPinpointDriver pinpoint = null;
-    AUTOBLUEDEPOT autoBlueDepot = new AUTOBLUEDEPOT();
-    ElapsedTime feederTimer = new ElapsedTime();
 
 
     /*
@@ -51,12 +36,6 @@ public class AUTOREDTRIANGLE extends OpMode {
      * We can use higher level code to cycle through these states. But this allows us to write
      * functions and autonomous routines in a way that avoids loops within loops, and "waits".
      */
-    private enum LaunchState {
-        IDLE,
-        SPIN_UP,
-        LAUNCH,
-        LAUNCHING,
-    }
 
 
 
@@ -70,55 +49,46 @@ public class AUTOREDTRIANGLE extends OpMode {
     boolean lastYstate = false;
     boolean launcherOn = false;
 
-    Timer ShooterTimer = new Timer();
 
 
-
-    AUTOBLUEDEPOT.PathState pathState;
     private ShooterSubsystem shooterSubsystem;
+    private AUTOlogic autoLogic;
 
 
-    public void setPathState(AUTOBLUEDEPOT.PathState newState) {
-        pathState = newState;
-        pathTimer.resetTimer();
-    }
     @Override
 
 
     public void init() {
-        autoBlueDepot.startPose = new Pose(56.16035634743875, 8.16035634743875, Math.toRadians(90));
-        autoBlueDepot.ShootingPose = new Pose(60.97104677060133,134.1380846325167, Math.toRadians(180));
-        autoBlueDepot.endPose = new Pose(61.61259079903148,60.624697336561766, Math.toRadians(270));
-
-        leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
-        rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
-        launcher = hardwareMap.get(DcMotorEx.class, "shooter");
-        pathState = AUTOBLUEDEPOT.PathState.DRIVE_STARTPOS_SHOOT_POS;
-        pathTimer = new Timer();
-        opModeTimer = new Timer();
         follower = Constants.createFollower(hardwareMap);
+        autoLogic.startPose = new Pose(56.16035634743875, 8.16035634743875, Math.toRadians(90));
+        autoLogic.ShootingPose = new Pose(60.97104677060133,134.1380846325167, Math.toRadians(180));
+        autoLogic.endPose = new Pose(61.61259079903148,60.624697336561766, Math.toRadians(270));
+        follower.setPose(autoLogic.startPose);
+        autoLogic.buildPaths();
+        autoLogic.pathState = AUTOlogic.PathState.TRIANGLE_DRIVE_START_SHOOTPOS;
+        autoLogic.pathTimer = new Timer();
+
         //TODO add in any other init mechanisms
         shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
-        autoBlueDepot.buildPaths();
-        follower.setPose(autoBlueDepot.startPose);
+
+
 
 
     }
     public void start() {
-        setPathState(pathState);
+        autoLogic.setPathState(autoLogic.pathState);
     }
     public void loop() {
 
         follower.update();
-        autoBlueDepot.statePathUpdate();
+        autoLogic.statePathUpdate();
         telemetry.addData("velocity", launcher.getVelocity());
-        telemetry.addData("path state",pathState.toString());
+        telemetry.addData("path state",autoLogic.pathState.toString());
         telemetry.addData("x", follower.getPose().getX());
         telemetry.addData("y", follower.getPose().getY());
         telemetry.addData("heading", follower.getPose().getHeading());
         telemetry.addData("busy", follower.isBusy());
         telemetry.addData("changed", true);
-        telemetry.addData("Path timer", pathTimer.getElapsedTimeSeconds());
         telemetry.update();
 
     }

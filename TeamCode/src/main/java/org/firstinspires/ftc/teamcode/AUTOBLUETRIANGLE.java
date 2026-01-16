@@ -31,7 +31,7 @@ public class AUTOBLUETRIANGLE extends OpMode {
     private Servo rightFeeder = null;
     private DcMotor intake = null;
     private GoBildaPinpointDriver pinpoint = null;
-    AUTOBLUEDEPOT autoBlueDepot = new AUTOBLUEDEPOT();
+    private AUTOlogic autoLogic;
     ElapsedTime feederTimer = new ElapsedTime();
 
 
@@ -74,43 +74,40 @@ public class AUTOBLUETRIANGLE extends OpMode {
 
 
 
-AUTOBLUEDEPOT.PathState pathState;
+    AUTOlogic.PathState pathState;
     private ShooterSubsystem shooterSubsystem;
 
-
-    public void setPathState(AUTOBLUEDEPOT.PathState newState) {
-        pathState = newState;
-        pathTimer.resetTimer();
-    }
     @Override
 
 
     public void init() {
-        autoBlueDepot.startPose = new Pose(87.3166412, 8.16035634743875, Math.toRadians(90));
-        autoBlueDepot.ShootingPose = new Pose(82.5059508,134.1380846325167, Math.toRadians(0));
-        autoBlueDepot.endPose = new Pose(81.8644068,60.624697336561766, Math.toRadians(270));
+        autoLogic.startPose = new Pose(87.3166412, 8.16035634743875, Math.toRadians(90));
+        autoLogic.ShootingPose = new Pose(82.5059508,134.1380846325167, Math.toRadians(0));
+        autoLogic.endPose = new Pose(81.8644068,60.624697336561766, Math.toRadians(270));
 
         leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
         rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
         launcher = hardwareMap.get(DcMotorEx.class, "shooter");
-        pathState = AUTOBLUEDEPOT.PathState.TRIANGLE_DRIVE_START_SHOOTPOS;
+        pathState = AUTOlogic.PathState.TRIANGLE_DRIVE_START_SHOOTPOS;
         pathTimer = new Timer();
         opModeTimer = new Timer();
         follower = Constants.createFollower(hardwareMap);
         //TODO add in any other init mechanisms
         shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
-        autoBlueDepot.buildPaths();
-        follower.setPose(autoBlueDepot.startPose);
+        autoLogic.buildPaths();
+        follower.setPose(autoLogic.startPose);
 
 
     }
     public void start() {
-        setPathState(pathState);
+        autoLogic.setPathState(pathState);
+        autoLogic.setPathState(pathState);
+        pathTimer.resetTimer();
     }
     public void loop() {
 
         follower.update();
-        autoBlueDepot.statePathUpdate();
+        autoLogic.statePathUpdate();
         telemetry.addData("velocity", launcher.getVelocity());
         telemetry.addData("path state",pathState.toString());
         telemetry.addData("x", follower.getPose().getX());
