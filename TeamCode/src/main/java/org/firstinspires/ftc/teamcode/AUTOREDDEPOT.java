@@ -19,9 +19,6 @@ public class AUTOREDDEPOT extends OpMode {
 
     public Timer pathTimer;
     public DcMotorEx launcher = null;
-    private Servo leftFeeder = null;
-    private Servo rightFeeder = null;
-    public DcMotor intake = null;
     private GoBildaPinpointDriver pinpoint = null;
     ElapsedTime feederTimer = new ElapsedTime();
     /*
@@ -110,8 +107,8 @@ public class AUTOREDDEPOT extends OpMode {
 
         autoLogic.follower.update();
         autoLogic.statePathUpdate();
-        telemetry.addData("velocity", launcher.getVelocity());
-        telemetry.addData("path state", pathState.toString());
+        telemetry.addData("velocity", autoLogic.launcher.getVelocity());
+        telemetry.addData("path state", autoLogic.pathState.toString());
         telemetry.addData("x", autoLogic.follower.getPose().getX());
         telemetry.addData("y", autoLogic.follower.getPose().getY());
         telemetry.addData("heading", autoLogic.follower.getPose().getHeading());

@@ -22,12 +22,6 @@ import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 public class AUTOBLUEDEPOT extends OpMode {
 
     public Timer pathTimer;
-    public DcMotorEx launcher = null;
-    private Servo leftFeeder = null;
-    private Servo rightFeeder = null;
-    public DcMotor intake = null;
-    private GoBildaPinpointDriver pinpoint = null;
-    ElapsedTime feederTimer = new ElapsedTime();
     /*
      * TECH TIP: State Machines
      * We use a "state machine" to control our launcher motor and feeder servos in this program.
@@ -48,17 +42,9 @@ public class AUTOBLUEDEPOT extends OpMode {
 
 
     // Setup a variable for each drive wheel to save power level for telemetry
-    double leftFrontPower;
-    double rightFrontPower;
-    double leftBackPower;
-    double rightBackPower;
-    boolean lastAState = false;
-    boolean intakeOn = false;
-    boolean lastYstate = false;
-    boolean launcherOn = false;
 
-    Timer ShooterTimer = new Timer();
-    AUTOlogic.PathState pathState;
+
+
 
 
 
@@ -66,6 +52,7 @@ public class AUTOBLUEDEPOT extends OpMode {
 
     private ShooterSubsystem shooterSubsystem;
     private AUTOlogic autoLogic;
+   private AUTOlogic.PathState pathState;
 
 
 
@@ -114,8 +101,8 @@ public class AUTOBLUEDEPOT extends OpMode {
 
         autoLogic.follower.update();
         autoLogic.statePathUpdate();
-        telemetry.addData("velocity", launcher.getVelocity());
-        telemetry.addData("path state", pathState.toString());
+        telemetry.addData("velocity", autoLogic.launcher.getVelocity());
+        telemetry.addData("path state", autoLogic.pathState.toString());
         telemetry.addData("x", autoLogic.follower.getPose().getX());
         telemetry.addData("y", autoLogic.follower.getPose().getY());
         telemetry.addData("heading", autoLogic.follower.getPose().getHeading());

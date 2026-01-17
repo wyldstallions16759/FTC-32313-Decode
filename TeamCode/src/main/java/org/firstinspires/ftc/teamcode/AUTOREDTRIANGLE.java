@@ -99,7 +99,7 @@ public class AUTOREDTRIANGLE extends OpMode {
         autoLogic.follower.update();
         autoLogic.statePathUpdate();
         telemetry.addData("velocity", autoLogic.launcher.getVelocity());
-        telemetry.addData("path state",pathState.toString());
+        telemetry.addData("path state", autoLogic.pathState.toString());
         telemetry.addData("x", autoLogic.follower.getPose().getX());
         telemetry.addData("y", autoLogic.follower.getPose().getY());
         telemetry.addData("heading", autoLogic.follower.getPose().getHeading());

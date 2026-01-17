@@ -110,7 +110,7 @@ public class AUTOlogic {
         pathTimer.resetTimer();
     }
     private ShooterSubsystem shooterSubsystem;
-    PathState pathState;
+    public PathState pathState;
     public void statePathUpdate() {
         switch(pathState){
             case DRIVE_STARTPOS_SHOOT_POS:
