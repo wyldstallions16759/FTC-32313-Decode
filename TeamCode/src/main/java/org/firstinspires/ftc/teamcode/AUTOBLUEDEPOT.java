@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import android.health.connect.TimeInstantRangeFilter;
+
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
@@ -10,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
@@ -18,16 +21,11 @@ import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 @Autonomous
 public class AUTOBLUEDEPOT extends OpMode {
 
-    public Timer pathTimer, opModeTimer;
-
-    private DcMotor leftFrontDrive = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor leftBackDrive = null;
-    private DcMotor rightBackDrive = null;
-    private DcMotorEx launcher = null;
+    public Timer pathTimer;
+    public DcMotorEx launcher = null;
     private Servo leftFeeder = null;
     private Servo rightFeeder = null;
-    private DcMotor intake = null;
+    public DcMotor intake = null;
     private GoBildaPinpointDriver pinpoint = null;
     ElapsedTime feederTimer = new ElapsedTime();
     /*
@@ -72,6 +70,8 @@ public class AUTOBLUEDEPOT extends OpMode {
 
 
 
+
+
     @Override
 
 
@@ -88,12 +88,16 @@ public class AUTOBLUEDEPOT extends OpMode {
         autoLogic.endPose = new Pose(40.18644067796609,84.87167070217917, Math.toRadians(143.5));
         autoLogic.follower.setPose(autoLogic.startPose);
         autoLogic.buildPaths();
-        intake = hardwareMap.get(DcMotor.class, "intakeMotor ");
-        leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
-        rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
-        launcher = hardwareMap.get(DcMotorEx.class, "shooter");
-    autoLogic.pathState = AUTOlogic.PathState.DRIVE_STARTPOS_SHOOT_POS;
 
+        autoLogic.pathTimer = new Timer();
+
+        autoLogic.intake = hardwareMap.get(DcMotor.class, "intakeMotor");
+        autoLogic.leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
+        autoLogic.rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
+        autoLogic.launcher = hardwareMap.get(DcMotorEx.class, "shooter");
+
+
+        autoLogic.pathState = AUTOlogic.PathState.DRIVE_STARTPOS_SHOOT_POS;
 
     //TODO add in any other init mechanisms
     shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
@@ -104,7 +108,7 @@ public class AUTOBLUEDEPOT extends OpMode {
     }
     public void start() {
         autoLogic.setPathState(autoLogic.pathState);
-        pathTimer.resetTimer();
+        autoLogic.pathTimer.resetTimer();
     }
     public void loop() {
 

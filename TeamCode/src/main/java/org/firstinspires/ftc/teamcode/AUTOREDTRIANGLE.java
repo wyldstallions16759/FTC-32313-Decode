@@ -9,15 +9,17 @@ import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.pedropathing.util.Timer;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 
 @Autonomous
 public class AUTOREDTRIANGLE extends OpMode {
-
-    private Follower follower;
-    private DcMotorEx launcher = null;
+    private AUTOlogic autoLogic;
+    ElapsedTime feederTimer = new ElapsedTime();
 
 
     /*
@@ -36,6 +38,12 @@ public class AUTOREDTRIANGLE extends OpMode {
      * We can use higher level code to cycle through these states. But this allows us to write
      * functions and autonomous routines in a way that avoids loops within loops, and "waits".
      */
+    private enum LaunchState {
+        IDLE,
+        SPIN_UP,
+        LAUNCH,
+        LAUNCHING,
+    }
 
 
 
@@ -49,25 +57,32 @@ public class AUTOREDTRIANGLE extends OpMode {
     boolean lastYstate = false;
     boolean launcherOn = false;
 
+    Timer ShooterTimer = new Timer();
 
 
+
+    AUTOlogic.PathState pathState;
     private ShooterSubsystem shooterSubsystem;
-    private AUTOlogic autoLogic;
-
 
     @Override
 
 
     public void init() {
-        follower = Constants.createFollower(hardwareMap);
+        autoLogic = new AUTOlogic();
+        autoLogic.follower = Constants.createFollower(hardwareMap);
         autoLogic.startPose = new Pose(56.16035634743875, 8.16035634743875, Math.toRadians(90));
         autoLogic.ShootingPose = new Pose(60.97104677060133,134.1380846325167, Math.toRadians(180));
         autoLogic.endPose = new Pose(61.61259079903148,60.624697336561766, Math.toRadians(270));
-        follower.setPose(autoLogic.startPose);
+        autoLogic.follower.setPose(autoLogic.startPose);
         autoLogic.buildPaths();
-        autoLogic.pathState = AUTOlogic.PathState.TRIANGLE_DRIVE_START_SHOOTPOS;
+
+        autoLogic.leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
+        autoLogic.rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
+        autoLogic.launcher = hardwareMap.get(DcMotorEx.class, "shooter");
+
         autoLogic.pathTimer = new Timer();
 
+        autoLogic.pathState = AUTOlogic.PathState.TRIANGLE_DRIVE_START_SHOOTPOS;
         //TODO add in any other init mechanisms
         shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
 
@@ -77,19 +92,22 @@ public class AUTOREDTRIANGLE extends OpMode {
     }
     public void start() {
         autoLogic.setPathState(autoLogic.pathState);
+        autoLogic.pathTimer.resetTimer();
     }
     public void loop() {
 
-        follower.update();
+        autoLogic.follower.update();
         autoLogic.statePathUpdate();
-        telemetry.addData("velocity", launcher.getVelocity());
-        telemetry.addData("path state",autoLogic.pathState.toString());
-        telemetry.addData("x", follower.getPose().getX());
-        telemetry.addData("y", follower.getPose().getY());
-        telemetry.addData("heading", follower.getPose().getHeading());
-        telemetry.addData("busy", follower.isBusy());
+        telemetry.addData("velocity", autoLogic.launcher.getVelocity());
+        telemetry.addData("path state",pathState.toString());
+        telemetry.addData("x", autoLogic.follower.getPose().getX());
+        telemetry.addData("y", autoLogic.follower.getPose().getY());
+        telemetry.addData("heading", autoLogic.follower.getPose().getHeading());
+        telemetry.addData("busy", autoLogic.follower.isBusy());
         telemetry.addData("changed", true);
+        telemetry.addData("Path timer", autoLogic.pathTimer.getElapsedTimeSeconds());
         telemetry.update();
 
     }
 }
+

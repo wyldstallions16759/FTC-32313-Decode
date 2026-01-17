@@ -22,8 +22,8 @@ public class ShooterSubsystem {
     private ElapsedTime timer = new ElapsedTime();
 
     public ShooterSubsystem(HardwareMap hardwareMap, Telemetry telemetry){
-    shooter = hardwareMap.get(DcMotorEx.class, "shooter");
-    intake = hardwareMap.get(DcMotor.class, "intakeMotor");
+        shooter = hardwareMap.get(DcMotorEx.class, "shooter");
+        intake = hardwareMap.get(DcMotor.class, "intakeMotor");
         this.telemetry = telemetry;
         rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
         leftFeeder = hardwareMap.get(Servo.class, "left_feeder");

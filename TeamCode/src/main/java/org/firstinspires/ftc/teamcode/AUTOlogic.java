@@ -3,23 +3,20 @@ package org.firstinspires.ftc.teamcode;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 import com.pedropathing.paths.PathChain;
 
 public class AUTOlogic {
 
     public Follower follower;
+    public Servo leftFeeder;
+    public Servo rightFeeder;
 
-    private DcMotorEx launcher = null;
+    public DcMotorEx launcher = null;
     public DcMotor intake = null;
     public Timer pathTimer = new Timer();
     public enum PathState {
@@ -107,6 +104,7 @@ public class AUTOlogic {
     public Pose GatherPose4 = new Pose(0,0, Math.toRadians(0));
     public Pose GatherPose5 = new Pose(0,0, Math.toRadians(0));
     public Pose endPose = new Pose(0,0, Math.toRadians(0));
+
     public void setPathState(PathState newState) {
         pathState = newState;
         pathTimer.resetTimer();

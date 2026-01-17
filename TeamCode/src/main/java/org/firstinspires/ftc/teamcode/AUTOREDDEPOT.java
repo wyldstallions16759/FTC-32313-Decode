@@ -1,27 +1,29 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
-import com.pedropathing.paths.PathChain;
+import com.pedropathing.util.Timer;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 
 @Autonomous
-public class AUTOBLUETRIANGLE extends OpMode {
-    private AUTOlogic autoLogic;
+public class AUTOREDDEPOT extends OpMode {
+
+    public Timer pathTimer;
+    public DcMotorEx launcher = null;
+    private Servo leftFeeder = null;
+    private Servo rightFeeder = null;
+    public DcMotor intake = null;
+    private GoBildaPinpointDriver pinpoint = null;
     ElapsedTime feederTimer = new ElapsedTime();
-
-
     /*
      * TECH TIP: State Machines
      * We use a "state machine" to control our launcher motor and feeder servos in this program.
@@ -38,12 +40,6 @@ public class AUTOBLUETRIANGLE extends OpMode {
      * We can use higher level code to cycle through these states. But this allows us to write
      * functions and autonomous routines in a way that avoids loops within loops, and "waits".
      */
-    private enum LaunchState {
-        IDLE,
-        SPIN_UP,
-        LAUNCH,
-        LAUNCHING,
-    }
 
 
 
@@ -58,11 +54,19 @@ public class AUTOBLUETRIANGLE extends OpMode {
     boolean launcherOn = false;
 
     Timer ShooterTimer = new Timer();
-
-
-
     AUTOlogic.PathState pathState;
+
+
+
+
+
     private ShooterSubsystem shooterSubsystem;
+    private AUTOlogic autoLogic;
+
+
+
+
+
 
     @Override
 
@@ -70,21 +74,29 @@ public class AUTOBLUETRIANGLE extends OpMode {
     public void init() {
         autoLogic = new AUTOlogic();
         autoLogic.follower = Constants.createFollower(hardwareMap);
-        autoLogic.startPose = new Pose(87.3166412, 8.16035634743875, Math.toRadians(90));
-        autoLogic.ShootingPose = new Pose(82.5059508,134.1380846325167, Math.toRadians(0));
-        autoLogic.endPose = new Pose(81.8644068,60.624697336561766, Math.toRadians(270));
+        autoLogic.startPose = new Pose(120.766014, 123.82126348, Math.toRadians(30));
+        autoLogic.ShootingPose = new Pose(89.9247193,101.6764252, Math.toRadians(30));
+        autoLogic.GatherPose1 = new Pose(86.9383667,85.10895883777242, Math.toRadians(0));
+        autoLogic.GatherPose2 = new Pose(123.544816,84.63174114021572,Math.toRadians(0));
+        autoLogic.GatherPose3 = new Pose(84.3825666,59.38498789346242, Math.toRadians(0));
+        autoLogic.GatherPose4 = new Pose(128.348668,59.38498789346242, Math.toRadians(0));
+        autoLogic.GatherPose5 = new Pose(19.469733656174345,59.38498789346242, Math.toRadians(0));
+        autoLogic.endPose = new Pose(102.631961,84.87167070217917, Math.toRadians(30));
         autoLogic.follower.setPose(autoLogic.startPose);
         autoLogic.buildPaths();
 
+        autoLogic.pathTimer = new Timer();
+
+        autoLogic.intake = hardwareMap.get(DcMotor.class, "intakeMotor");
         autoLogic.leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
         autoLogic.rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
         autoLogic.launcher = hardwareMap.get(DcMotorEx.class, "shooter");
 
-        autoLogic.pathTimer = new Timer();
 
-        autoLogic.pathState = AUTOlogic.PathState.TRIANGLE_DRIVE_START_SHOOTPOS;
-        //TODO add in any other init mechanisms
-        shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
+        autoLogic.pathState = AUTOlogic.PathState.DRIVE_STARTPOS_SHOOT_POS;
+
+    //TODO add in any other init mechanisms
+    shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
 
 
 
@@ -98,15 +110,15 @@ public class AUTOBLUETRIANGLE extends OpMode {
 
         autoLogic.follower.update();
         autoLogic.statePathUpdate();
-        telemetry.addData("velocity", autoLogic.launcher.getVelocity());
-        telemetry.addData("path state",pathState.toString());
+        telemetry.addData("velocity", launcher.getVelocity());
+        telemetry.addData("path state", pathState.toString());
         telemetry.addData("x", autoLogic.follower.getPose().getX());
         telemetry.addData("y", autoLogic.follower.getPose().getY());
         telemetry.addData("heading", autoLogic.follower.getPose().getHeading());
         telemetry.addData("busy", autoLogic.follower.isBusy());
         telemetry.addData("changed", true);
-        telemetry.addData("Path timer", autoLogic.pathTimer.getElapsedTimeSeconds());
+        telemetry.addData("Path timer", pathTimer.getElapsedTimeSeconds());
         telemetry.update();
-
     }
-}
+    }
+
