@@ -179,6 +179,7 @@ public class Team_TeleOp_RELATIVE extends OpMode {
                 RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
                 RevHubOrientationOnRobot.UsbFacingDirection.UP);
         imu.initialize(new IMU.Parameters(RevOrientation));
+        imu.resetYaw();
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -367,10 +368,10 @@ public class Team_TeleOp_RELATIVE extends OpMode {
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
-        double frontLeftPower  = axial + lateral + yaw;
-        double frontRightPower = axial - lateral - yaw;
-        double backLeftPower   = axial - lateral + yaw;
-        double backRightPower  = axial + lateral - yaw;
+        double frontLeftPower  = axial + lateral + 3*yaw;
+        double frontRightPower = axial - lateral - 3*yaw;
+        double backLeftPower   = axial - lateral + 3*yaw;
+        double backRightPower  = axial + lateral - 3*yaw;
 
         double max = 1.0;
         double maxSpeed = 1.0;

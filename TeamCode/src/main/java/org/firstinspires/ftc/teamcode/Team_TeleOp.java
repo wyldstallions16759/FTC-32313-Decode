@@ -108,9 +108,9 @@ public class Team_TeleOp extends OpMode {
     private DcMotor intakeMotor = null;
     private GoBildaPinpointDriver pinpoint = null;
     private ShooterSubsystem shooterSubsystem;
-    private double axial = -gamepad1.left_stick_y;
-    private double lateral = gamepad1.left_stick_x;
-    private double yaw = gamepad1.right_stick_x;
+    private double axial;
+    private double lateral;
+    private double yaw;
     boolean SlowOn = false;
 
     ElapsedTime feederTimer = new ElapsedTime();
@@ -240,6 +240,9 @@ public class Team_TeleOp extends OpMode {
      */
     @Override
     public void loop() {
+        axial = -gamepad1.left_stick_y;
+        lateral = gamepad1.left_stick_x;
+        yaw = gamepad1.right_stick_x;
         /*
          * Here we call a function called arcadeDrive. The arcadeDrive function takes the input from
          * the joysticks, and applies power to the left and right drive motor to move the robot
