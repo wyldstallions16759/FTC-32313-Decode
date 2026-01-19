@@ -52,15 +52,18 @@ package org.firstinspires.ftc.teamcode;
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 
 /*
  *
@@ -80,9 +83,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  */
 
-@TeleOp(name = "StarterBotTeleopMecanums", group = "StarterBot")
+@TeleOp(name = "32313 RELATIVE FIELD DRIVE (BLUE)", group = "StarterBot")
 //@Disabled
-public class StarterBotTeleopMecanums extends OpMode {
+public class Team_TeleOp_RELATIVE extends OpMode {
     final double FEED_TIME_SECONDS = 0.20; //The feeder servos run this long when a shot is requested.
     final double STOP_SPEED = 0.5; //We send this power to the servos when we want them to stop.
     final double FULL_SPEED = 1.0;
@@ -107,6 +110,12 @@ public class StarterBotTeleopMecanums extends OpMode {
     private Servo rightFeeder = null;
     private DcMotor intakeMotor = null;
     private GoBildaPinpointDriver pinpoint = null;
+    private ShooterSubsystem shooterSubsystem;
+    private double axial = -gamepad1.left_stick_y;
+    private double lateral = gamepad1.left_stick_x;
+    private double yaw = gamepad1.right_stick_x;
+    boolean SlowOn = false;
+    private IMU imu;
 
     ElapsedTime feederTimer = new ElapsedTime();
 
@@ -140,7 +149,8 @@ public class StarterBotTeleopMecanums extends OpMode {
     double rightFrontPower;
     double leftBackPower;
     double rightBackPower;
-    boolean lastAState = false;
+    boolean lastAState2 = false;
+    boolean lastAState  = false;
     boolean intakeOn = false;
     boolean lastYstate = false;
     boolean launcherOn = false;
@@ -164,7 +174,11 @@ public class StarterBotTeleopMecanums extends OpMode {
         leftFeeder = hardwareMap.get(Servo.class, "left_feeder"); //extension hub 0
         rightFeeder = hardwareMap.get(Servo.class, "right_feeder"); //extension hub 1
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor"); //control hub 3
-
+        imu = hardwareMap.get(IMU.class, "imu");
+        RevHubOrientationOnRobot RevOrientation = new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+                RevHubOrientationOnRobot.UsbFacingDirection.UP);
+        imu.initialize(new IMU.Parameters(RevOrientation));
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -218,16 +232,10 @@ public class StarterBotTeleopMecanums extends OpMode {
     /*
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit START
      */
-    @Override
-    public void init_loop() {
-    }
 
     /*
      * Code to run ONCE when the driver hits START
      */
-    @Override
-    public void start() {
-    }
 
     /*
      * Code to run REPEATEDLY after the driver hits START but before they hit STOP
@@ -251,7 +259,6 @@ public class StarterBotTeleopMecanums extends OpMode {
          * \           /
          *  |         |
          */
-        mecanumDrive();
 
         /*
          * Here we give the user control of the speed of the launcher motor without automatically
@@ -261,22 +268,20 @@ public class StarterBotTeleopMecanums extends OpMode {
         // Pressing the Y button makes the Launcher turn on
         // Pressing the Y button again makes the Launcher turn off
         // lastYstate is whether or not the launcher is on
-        if (gamepad2.right_bumper && !lastYstate)
-            launcherOn = true;
+
         if (gamepad2.right_trigger > 0.5) {
             launcher.setVelocity(1400);
         } else {
             launcher.setVelocity(STOP_SPEED);
         }
-
-
-
-        // Pressing the A button makes the intake Motors turn on
-        // Pressing the A button again makes the intake Motors turn off
-        // lastAstate is whether or not the intake Motors are on
-
+        if (gamepad1.a && !lastAState) {
+            mecanumSpeedToggle();
+        }
          if (gamepad2.left_trigger > 0.02) {
              intakeMotor.setPower(-gamepad2.left_trigger);
+         }
+         else if (gamepad1.right_trigger > 0.02) {
+             intakeMotor.setPower(-gamepad1.right_trigger);
          }else if (gamepad2.x){
              intakeMotor.setPower(1);
          }else{
@@ -293,6 +298,7 @@ public class StarterBotTeleopMecanums extends OpMode {
             rightFeeder.setPosition(0.5);
             leftFeeder.setPosition(0.5);
         }
+        FieldRelativeDrive(axial, lateral, yaw);
 
 //        if (gamepad2.x) {
 //            intake.setPower(1);
@@ -340,10 +346,10 @@ public class StarterBotTeleopMecanums extends OpMode {
         telemetry.addData("motorSpeed", launcher.getVelocity());
 
         telemetry.addData("A is pressed", gamepad2.a);
-        telemetry.addData("Last a state", lastAState);
+        telemetry.addData("Last a state", lastAState2);
 
 
-        lastAState = gamepad2.a;
+        lastAState2 = gamepad2.a;
         lastYstate = gamepad2.right_bumper;
         telemetry.update();
     }
@@ -353,17 +359,12 @@ public class StarterBotTeleopMecanums extends OpMode {
      */
     @Override
     public void stop() {
-        mecanumDrive();
     }
 
-    void mecanumDrive(){
+    void mecanumDrive(double axial, double lateral, double yaw){
 
-        double max;
 
         // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-        double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-        double lateral =  gamepad1.left_stick_x;
-        double yaw     =  gamepad1.right_stick_x;
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -372,10 +373,14 @@ public class StarterBotTeleopMecanums extends OpMode {
         double backLeftPower   = axial - lateral + yaw;
         double backRightPower  = axial + lateral - yaw;
 
+        double max = 1.0;
+        double maxSpeed = 1.0;
+
         // Normalize the values so no wheel power exceeds 100%
         // This ensures that the robot maintains the desired motion.
-        max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
+        max = Math.max(max, Math.abs(frontLeftPower));
         max = Math.max(max, Math.abs(backLeftPower));
+        max = Math.max(max, Math.abs(frontRightPower));
         max = Math.max(max, Math.abs(backRightPower));
 
         if (max > 1.0) {
@@ -385,10 +390,33 @@ public class StarterBotTeleopMecanums extends OpMode {
             backRightPower  /= max;
         }
 
-        leftFrontDrive.setPower(frontLeftPower);
-        rightFrontDrive.setPower(frontRightPower);
-        leftBackDrive.setPower(backLeftPower);
-        rightBackDrive.setPower(backRightPower);
+        leftFrontDrive.setPower(maxSpeed * (frontLeftPower/max));
+        rightFrontDrive.setPower(maxSpeed * (frontRightPower/max));
+        leftBackDrive.setPower(maxSpeed * (backLeftPower/max));
+        rightBackDrive.setPower(maxSpeed * (backRightPower/max));
+
+    }
+    void FieldRelativeDrive(double axial, double lateral, double yaw) {
+        double theta = Math.atan2(axial, lateral);
+        double r = Math.hypot(lateral,axial);
+        theta = AngleUnit.normalizeRadians(theta - imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
+        double newaxial = r * Math.sin(theta);
+        double newlateral = r * Math.cos(theta);
+        mecanumDrive(newaxial,newlateral,yaw);
+    }
+    void mecanumSpeedToggle(){
+        if (axial == (0.5* -gamepad1.left_stick_y)) {
+            SlowOn = false;
+            axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+            lateral =  gamepad1.left_stick_x;
+            yaw     =  gamepad1.right_stick_x;
+        }
+        else {
+            SlowOn = true;
+            axial   = 0.5 * -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+            lateral =  0.5 * gamepad1.left_stick_x;
+            yaw     =  0.5 * gamepad1.right_stick_x;
+        }
     }
 
     void launch(boolean shotRequested) {

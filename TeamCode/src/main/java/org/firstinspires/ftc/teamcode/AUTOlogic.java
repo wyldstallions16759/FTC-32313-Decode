@@ -196,19 +196,19 @@ public class AUTOlogic {
 
             case DRIVE_SHOOT_GATHERPOSE_3:
                 if (!follower.isBusy()) {
-                    follower.followPath(driveShootPosGatherPos3);
+                    follower.followPath(driveShootPosGatherPos3, true);
                     setPathState(PathState.DRIVE_GATHERPOSE_3_GATHERPOSE_4);
                 }
                 break;
             case DRIVE_GATHERPOSE_3_GATHERPOSE_4:
                 if (!follower.isBusy()) {
-                    follower.followPath(driveGatherPos3GatherPos4);
+                    follower.followPath(driveGatherPos3GatherPos4, true);
                     setPathState(PathState.DRIVE_GATHERPOSE_4_GATHERPOSE_5);
                 }
                 break;
             case DRIVE_GATHERPOSE_4_GATHERPOSE_5:
                 if (!follower.isBusy()) {
-                    follower.followPath(driveGatherPos4GatherPos5);
+                    follower.followPath(driveGatherPos4GatherPos5, true);
                     setPathState(PathState.DRIVE_GATHERPOSE_5_SHOOT);
                 }
                 break;
@@ -241,7 +241,7 @@ public class AUTOlogic {
                 }
                 break;
             case TRIANGLE_DRIVE_START_SHOOTPOS:
-                follower.followPath(driveStartPosShootPos);
+                follower.followPath(driveStartPosShootPos, true);
                 if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 0.25){
 
                     shooterSubsystem.startShooter();
@@ -258,7 +258,7 @@ public class AUTOlogic {
                 break;
             case TRIANGLE_DRIVE_SHOOT_ENDPOS:
                 if (!follower.isBusy()) {
-                    follower.followPath(driveShootPosEndPos);
+                    follower.followPath(driveShootPosEndPos, true);
                 }
 
             default:

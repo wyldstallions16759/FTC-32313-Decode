@@ -16,6 +16,8 @@ public class ShooterSubsystem {
     private DcMotor intake = null;
 
     private Servo rightFeeder = null;
+    private int TARGET_VELOCITY = 1350;
+    private int NEW_TARGET_VELOCITY = TARGET_VELOCITY;
     private Servo leftFeeder = null;
     boolean shooterOn = false;
     Telemetry telemetry;
@@ -32,11 +34,20 @@ public class ShooterSubsystem {
 
 
     public void startShooter(){
-        shooter.setVelocity(1400);
+        shooter.setVelocity(1350);
         shooterOn = true;
 
 
         telemetry.addLine(" START SHOOTER");
+    }
+    public void TeleOpstartShooter(){
+        shooter.setVelocity(NEW_TARGET_VELOCITY);
+    }
+    public void speedUp(){
+       TARGET_VELOCITY = TARGET_VELOCITY +50;
+    }
+    public void speedDown(){
+        TARGET_VELOCITY = TARGET_VELOCITY - 50;
     }
     public void feedBall(){
         leftFeeder.setPosition(1);
