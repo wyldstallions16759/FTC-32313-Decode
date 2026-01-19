@@ -181,6 +181,7 @@ public class Team_TeleOp_RELATIVE extends OpMode {
         imu.initialize(new IMU.Parameters(RevOrientation));
         imu.resetYaw();
 
+
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
          * because the axles point in opposite directions. Pushing the left stick forward
@@ -347,6 +348,10 @@ public class Team_TeleOp_RELATIVE extends OpMode {
 
         telemetry.addData("A is pressed", gamepad2.a);
         telemetry.addData("Last a state", lastAState2);
+        telemetry.addData("Back Left Power",leftBackDrive.getPower());
+        telemetry.addData("Back Right Power",rightBackDrive.getPower());
+        telemetry.addData("Front Left Power",leftFrontDrive.getPower());
+        telemetry.addData("Front Right Power",rightFrontDrive.getPower());
 
 
         lastAState2 = gamepad2.a;
