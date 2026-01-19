@@ -22,6 +22,7 @@ import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 public class AUTOBLUEDEPOT extends OpMode {
 
     public Timer pathTimer;
+    public DcMotorEx launcher = null;
     /*
      * TECH TIP: State Machines
      * We use a "state machine" to control our launcher motor and feeder servos in this program.
@@ -66,9 +67,9 @@ public class AUTOBLUEDEPOT extends OpMode {
         autoLogic = new AUTOlogic();
         autoLogic.follower = Constants.createFollower(hardwareMap);
         autoLogic.startPose = new Pose(22.0523882, 123.82126348, Math.toRadians(145));
-        autoLogic.ShootingPose = new Pose(52.893682588597834,101.6764252, Math.toRadians(143.5));
+        autoLogic.ShootingPose = new Pose(50.893682588597834,99.6764252, Math.toRadians(143.5));
         autoLogic.GatherPose1 = new Pose(55.88003521901827,85.10895883777242, Math.toRadians(180));
-        autoLogic.GatherPose2 = new Pose(19.27358573629768,84.63174114021572,Math.toRadians(180));
+        autoLogic.GatherPose2 = new Pose(23.27358573629768,84.63174114021572,Math.toRadians(180));
         autoLogic.GatherPose3 = new Pose(58.43583535108961,59.38498789346242, Math.toRadians(180));
         autoLogic.GatherPose4 = new Pose(14.469733656174345,59.38498789346242, Math.toRadians(180));
         autoLogic.GatherPose5 = new Pose(19.469733656174345,59.38498789346242, Math.toRadians(180));
@@ -82,12 +83,14 @@ public class AUTOBLUEDEPOT extends OpMode {
         autoLogic.leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
         autoLogic.rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
         autoLogic.launcher = hardwareMap.get(DcMotorEx.class, "shooter");
+        launcher = hardwareMap.get(DcMotorEx.class, "shooter");
+        autoLogic.shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
 
 
         autoLogic.pathState = AUTOlogic.PathState.DRIVE_STARTPOS_SHOOT_POS;
 
     //TODO add in any other init mechanisms
-    shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
+        shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
 
 
 
@@ -95,6 +98,7 @@ public class AUTOBLUEDEPOT extends OpMode {
     }
     public void start() {
         autoLogic.setPathState(autoLogic.pathState);
+        autoLogic.pathTimer = new Timer();
         autoLogic.pathTimer.resetTimer();
     }
     public void loop() {
@@ -108,7 +112,7 @@ public class AUTOBLUEDEPOT extends OpMode {
         telemetry.addData("heading", autoLogic.follower.getPose().getHeading());
         telemetry.addData("busy", autoLogic.follower.isBusy());
         telemetry.addData("changed", true);
-        telemetry.addData("Path timer", pathTimer.getElapsedTimeSeconds());
+        telemetry.addData("Path timer", autoLogic.pathTimer.getElapsedTimeSeconds());
         telemetry.update();
     }
     }
