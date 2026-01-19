@@ -213,12 +213,7 @@ public class Team_TeleOp_RELATIVE extends OpMode {
         launcher.setZeroPowerBehavior(BRAKE);
 
 
-        axial = -gamepad1.left_stick_y;
-        lateral = gamepad1.left_stick_x;
-        yaw = gamepad1.right_stick_x;
-        /*
-         * set Feeders to an initial value to initialize the servo controller
-         */
+
 
         launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(300, 0, 0, 10));
 
@@ -272,14 +267,14 @@ public class Team_TeleOp_RELATIVE extends OpMode {
         // Pressing the Y button makes the Launcher turn on
         // Pressing the Y button again makes the Launcher turn off
         // lastYstate is whether or not the launcher is on
+        axial = -gamepad1.left_stick_y;
+        lateral = gamepad1.left_stick_x;
+        yaw = gamepad1.right_stick_x;
 
         if (gamepad2.right_trigger > 0.5) {
             launcher.setVelocity(1400);
         } else {
             launcher.setVelocity(STOP_SPEED);
-        }
-        if (gamepad1.a && !lastAState) {
-            mecanumSpeedToggle();
         }
          if (gamepad2.left_trigger > 0.02) {
              intakeMotor.setPower(-gamepad2.left_trigger);
