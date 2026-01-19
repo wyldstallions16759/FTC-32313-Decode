@@ -44,7 +44,7 @@ public class AUTOlogic {
         DRIVE_GATHERPOSE_5_SHOOT,
         DRIVE_SHOOT_ENDPOS,
         TRIANGLE_DRIVE_SHOOT_ENDPOS,
-        TRIANGLE_DRIVE_START_SHOOTPOS;
+        TRIANGLE_DRIVE_START_SHOOTPOS
 
     }
     public PathChain
@@ -256,6 +256,7 @@ public class AUTOlogic {
                     setPathState(PathState.TRIANGLE_DRIVE_SHOOT_ENDPOS);
                 }
                 break;
+
             case TRIANGLE_DRIVE_SHOOT_ENDPOS:
                 if (!follower.isBusy()) {
                     follower.followPath(driveShootPosEndPos, true);
