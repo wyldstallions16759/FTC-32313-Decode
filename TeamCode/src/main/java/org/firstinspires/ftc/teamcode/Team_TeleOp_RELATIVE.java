@@ -111,9 +111,9 @@ public class Team_TeleOp_RELATIVE extends OpMode {
     private DcMotor intakeMotor = null;
     private GoBildaPinpointDriver pinpoint = null;
     private ShooterSubsystem shooterSubsystem;
-    private double axial = -gamepad1.left_stick_y;
-    private double lateral = gamepad1.left_stick_x;
-    private double yaw = gamepad1.right_stick_x;
+    private double axial;
+    private double lateral;
+    private double yaw;
     boolean SlowOn = false;
     private IMU imu;
 
@@ -212,6 +212,10 @@ public class Team_TeleOp_RELATIVE extends OpMode {
         rightBackDrive.setZeroPowerBehavior(BRAKE);
         launcher.setZeroPowerBehavior(BRAKE);
 
+
+        axial = -gamepad1.left_stick_y;
+        lateral = gamepad1.left_stick_x;
+        yaw = gamepad1.right_stick_x;
         /*
          * set Feeders to an initial value to initialize the servo controller
          */
