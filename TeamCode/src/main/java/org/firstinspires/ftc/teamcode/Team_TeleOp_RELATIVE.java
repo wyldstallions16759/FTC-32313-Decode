@@ -51,6 +51,9 @@ package org.firstinspires.ftc.teamcode;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
+import android.support.v4.app.INotificationSideChannel;
+
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -63,6 +66,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 
 /*
@@ -111,6 +116,7 @@ public class Team_TeleOp_RELATIVE extends OpMode {
     private DcMotor intakeMotor = null;
     private GoBildaPinpointDriver pinpoint = null;
     private ShooterSubsystem shooterSubsystem;
+    private AUTOlogic autoLogic;
     private double axial;
     private double lateral;
     private double yaw;
@@ -173,13 +179,20 @@ public class Team_TeleOp_RELATIVE extends OpMode {
         launcher = hardwareMap.get(DcMotorEx.class, "shooter"); // extension hub 1
         leftFeeder = hardwareMap.get(Servo.class, "left_feeder"); //extension hub 0
         rightFeeder = hardwareMap.get(Servo.class, "right_feeder"); //extension hub 1
-        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor"); //control hub 3
+        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
+        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint"); //control hub 3
         imu = hardwareMap.get(IMU.class, "imu");
         RevHubOrientationOnRobot RevOrientation = new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
                 RevHubOrientationOnRobot.UsbFacingDirection.UP);
         imu.initialize(new IMU.Parameters(RevOrientation));
         imu.resetYaw();
+        pinpoint.setOffsets(-0.23,-6.36, DistanceUnit.INCH);
+        pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        pinpoint.resetPosAndIMU();
+
+
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -299,59 +312,21 @@ public class Team_TeleOp_RELATIVE extends OpMode {
             leftFeeder.setPosition(0.5);
         }
         FieldRelativeDrive(axial, lateral, yaw);
-
-//        if (gamepad2.x) {
-//            intake.setPower(1);
-//            rightFeeder.setPower(-1);
-//            leftFeeder.setPower(-1);
-//        }else {
-//            intake.setPower(0);
-//            rightFeeder.setPower(0);
-//            leftFeeder.setPower(0);
-//        }
-//            intakeOn = !intakeOn;
-//        }
-//        if (intakeOn) {
-//            intake.setPower(-1);
-//        } else {
-//            intake.setPower(0);
-//        }
-        // Holding down the dpad_down button makes the feeder turn on
-        // Releasing the dpad_down button makes the feeder turn off
-
-        // Holding down the dpad_left button makes the green flywheel go in reverse
-        // Releasing the dpad_left button makes the green flywheel stop
-
-//        if (gamepad2.dpad_left) {
-//            leftFrontDrive.setPower(1);
-//        }
-//        if (gamepad2.dpad_up) {
-//            rightFrontDrive.setPower(1);
-//        }
-//        if (gamepad2.dpad_right) {
-//            rightBackDrive.setPower(1);
-//        }
-//        if (gamepad2.dpad_down) {
-//            leftBackDrive.setPower(1    );
-//        }
-
-        /*
-         * Now we call our "Launch" function. 
-         */
-
-        /*
-         * Show the state and motor powers
-         */
         telemetry.addData("State", launchState);
         telemetry.addData("motorSpeed", launcher.getVelocity());
 
         telemetry.addData("A is pressed", gamepad2.a);
         telemetry.addData("Last a state", lastAState2);
+        telemetry.addData("Back Left Power",leftBackDrive.getPower());
+        telemetry.addData("Back Right Power",rightBackDrive.getPower());
+        telemetry.addData("Front Left Power",leftFrontDrive.getPower());
+        telemetry.addData("Front Right Power",rightFrontDrive.getPower());
 
 
         lastAState2 = gamepad2.a;
         lastYstate = gamepad2.right_bumper;
         telemetry.update();
+        pinpoint.update();
     }
 
     /*
@@ -368,10 +343,10 @@ public class Team_TeleOp_RELATIVE extends OpMode {
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
-        double frontLeftPower  = axial + lateral + 3*yaw;
-        double frontRightPower = axial - lateral - 3*yaw;
-        double backLeftPower   = axial - lateral + 3*yaw;
-        double backRightPower  = axial + lateral - 3*yaw;
+        double frontLeftPower  = axial + lateral + yaw;
+        double frontRightPower = axial - lateral - yaw;
+        double backLeftPower   = axial - lateral + yaw;
+        double backRightPower  = axial + lateral - yaw;
 
         double max = 1.0;
         double maxSpeed = 1.0;
@@ -399,10 +374,33 @@ public class Team_TeleOp_RELATIVE extends OpMode {
     void FieldRelativeDrive(double axial, double lateral, double yaw) {
         double theta = Math.atan2(axial, lateral);
         double r = Math.hypot(lateral,axial);
-        theta = AngleUnit.normalizeRadians(theta - imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
+        theta = AngleUnit.normalizeRadians(theta - pinpoint.getHeading(AngleUnit.RADIANS));
         double newaxial = r * Math.sin(theta);
         double newlateral = r * Math.cos(theta);
-        mecanumDrive(newaxial,newlateral,yaw);
+        double frontLeftPower  = newaxial + newlateral + yaw;
+        double frontRightPower = newaxial - newlateral - yaw;
+        double backLeftPower   = newaxial - newlateral + yaw;
+        double backRightPower  = newaxial + newlateral - yaw;
+        double max = 1.0;
+        double maxSpeed = 1.0;
+
+        // Normalize the values so no wheel power exceeds 100%
+        // This ensures that the robot maintains the desired motion.
+        max = Math.max(max, Math.abs(frontLeftPower));
+        max = Math.max(max, Math.abs(backLeftPower));
+        max = Math.max(max, Math.abs(frontRightPower));
+        max = Math.max(max, Math.abs(backRightPower));
+
+        if (max > 1.0) {
+            frontLeftPower  /= max;
+            frontRightPower /= max;
+            backLeftPower   /= max;
+            backRightPower  /= max;
+        }
+        leftFrontDrive.setPower(maxSpeed * frontLeftPower/max);
+        rightFrontDrive.setPower(maxSpeed * frontRightPower/max);
+        leftBackDrive.setPower(maxSpeed * backLeftPower/max);
+        rightBackDrive.setPower(maxSpeed * backRightPower/max);
     }
     void mecanumSpeedToggle(){
         if (axial == (0.5* -gamepad1.left_stick_y)) {
