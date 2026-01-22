@@ -109,7 +109,7 @@ public class AUTOlogic {
         pathState = newState;
         pathTimer.resetTimer();
     }
-    private ShooterSubsystem shooterSubsystem;
+    public ShooterSubsystem shooterSubsystem;
     public PathState pathState;
     public void statePathUpdate() {
         switch(pathState){

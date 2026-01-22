@@ -87,7 +87,7 @@ public class AUTOBLUETRIANGLE extends OpMode {
 
         autoLogic.pathTimer = new Timer();
 
-        autoLogic.pathState = AUTOlogic.PathState.TRIANGLE_DRIVE_START_GATHERPOSE1;
+        autoLogic.pathState = AUTOlogic.PathState.TRIANGLE_DRIVE_START_SHOOTPOS;
         //TODO add in any other init mechanisms
         shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
 

@@ -272,7 +272,7 @@ public class Team_TeleOp extends OpMode {
         // lastYstate is whether or not the launcher is on
 
         if (gamepad2.right_trigger > 0.5) {
-            launcher.setVelocity(1400);
+            launcher.setVelocity(1650);
         } else {
             launcher.setVelocity(STOP_SPEED);
         }
