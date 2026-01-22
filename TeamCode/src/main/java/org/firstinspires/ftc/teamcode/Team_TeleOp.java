@@ -111,6 +111,12 @@ public class Team_TeleOp extends OpMode {
     private double axial;
     private double lateral;
     private double yaw;
+    private double  P,F;
+    private double LowVelocity = 900;
+    private double HighVelocity = 1600;
+    private double currentVelocity = HighVelocity;
+    double[] StepSizes = {10, 1, 0.1, 0.01, 0};
+    int StepIndex = 1;
     boolean SlowOn = false;
 
     ElapsedTime feederTimer = new ElapsedTime();
@@ -273,11 +279,33 @@ public class Team_TeleOp extends OpMode {
 
         if (gamepad2.right_trigger > 0.5) {
             launcher.setVelocity(1650);
-        } else {
-            launcher.setVelocity(STOP_SPEED);
-        }
+        } 
+        //else {
+        //    launcher.setVelocity(STOP_SPEED);
+        //}
         if (gamepad1.a && !lastAState) {
             mecanumSpeedToggle();
+        }
+        if (gamepad1.xWasPressed()) {
+            StepIndex = (StepIndex + 1) % StepSizes.length;
+        }
+        if (gamepad1.bWasPressed()) {
+            StepIndex = (StepIndex - 1) % StepSizes.length;
+        }
+        if (gamepad1.dpadLeftWasPressed()) {
+            F += StepSizes[StepIndex];
+        }
+        if (gamepad1.dpadRightWasPressed()) {
+            F -= StepSizes[StepIndex];
+        }
+        if (gamepad1.dpadUpWasPressed()) {
+            P += StepSizes[StepIndex];
+        }
+        if (gamepad1.dpadDownWasPressed()) {
+            P -= StepSizes[StepIndex];
+        }
+        if (gamepad1.yWasPressed()) {
+            toggleShooter();
         }
          if (gamepad2.left_trigger > 0.02) {
              intakeMotor.setPower(-gamepad2.left_trigger);
@@ -346,10 +374,11 @@ public class Team_TeleOp extends OpMode {
          */
         telemetry.addData("State", launchState);
         telemetry.addData("motorSpeed", launcher.getVelocity());
-
+        telemetry.addData("P", P);
+        telemetry.addData("F", F);
         telemetry.addData("A is pressed", gamepad2.a);
         telemetry.addData("Last a state", lastAState2);
-
+        
 
         lastAState2 = gamepad2.a;
         lastYstate = gamepad2.right_bumper;
@@ -363,7 +392,14 @@ public class Team_TeleOp extends OpMode {
     public void stop() {
         mecanumDrive();
     }
-
+    void toggleShooter() {
+        if (currentVelocity == HighVelocity) {
+            currentVelocity = HighVelocity;
+        }
+        else {
+            currentVelocity = LowVelocity;
+        }
+    }
     void mecanumDrive(){
 
         double max;
