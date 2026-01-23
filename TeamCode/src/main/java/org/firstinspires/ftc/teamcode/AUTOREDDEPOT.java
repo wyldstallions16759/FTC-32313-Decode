@@ -72,11 +72,11 @@ public class AUTOREDDEPOT extends OpMode {
         autoLogic = new AUTOlogic();
         autoLogic.follower = Constants.createFollower(hardwareMap);
         autoLogic.startPose = new Pose(120.766014, 123.82126348, Math.toRadians(30));
-        autoLogic.ShootingPose = new Pose(89.9247193,101.6764252, Math.toRadians(30));
-        autoLogic.GatherPose1 = new Pose(86.9383667,85.10895883777242, Math.toRadians(0));
-        autoLogic.GatherPose2 = new Pose(123.544816,84.63174114021572,Math.toRadians(0));
-        autoLogic.GatherPose3 = new Pose(84.3825666,59.38498789346242, Math.toRadians(0));
-        autoLogic.GatherPose4 = new Pose(128.348668,59.38498789346242, Math.toRadians(0));
+        autoLogic.ShootingPose = new Pose(89.9247193,106.6764252, Math.toRadians(30));
+        autoLogic.GatherPose1 = new Pose(86.9383667,89.63174114021572, Math.toRadians(0));
+        autoLogic.GatherPose2 = new Pose(118.544816,89.63174114021572,Math.toRadians(0));
+        autoLogic.GatherPose3 = new Pose(84.3825666,65.38498789346242, Math.toRadians(0));
+        autoLogic.GatherPose4 = new Pose(128.348668,65.38498789346242, Math.toRadians(0));
         autoLogic.GatherPose5 = new Pose(19.469733656174345,59.38498789346242, Math.toRadians(0));
         autoLogic.endPose = new Pose(102.631961,84.87167070217917, Math.toRadians(30));
         autoLogic.follower.setPose(autoLogic.startPose);
@@ -88,6 +88,9 @@ public class AUTOREDDEPOT extends OpMode {
         autoLogic.leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
         autoLogic.rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
         autoLogic.launcher = hardwareMap.get(DcMotorEx.class, "shooter");
+        launcher = hardwareMap.get(DcMotorEx.class, "shooter");
+        autoLogic.shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
+
 
 
         autoLogic.pathState = AUTOlogic.PathState.DRIVE_STARTPOS_SHOOT_POS;
@@ -114,7 +117,7 @@ public class AUTOREDDEPOT extends OpMode {
         telemetry.addData("heading", autoLogic.follower.getPose().getHeading());
         telemetry.addData("busy", autoLogic.follower.isBusy());
         telemetry.addData("changed", true);
-        telemetry.addData("Path timer", pathTimer.getElapsedTimeSeconds());
+        telemetry.addData("Path timer", autoLogic.pathTimer.getElapsedTimeSeconds());
         telemetry.update();
     }
     }

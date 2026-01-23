@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 public class AUTOBLUETRIANGLE extends OpMode {
     private AUTOlogic autoLogic;
     ElapsedTime feederTimer = new ElapsedTime();
+    private DcMotorEx launcher = null;
 
 
     /*
@@ -70,15 +71,19 @@ public class AUTOBLUETRIANGLE extends OpMode {
     public void init() {
         autoLogic = new AUTOlogic();
         autoLogic.follower = Constants.createFollower(hardwareMap);
-        autoLogic.startPose = new Pose(87.3166412, 8.16035634743875, Math.toRadians(90));
-        autoLogic.ShootingPose = new Pose(82.5059508,134.1380846325167, Math.toRadians(0));
-        autoLogic.endPose = new Pose(81.8644068,60.624697336561766, Math.toRadians(270));
+        autoLogic.startPose = new Pose(56.16035634743875, 8.16035634743875, Math.toRadians(90));
+        autoLogic.ShootingPose = new Pose(60.97104677060133,134.1380846325167, Math.toRadians(180));
+        autoLogic.endPose = new Pose(61.61259079903148,60.624697336561766, Math.toRadians(270));
+
         autoLogic.follower.setPose(autoLogic.startPose);
         autoLogic.buildPaths();
 
         autoLogic.leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
         autoLogic.rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
         autoLogic.launcher = hardwareMap.get(DcMotorEx.class, "shooter");
+        autoLogic.intake = hardwareMap.get(DcMotor.class, "intakeMotor");
+        launcher = hardwareMap.get(DcMotorEx.class, "shooter");
+        autoLogic.shooterSubsystem = new ShooterSubsystem(hardwareMap, telemetry);
 
         autoLogic.pathTimer = new Timer();
 

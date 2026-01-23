@@ -111,6 +111,14 @@ public class Team_TeleOp extends OpMode {
     private double axial;
     private double lateral;
     private double yaw;
+    private double  P = 450;
+    private double F = 1.49;
+    private double D = 0;
+    private double LowVelocity = 900;
+    private double HighVelocity = 1600;
+    private double currentVelocity = HighVelocity;
+    double[] StepSizes = {10, 1, 0.1, 0.01, 0};
+    int StepIndex = 1;
     boolean SlowOn = false;
 
     ElapsedTime feederTimer = new ElapsedTime();
@@ -208,7 +216,7 @@ public class Team_TeleOp extends OpMode {
          * set Feeders to an initial value to initialize the servo controller
          */
 
-        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(300, 0, 0, 10));
+        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(400, 0, 8.2, 11.49));
 
         /*
          * Much like our drivetrain motors, we set the left feeder servo to reverse so that they
@@ -260,7 +268,6 @@ public class Team_TeleOp extends OpMode {
          * \           /
          *  |         |
          */
-        mecanumDrive();
 
         /*
          * Here we give the user control of the speed of the launcher motor without automatically
@@ -272,89 +279,47 @@ public class Team_TeleOp extends OpMode {
         // lastYstate is whether or not the launcher is on
 
         if (gamepad2.right_trigger > 0.5) {
-            launcher.setVelocity(1400);
+            launcher.setVelocity(1600);
         } else {
             launcher.setVelocity(STOP_SPEED);
+
         }
-        if (gamepad1.a && !lastAState) {
-            mecanumSpeedToggle();
+            if (gamepad2.left_trigger > 0.02) {
+                intakeMotor.setPower(-gamepad2.left_trigger);
+            } else if (gamepad1.right_trigger > 0.02) {
+                intakeMotor.setPower(-gamepad1.right_trigger);
+            } else if (gamepad2.x) {
+                intakeMotor.setPower(1);
+            } else {
+                intakeMotor.setPower(0);
+            }
+            if (gamepad2.a) {
+
+                rightFeeder.setPosition(0);
+                leftFeeder.setPosition(1);
+            } else if (gamepad2.x) {
+                rightFeeder.setPosition(1);
+                leftFeeder.setPosition(0);
+            } else {
+                rightFeeder.setPosition(0.5);
+                leftFeeder.setPosition(0.5);
+            }
+            mecanumDrive();
+            telemetry.addData("State", launchState);
+            telemetry.addData("motorSpeed", launcher.getVelocity());
+            telemetry.addData("P", P);
+            telemetry.addData("F", F);
+            telemetry.addData("D:", D);
+            telemetry.addData("A is pressed", gamepad2.a);
+            telemetry.addData("Last a state", lastAState2);
+            telemetry.addData("Step Index:", StepIndex);
+            telemetry.addData("StepSizes:", StepSizes);
+
+
+            lastAState2 = gamepad2.a;
+            lastYstate = gamepad2.right_bumper;
+            telemetry.update();
         }
-         if (gamepad2.left_trigger > 0.02) {
-             intakeMotor.setPower(-gamepad2.left_trigger);
-         }
-         else if (gamepad1.right_trigger > 0.02) {
-             intakeMotor.setPower(-gamepad1.right_trigger);
-         }else if (gamepad2.x){
-             intakeMotor.setPower(1);
-         }else{
-             intakeMotor.setPower(0);
-         }
-        if (gamepad2.a){
-
-            rightFeeder.setPosition(0);
-            leftFeeder.setPosition(1);
-        } else if(gamepad2.x){
-            rightFeeder.setPosition(1);
-            leftFeeder.setPosition(0);
-        }else {
-            rightFeeder.setPosition(0.5);
-            leftFeeder.setPosition(0.5);
-        }
-        mecanumDrive();
-
-//        if (gamepad2.x) {
-//            intake.setPower(1);
-//            rightFeeder.setPower(-1);
-//            leftFeeder.setPower(-1);
-//        }else {
-//            intake.setPower(0);
-//            rightFeeder.setPower(0);
-//            leftFeeder.setPower(0);
-//        }
-//            intakeOn = !intakeOn;
-//        }
-//        if (intakeOn) {
-//            intake.setPower(-1);
-//        } else {
-//            intake.setPower(0);
-//        }
-        // Holding down the dpad_down button makes the feeder turn on
-        // Releasing the dpad_down button makes the feeder turn off
-
-        // Holding down the dpad_left button makes the green flywheel go in reverse
-        // Releasing the dpad_left button makes the green flywheel stop
-
-//        if (gamepad2.dpad_left) {
-//            leftFrontDrive.setPower(1);
-//        }
-//        if (gamepad2.dpad_up) {
-//            rightFrontDrive.setPower(1);
-//        }
-//        if (gamepad2.dpad_right) {
-//            rightBackDrive.setPower(1);
-//        }
-//        if (gamepad2.dpad_down) {
-//            leftBackDrive.setPower(1    );
-//        }
-
-        /*
-         * Now we call our "Launch" function. 
-         */
-
-        /*
-         * Show the state and motor powers
-         */
-        telemetry.addData("State", launchState);
-        telemetry.addData("motorSpeed", launcher.getVelocity());
-
-        telemetry.addData("A is pressed", gamepad2.a);
-        telemetry.addData("Last a state", lastAState2);
-
-
-        lastAState2 = gamepad2.a;
-        lastYstate = gamepad2.right_bumper;
-        telemetry.update();
-    }
 
     /*
      * Code to run ONCE after the driver hits STOP
@@ -363,7 +328,14 @@ public class Team_TeleOp extends OpMode {
     public void stop() {
         mecanumDrive();
     }
-
+    void toggleShooter(){
+        if (currentVelocity == HighVelocity) {
+            currentVelocity = LowVelocity;
+        }
+        else {
+            currentVelocity = HighVelocity;
+        }
+    }
     void mecanumDrive(){
 
         double max;
