@@ -40,7 +40,7 @@ public class ShooterSubsystem {
 
 
     public void startShooter(){
-        shooter.setVelocity(1350);
+        shooter.setVelocity(1650);
         shooterOn = true;
 
 

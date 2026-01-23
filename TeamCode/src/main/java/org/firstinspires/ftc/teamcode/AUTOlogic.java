@@ -192,7 +192,6 @@ public class AUTOlogic {
                         setPathState(PathState.DRIVE_SHOOT_ENDPOS);
                     }
                 }
-
                 break;
             case DRIVE_SHOOT_ENDPOS:
                 if (!follower.isBusy()){
@@ -206,13 +205,13 @@ public class AUTOlogic {
                     shooterSubsystem.startShooter();
 
                 }
-                if (launcher.getVelocity() > 1375){
+                if (launcher.getVelocity() > 1600){
                     shooterSubsystem.feedBall();
                 }
-                if (pathTimer.getElapsedTimeSeconds() > 7.5) {
+                if (pathTimer.getElapsedTimeSeconds() > 5) {
                     shooterSubsystem.stopFeed();
                     intake.setPower(0);
-                    setPathState(PathState.TRIANGLE_DRIVE_SHOOT_ENDPOS);
+                    setPathState(PathState.DRIVE_SHOOT_ENDPOS);
                 }
                 break;
 
