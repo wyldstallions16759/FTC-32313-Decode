@@ -179,7 +179,7 @@ public class AUTOlogic {
                 break;
 
             case SHOOT_BALL_2:
-                if (launcher.getVelocity() > 1375) {
+                if (launcher.getVelocity() > 1600) {
                     pathTimer.resetTimer();
                     shooterSubsystem.feedBall();
                     setPathState(PathState.STOP_FEED_2);
@@ -187,7 +187,7 @@ public class AUTOlogic {
 
                 break;
             case STOP_FEED_2:
-                if (pathTimer.getElapsedTimeSeconds() > 7.5) {
+                if (pathTimer.getElapsedTimeSeconds() > 5) {
                     shooterSubsystem.stopFeed();
                     setPathState(PathState.DRIVE_SHOOT_GATHERPOSE_3);
                 }
@@ -224,19 +224,21 @@ public class AUTOlogic {
                 setPathState(PathState.SHOOT_BALL_3);
                 break;
             case SHOOT_BALL_3:
-                if (launcher.getVelocity() > 1375){
+                if (launcher.getVelocity() > 1600){
                     shooterSubsystem.feedBall();
                     setPathState(PathState.STOP_FEED_3);
                 }
                 break;
             case STOP_FEED_3:
-                if(pathTimer.getElapsedTimeSeconds() > 10){
+                if(pathTimer.getElapsedTimeSeconds() > 5){
                     shooterSubsystem.stopFeed();
                     setPathState(PathState.DRIVE_SHOOT_ENDPOS);
                 }
                 break;
             case DRIVE_SHOOT_ENDPOS:
                 if (!follower.isBusy()){
+                    shooterSubsystem.stopFeed();
+                    launcher.setVelocity(0);
                     follower.followPath(driveShootPosEndPos, true);
                 }
                 break;
@@ -247,20 +249,17 @@ public class AUTOlogic {
                     shooterSubsystem.startShooter();
 
                 }
-                if (launcher.getVelocity() > 1375){
+                if (launcher.getVelocity() > 1600){
                     shooterSubsystem.feedBall();
                 }
-                if (pathTimer.getElapsedTimeSeconds() > 7.5) {
+                if (pathTimer.getElapsedTimeSeconds() > 5) {
                     shooterSubsystem.stopFeed();
                     intake.setPower(0);
-                    setPathState(PathState.TRIANGLE_DRIVE_SHOOT_ENDPOS);
+                    setPathState(PathState.DRIVE_SHOOT_ENDPOS);
                 }
                 break;
 
-            case TRIANGLE_DRIVE_SHOOT_ENDPOS:
-                if (!follower.isBusy()) {
-                    follower.followPath(driveShootPosEndPos, true);
-                }
+
 
             default:
                 break;
