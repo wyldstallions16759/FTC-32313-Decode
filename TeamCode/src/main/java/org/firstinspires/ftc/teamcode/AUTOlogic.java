@@ -13,27 +13,28 @@ import com.pedropathing.paths.PathChain;
 public class AUTOlogic {
 
     public Follower follower;
-    public Servo leftFeeder;
-    public Servo rightFeeder;
-
+    public Servo leftFeeder, rightFeeder;
     public DcMotorEx launcher = null;
     public DcMotor intake = null;
     public Timer pathTimer = new Timer();
+    public enum ShootState {
+        PRIME_SHOOTER,
+        SHOOT_BALL,
+        STOP_FEED
+    }
+    public ShootState shootState;
+
+    public Timer shootTimer = new Timer();
+
     public enum PathState {
         //
         // START POSITION - END POSITION
         // DRIVE > MOVEMENT STATE
         // SHOOT > ATTEMPT TO SCORE THE ARTIFACT
         DRIVE_STARTPOS_SHOOT_POS,
-        PRIME_SHOOTER_1,
-        PRIME_SHOOTER_2,
-        PRIME_SHOOTER_3,
-        SHOOT_BALL_1,
-        SHOOT_BALL_2,
-        SHOOT_BALL_3,
-        STOP_FEED_1,
-        STOP_FEED_2,
-        STOP_FEED_3,
+        SHOOT_1,
+        SHOOT_2,
+        SHOOT_3,
 
         DRIVE_SHOOT_GATHERPOSE_1,
         DRIVE_GATHERPOSE_1_GATHERPOSE_2,
@@ -47,16 +48,9 @@ public class AUTOlogic {
         TRIANGLE_DRIVE_START_SHOOTPOS
 
     }
-    public PathChain
-            driveStartPosShootPos,
-            driveShootPosGatherPos1,
-            driveGatherPos1GatherPos2,
-            driveGatherPos2ShootPos,
-            driveShootPosGatherPos3,
-            driveGatherPos3GatherPos4,
-            driveGatherPos4GatherPos5,
-            driveGatherPos5ShootPos,
-            driveShootPosEndPos;
+    public PathChain driveStartPosShootPos, driveShootPosGatherPos1, driveGatherPos1GatherPos2,
+            driveGatherPos2ShootPos, driveShootPosGatherPos3, driveGatherPos3GatherPos4,
+            driveGatherPos4GatherPos5, driveGatherPos5ShootPos, driveShootPosEndPos;
     public void buildPaths() {
         // put in start and end pos
         driveStartPosShootPos = follower.pathBuilder()
@@ -115,30 +109,14 @@ public class AUTOlogic {
         switch(pathState){
             case DRIVE_STARTPOS_SHOOT_POS:
                 follower.followPath(driveStartPosShootPos, true);
-                setPathState(PathState.PRIME_SHOOTER_1); /*it goes to the public void down there and changes
-                 the variable pathState and resets the timer that we want to reset every time we set a new path */
+                setPathState(PathState.SHOOT_1);
+                setShootState(ShootState.PRIME_SHOOTER);
                 break;
-            case PRIME_SHOOTER_1:
+            case SHOOT_1:
                 if (!follower.isBusy()) {
-                    pathTimer.resetTimer();
-                    shooterSubsystem.startShooter();
-                    setPathState(PathState.SHOOT_BALL_1);
-                }
-
-                break;
-
-            case SHOOT_BALL_1:
-                if (launcher.getVelocity() > 1375) {
-                    shooterSubsystem.feedBall();
-                    setPathState(PathState.STOP_FEED_1);
-                }
-
-                break;
-            case STOP_FEED_1:
-                if (pathTimer.getElapsedTimeSeconds() > 7.5) {
-                    shooterSubsystem.stopFeed();
-                    shooterSubsystem.stopShooter();
-                    setPathState(PathState.DRIVE_SHOOT_GATHERPOSE_1);
+                    if (shootUpdate()){
+                        setPathState(PathState.DRIVE_SHOOT_GATHERPOSE_1);
+                    }
                 }
 
                 break;
@@ -167,32 +145,21 @@ public class AUTOlogic {
                 if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 1.5) {
                     follower.followPath(driveGatherPos2ShootPos, true);
                     intake.setPower(-0.5);
-                    setPathState(PathState.PRIME_SHOOTER_2);
+                    setPathState(PathState.SHOOT_2);
+                    setShootState(ShootState.PRIME_SHOOTER);
                 }
 
 
                 break;
-            case PRIME_SHOOTER_2:
-                pathTimer.resetTimer();
-                shooterSubsystem.startShooter();
-                setPathState(PathState.SHOOT_BALL_2);
-                break;
-
-            case SHOOT_BALL_2:
-                if (launcher.getVelocity() > 1375) {
-                    pathTimer.resetTimer();
-                    shooterSubsystem.feedBall();
-                    setPathState(PathState.STOP_FEED_2);
+            case SHOOT_2:
+                if (!follower.isBusy()) {
+                    if (shootUpdate()){
+                        setPathState(PathState.DRIVE_SHOOT_GATHERPOSE_3);
+                    }
                 }
 
                 break;
-            case STOP_FEED_2:
-                if (pathTimer.getElapsedTimeSeconds() > 7.5) {
-                    shooterSubsystem.stopFeed();
-                    setPathState(PathState.DRIVE_SHOOT_GATHERPOSE_3);
-                }
 
-                break;
 
             case DRIVE_SHOOT_GATHERPOSE_3:
                 if (!follower.isBusy()) {
@@ -215,25 +182,17 @@ public class AUTOlogic {
             case DRIVE_GATHERPOSE_5_SHOOT:
                 if (!follower.isBusy()) {
                     follower.followPath(driveGatherPos5ShootPos);
-                    setPathState(PathState.PRIME_SHOOTER_3);
+                    setPathState(PathState.SHOOT_3);
+                    setShootState(ShootState.PRIME_SHOOTER);
                 }
                 break;
-            case PRIME_SHOOTER_3:
-                pathTimer.resetTimer();
-                shooterSubsystem.startShooter();
-                setPathState(PathState.SHOOT_BALL_3);
-                break;
-            case SHOOT_BALL_3:
-                if (launcher.getVelocity() > 1375){
-                    shooterSubsystem.feedBall();
-                    setPathState(PathState.STOP_FEED_3);
+            case SHOOT_3:
+                if (!follower.isBusy()) {
+                    if (shootUpdate()){
+                        setPathState(PathState.DRIVE_SHOOT_ENDPOS);
+                    }
                 }
-                break;
-            case STOP_FEED_3:
-                if(pathTimer.getElapsedTimeSeconds() > 10){
-                    shooterSubsystem.stopFeed();
-                    setPathState(PathState.DRIVE_SHOOT_ENDPOS);
-                }
+
                 break;
             case DRIVE_SHOOT_ENDPOS:
                 if (!follower.isBusy()){
@@ -266,6 +225,35 @@ public class AUTOlogic {
                 break;
 
         }
+    }
+
+    public void startShootSequence(){
+
+    }
+    public void setShootState(ShootState state){
+        shootState = state;
+        shootTimer.resetTimer();
+    }
+    public boolean shootUpdate(){
+        switch (shootState){
+            case PRIME_SHOOTER:
+                shooterSubsystem.setShooter(Math.PI);
+                setShootState(ShootState.SHOOT_BALL);
+                break;
+            case SHOOT_BALL:
+                if (shooterSubsystem.atSpeed()) {
+                    shooterSubsystem.feedBall();
+                    setShootState(ShootState.STOP_FEED);
+                }
+                break;
+            case STOP_FEED:
+                if (shootTimer.getElapsedTimeSeconds() > 7.5){
+                    shooterSubsystem.stopFeed();
+                    shooterSubsystem.setShooter(0);
+                    return true;
+                }
+        }
+        return false;
     }
 }
 
