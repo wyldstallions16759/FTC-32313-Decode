@@ -248,9 +248,11 @@ public class AUTOlogic {
                 if (shootTimer.getElapsedTimeSeconds() > 7.5){
                     shooterSubsystem.stopFeed();
                     shooterSubsystem.setShooter(0);
+                    shooterSubsystem.shooterLoop();
                     return true;
                 }
         }
+        shooterSubsystem.shooterLoop();
         return false;
     }
 }

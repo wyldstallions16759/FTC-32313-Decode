@@ -6,18 +6,14 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
-
-public class TestConstant {
-    public static final Pose START_POSE = new Pose(22.425, 122.773);
-    //    public static final Pose GATHER_POSE_1 = new Pose(55.88003521901827,85.10895883777242, Math.toRadians(180));
-//    public static final Pose GATHER_POSE_2 = new Pose(19.27358573629768,84.63174114021572,Math.toRadians(180));
-//    public static final Pose GATHER_POSE_3 = new Pose(58.43583535108961,59.38498789346242, Math.toRadians(180));
-//    public static final Pose GATHER_POSE_4 = new Pose(14.469733656174345,59.38498789346242, Math.toRadians(180));
-//    public static final Pose GATHER_POSE_5 = new Pose(19.469733656174345,59.38498789346242, Math.toRadians(180));
-//    public static final Pose END_POSE = new Pose(40.18644067796609,84.87167070217917, Math.toRadians(143.5));
+public class RedCommandAutoConstants {
+    public static final Pose START_POSE = new Pose(144-22.425, 122.773, Math.toRadians(135));
+    //    public static final Pose GATHER_POSE_1 = new Pose(144-55.88003521901827,85.10895883777242, Math.toRadians(180));
+//    public static final Pose GATHER_POSE_2 = new Pose(144-19.27358573629768,84.63174114021572,Math.toRadians(180));
+//    public static final Pose GATHER_POSE_3 = new Pose(144-58.43583535108961,59.38498789346242, Math.toRadians(180));
+//    public static final Pose GATHER_POSE_4 = new Pose(144-14.469733656174345,59.38498789346242, Math.toRadians(180));
+//    public static final Pose GATHER_POSE_5 = new Pose(144-19.469733656174345,59.38498789346242, Math.toRadians(180));
+//    public static final Pose END_POSE = new Pose(144-40.18644067796609,84.87167070217917, Math.toRadians(143.5));
     public PathChain DRIVETOSHOOT;
     public PathChain INTAKELINE1;
     public PathChain LINE1TOSHOOT;
@@ -26,14 +22,14 @@ public class TestConstant {
     public PathChain INTAKELINE3;
     public PathChain LINE3TOSHOOT;
 
-    public TestConstant
+    public RedCommandAutoConstants
             (Follower follower) {
         DRIVETOSHOOT = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(22.425, 122.773),
+                                new Pose(144-22.425, 122.773),
 
-                                new Pose(59.169, 88.886)
+                                new Pose(144-59.169, 88.886)
                         )
                 ).setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(135))
 
@@ -41,9 +37,9 @@ public class TestConstant {
 
         INTAKELINE1 = follower.pathBuilder().addPath(
                         new BezierCurve(
-                                new Pose(59.169, 88.886),
-                                new Pose(41.774, 82.677),
-                                new Pose(17.230, 84.448)
+                                new Pose(144-59.169, 88.886),
+                                new Pose(144-41.774, 82.677),
+                                new Pose(144-17.230, 84.448)
                         )
                 ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
 
@@ -51,9 +47,9 @@ public class TestConstant {
 
         LINE1TOSHOOT = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(17.230, 84.448),
+                                new Pose(144-17.230, 84.448),
 
-                                new Pose(59.122, 88.602)
+                                new Pose(144-59.122, 88.602)
                         )
                 ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
 
@@ -61,9 +57,9 @@ public class TestConstant {
 
         INTAKELINE2 = follower.pathBuilder().addPath(
                         new BezierCurve(
-                                new Pose(59.122, 88.602),
-                                new Pose(55.646, 56.283),
-                                new Pose(15.084, 59.620)
+                                new Pose(144-59.122, 88.602),
+                                new Pose(144-55.646, 56.283),
+                                new Pose(144-15.084, 59.620)
                         )
                 ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
 
@@ -71,9 +67,9 @@ public class TestConstant {
 
         LINE2TOSHOOT = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(15.084, 59.620),
+                                new Pose(144-15.084, 59.620),
 
-                                new Pose(59.199, 88.352)
+                                new Pose(144-59.199, 88.352)
                         )
                 ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
 
@@ -81,9 +77,9 @@ public class TestConstant {
 
         INTAKELINE3 = follower.pathBuilder().addPath(
                         new BezierCurve(
-                                new Pose(59.199, 88.352),
-                                new Pose(68.067, 29.723),
-                                new Pose(14.143, 35.579)
+                                new Pose(144-59.199, 88.352),
+                                new Pose(144-68.067, 29.723),
+                                new Pose(144-14.143, 35.579)
                         )
                 ).setTangentHeadingInterpolation()
 
@@ -91,12 +87,13 @@ public class TestConstant {
 
         LINE3TOSHOOT = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(14.143, 35.579),
+                                new Pose(144-14.143, 35.579),
 
-                                new Pose(59.140, 88.629)
+                                new Pose(144-59.140, 88.629)
                         )
                 ).setTangentHeadingInterpolation()
 
                 .build();
     }
 }
+

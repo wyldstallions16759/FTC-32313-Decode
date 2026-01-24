@@ -28,7 +28,7 @@ public class ShooterSubsystem {
     private PIDController pid;
     private static final double w_max = 5.6; //TODO: Tune by setting power to 1 and reading the velocity in radians
     private static final double kV = 1.0/w_max;
-    private static final double threshold = Math.PI;
+    private static final double threshold = 20;
     public ShooterSubsystem(HardwareMap hardwareMap, Telemetry telemetry){
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
         intake = hardwareMap.get(DcMotor.class, "intakeMotor");
@@ -79,26 +79,30 @@ public class ShooterSubsystem {
     }
 
     public void shooterLoop(){
-        if (targetVelo == 0){
-            shooter.setPower(0);
-            return;
-        }
-        pid.setSetPoint(targetVelo);
-        double pidCalc = pid.calculate(shooter.getVelocity(AngleUnit.RADIANS));
-        double ffCalc = (targetVelo * kV);
-        double power = ffCalc + pidCalc;
-        if (power < -1.0) power = -1;
-        if (power > 1.0) power = 1.0;
-        telemetry.addData("Power", power);
-        telemetry.addData("FF Calc", ffCalc);
-        telemetry.addData("PID Calc", pidCalc);
-        telemetry.addData("kV", kV);
-        shooter.setPower(power);
-        telemetry.addData("Shooter velocity", shooter.getVelocity(AngleUnit.RADIANS));
+//        if (targetVelo == 0){
+//            shooter.setPower(0);
+//            return;
+//        }
+//        pid.setSetPoint(targetVelo);
+//        double pidCalc = pid.calculate(shooter.getVelocity(AngleUnit.RADIANS));
+//        double ffCalc = (targetVelo * kV);
+//        double power = ffCalc + pidCalc;
+//        if (power < -1.0) power = -1;
+//        if (power > 1.0) power = 1.0;
+//        telemetry.addData("Power", power);
+//        telemetry.addData("FF Calc", ffCalc);
+//        telemetry.addData("PID Calc", pidCalc);
+//        telemetry.addData("kV", kV);
+//        shooter.setPower(power);
+//        telemetry.addData("Shooter velocity", shooter.getVelocity(AngleUnit.RADIANS));
+        shooter.setVelocity(targetVelo);
     }
 
     public boolean atSpeed(){
-        double error = targetVelo - shooter.getVelocity(AngleUnit.RADIANS);
+        double error = targetVelo - shooter.getVelocity();
+        telemetry.addData("Velo Error", error);
+        telemetry.addData("Shooter Speed", targetVelo-error);
+        telemetry.addData("Target Velocity", targetVelo);
         return (error < threshold && error > -threshold);
     }
 }

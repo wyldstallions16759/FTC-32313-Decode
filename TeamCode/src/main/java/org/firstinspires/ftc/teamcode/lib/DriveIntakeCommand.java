@@ -4,6 +4,8 @@ import com.pedropathing.paths.PathChain;
 
 import org.firstinspires.ftc.teamcode.subsystem.AutoSS;
 
+
+//See DriveCommand.java for more info. This does the same thing but turns the intake on and off.
 public class DriveIntakeCommand implements Command{
     public Command.CommandType t = CommandType.DRIVE_INTAKE;
     PathChain path;

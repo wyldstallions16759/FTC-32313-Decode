@@ -21,6 +21,7 @@ public class ShootCommand implements Command{
     }
 
     public boolean run() {
+        //This loop basically just runs a state machine
         if (!runAlready){
             setShootState(ShootState.PRIME_SHOOTER);
             runAlready = true;
@@ -35,7 +36,7 @@ public class ShootCommand implements Command{
     public boolean shootUpdate(){
         switch (shootState){
             case PRIME_SHOOTER:
-                ss.shooterSubsystem.setShooter(2.5);
+                ss.shooterSubsystem.setShooter(1500);
                 setShootState(ShootState.SHOOT_BALL);
                 break;
             case SHOOT_BALL:
@@ -45,7 +46,7 @@ public class ShootCommand implements Command{
                 }
                 break;
             case STOP_FEED:
-                if (shootTimer.getElapsedTimeSeconds() > 7.5){
+                if (shootTimer.getElapsedTimeSeconds() > 4.5){
                     ss.shooterSubsystem.stopFeed();
                     ss.shooterSubsystem.setShooter(0);
                     ss.shooterSubsystem.shooterLoop();
