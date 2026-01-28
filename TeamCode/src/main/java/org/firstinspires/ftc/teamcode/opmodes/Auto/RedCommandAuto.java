@@ -11,33 +11,44 @@ import org.firstinspires.ftc.teamcode.opmodes.AutoConstants.RedCommandAutoConsta
 import org.firstinspires.ftc.teamcode.opmodes.AutoConstants.BlueCommandAutoConstants;
 import org.firstinspires.ftc.teamcode.subsystem.AutoSS;
 
-@Autonomous(name = "Flipped Command Auto")
+@Autonomous(name = "Red Command Auto")
 public class RedCommandAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
         AutoSS ss = new AutoSS(hardwareMap, telemetry);
-        RedCommandAutoConstants constants = new RedCommandAutoConstants(ss.follower);
-        ss.follower.setStartingPose(BlueCommandAutoConstants.START_POSE);
 
+        //This builds the paths in the constants file
+        RedCommandAutoConstants constants = new RedCommandAutoConstants(ss.follower);
+        ss.follower.setStartingPose(RedCommandAutoConstants.START_POSE);
+
+        //The command scheduler is a class that runs commands in a sequence
+        //You pass in your commands in as parameters. There are only the 3 types for now
+        //I commented the scheduler and commands if you want to see them.
         CommandScheduler commandScheduler = new CommandScheduler(ss,
                 new DriveCommand(ss, constants.DRIVETOSHOOT, true),
                 new ShootCommand(ss),
                 new DriveIntakeCommand(ss, constants.INTAKELINE1, false),
+//                new IntakeCommand(ss),
                 new DriveIntakeCommand(ss, constants.LINE1TOSHOOT, true),
                 new ShootCommand(ss),
                 new DriveIntakeCommand(ss, constants.INTAKELINE2, false),
+//                new IntakeCommand(ss),
                 new DriveIntakeCommand(ss, constants.LINE2TOSHOOT, true),
                 new ShootCommand(ss),
                 new DriveIntakeCommand(ss, constants.INTAKELINE3, false),
+//                new IntakeCommand(ss),
                 new DriveIntakeCommand(ss, constants.LINE3TOSHOOT, true),
-                new ShootCommand(ss),
-                new DriveCommand(ss, constants.INTAKELINE3, true)
+                new ShootCommand(ss)
         );
 
         waitForStart();
 
         while (opModeIsActive()){
+            //This progresses the commands. The scheduler handles all of state switching and stuff
             boolean res = commandScheduler.commandLoop();
+
+            //The command loop will return true if it's still busy running commands
+            //So we check if it's done by asking if it's false. If it is we break out of the loop.
             if (!res) break;
             telemetry.update();
         }

@@ -6,12 +6,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.lib.CommandScheduler;
 import org.firstinspires.ftc.teamcode.lib.DriveCommand;
 import org.firstinspires.ftc.teamcode.lib.DriveIntakeCommand;
+import org.firstinspires.ftc.teamcode.lib.IntakeCommand;
 import org.firstinspires.ftc.teamcode.lib.ShootCommand;
 import org.firstinspires.ftc.teamcode.opmodes.AutoConstants.BlueCommandAutoConstants;
 import org.firstinspires.ftc.teamcode.subsystem.AutoSS;
 
-@Autonomous(name = "Command Auto")
-public class CommandAuto extends LinearOpMode {
+@Autonomous(name = "Blue Command Auto")
+public class BlueCommandAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
         //This is the command version of the blue depot auto.
@@ -31,12 +32,15 @@ public class CommandAuto extends LinearOpMode {
                 new DriveCommand(ss, constants.DRIVETOSHOOT, true),
                 new ShootCommand(ss),
                 new DriveIntakeCommand(ss, constants.INTAKELINE1, false),
+//                new IntakeCommand(ss),
                 new DriveIntakeCommand(ss, constants.LINE1TOSHOOT, true),
                 new ShootCommand(ss),
                 new DriveIntakeCommand(ss, constants.INTAKELINE2, false),
+//                new IntakeCommand(ss),
                 new DriveIntakeCommand(ss, constants.LINE2TOSHOOT, true),
                 new ShootCommand(ss),
                 new DriveIntakeCommand(ss, constants.INTAKELINE3, false),
+//                new IntakeCommand(ss),
                 new DriveIntakeCommand(ss, constants.LINE3TOSHOOT, true),
                 new ShootCommand(ss)
         );

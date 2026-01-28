@@ -14,7 +14,7 @@ public class IntakeSubsystem {
         this.telemetry = telemetry;
     }
     public void startIntake(){
-        intake.setPower(1);
+        intake.setPower(-1);
         intakeOn = true;
     }
     public void stopIntake(){

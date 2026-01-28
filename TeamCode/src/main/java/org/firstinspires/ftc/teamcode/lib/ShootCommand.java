@@ -36,7 +36,7 @@ public class ShootCommand implements Command{
     public boolean shootUpdate(){
         switch (shootState){
             case PRIME_SHOOTER:
-                ss.shooterSubsystem.setShooter(1500);
+                ss.shooterSubsystem.setShooter(1525);
                 setShootState(ShootState.SHOOT_BALL);
                 break;
             case SHOOT_BALL:

@@ -26,6 +26,8 @@ public class DriveCommand implements Command{
             return true;
         }
         ss.follower.update();
+        ss.telemetry.addData("Current position", ss.follower.getPose());
+        ss.telemetry.addData("Driving to", ss.follower.getCurrentPathChain().endPoint());
         return ss.follower.isBusy();
     }
 }

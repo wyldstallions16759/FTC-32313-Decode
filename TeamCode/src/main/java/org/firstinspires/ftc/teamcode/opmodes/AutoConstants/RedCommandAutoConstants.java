@@ -7,13 +7,14 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
 public class RedCommandAutoConstants {
-    public static final Pose START_POSE = new Pose(144-22.425, 122.773, Math.toRadians(135));
-    //    public static final Pose GATHER_POSE_1 = new Pose(144-55.88003521901827,85.10895883777242, Math.toRadians(180));
-//    public static final Pose GATHER_POSE_2 = new Pose(144-19.27358573629768,84.63174114021572,Math.toRadians(180));
-//    public static final Pose GATHER_POSE_3 = new Pose(144-58.43583535108961,59.38498789346242, Math.toRadians(180));
-//    public static final Pose GATHER_POSE_4 = new Pose(144-14.469733656174345,59.38498789346242, Math.toRadians(180));
-//    public static final Pose GATHER_POSE_5 = new Pose(144-19.469733656174345,59.38498789346242, Math.toRadians(180));
-//    public static final Pose END_POSE = new Pose(144-40.18644067796609,84.87167070217917, Math.toRadians(143.5));
+    public static final Pose START_POSE = new Pose(121.575, 122.773, Math.toRadians(45));
+    public static final Pose SHOOT_POSE = new Pose(94,92, Math.toRadians(47));
+    public static final Pose GATHER_POSE_1 = new Pose(88.11996478,85.10895883777242, Math.toRadians(0));
+    public static final Pose GATHER_POSE_2 = new Pose(144-19.27358573629768,84.63174114021572,Math.toRadians(0));
+    public static final Pose GATHER_POSE_3 = new Pose(144-58.43583535108961,59.38498789346242, Math.toRadians(0));
+    public static final Pose GATHER_POSE_4 = new Pose(144-14.469733656174345,59.38498789346242, Math.toRadians(0));
+    public static final Pose GATHER_POSE_5 = new Pose(144-19.469733656174345,59.38498789346242, Math.toRadians(0));
+    public static final Pose END_POSE = new Pose(144-40.18644067796609,84.87167070217917, Math.toRadians(143.5));
     public PathChain DRIVETOSHOOT;
     public PathChain INTAKELINE1;
     public PathChain LINE1TOSHOOT;
@@ -22,64 +23,63 @@ public class RedCommandAutoConstants {
     public PathChain INTAKELINE3;
     public PathChain LINE3TOSHOOT;
 
-    public RedCommandAutoConstants
-            (Follower follower) {
+    public RedCommandAutoConstants(Follower follower) {
         DRIVETOSHOOT = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(144-22.425, 122.773),
+                                START_POSE,
 
-                                new Pose(144-59.169, 88.886)
+                                SHOOT_POSE
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(135))
+                ).setLinearHeadingInterpolation(Math.toRadians(45), Math.toRadians(45))
 
                 .build();
 
         INTAKELINE1 = follower.pathBuilder().addPath(
                         new BezierCurve(
-                                new Pose(144-59.169, 88.886),
-                                new Pose(144-41.774, 82.677),
-                                new Pose(144-17.230, 84.448)
+                                SHOOT_POSE,
+                                new Pose(102.226, 82.677),
+                                new Pose(134.77, 84.448)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                ).setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
 
                 .build();
 
         LINE1TOSHOOT = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(144-17.230, 84.448),
+                                new Pose(134.77, 84.448),
 
-                                new Pose(144-59.122, 88.602)
+                                SHOOT_POSE
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
+                ).setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
 
                 .build();
 
         INTAKELINE2 = follower.pathBuilder().addPath(
                         new BezierCurve(
-                                new Pose(144-59.122, 88.602),
-                                new Pose(144-55.646, 56.283),
-                                new Pose(144-15.084, 59.620)
+                                SHOOT_POSE,
+                                new Pose(88.354, 56.283),
+                                new Pose(134.916, 56.620)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                ).setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
 
                 .build();
 
         LINE2TOSHOOT = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(144-15.084, 59.620),
+                                new Pose(134.916, 56.620),
 
-                                new Pose(144-59.199, 88.352)
+                                SHOOT_POSE
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(135))
+                ).setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(45))
 
                 .build();
 
         INTAKELINE3 = follower.pathBuilder().addPath(
                         new BezierCurve(
-                                new Pose(144-59.199, 88.352),
-                                new Pose(144-68.067, 29.723),
-                                new Pose(144-14.143, 35.579)
+                                SHOOT_POSE,
+                                new Pose(75.933, 29.723),
+                                new Pose(132.857, 35.579)
                         )
                 ).setTangentHeadingInterpolation()
 
@@ -87,9 +87,9 @@ public class RedCommandAutoConstants {
 
         LINE3TOSHOOT = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(144-14.143, 35.579),
+                                new Pose(132.857, 35.579),
 
-                                new Pose(144-59.140, 88.629)
+                                SHOOT_POSE
                         )
                 ).setTangentHeadingInterpolation()
 

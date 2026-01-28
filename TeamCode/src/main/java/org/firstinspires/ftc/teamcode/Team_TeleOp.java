@@ -1,52 +1,3 @@
-/*
- * Copyright (c) 2025 FIRST
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided that
- * the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list
- * of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright notice, this
- * list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution.
- *
- * Neither the name of FIRST nor the names of its contributors may be used to
- * endorse or promote products derived from this software without specific prior
- * written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
- * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-/*⠀https://downloads.khinsider.com/game-soundtracks/album/jojo-s-bizarre-adventure-2nd-season-op/01.%2520BLOODY%2520STREAM.mp3⠀⠀
- *⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣠⡤⢶⣶⠖⢲⣶⠀⠀⠀⠀⠀⠀⠀⠀⣼⠋⠉⠉⢹⣷⠖⣶⠖⣶⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡤⠶⠚⠋⠉⢹⣿⡏⡀⣼⡇⠀⣿⡏⠀⠀⠀⠀⠀⠀⠀⢰⠇⠀⠀⢠⣿⣿⣴⣿⣤⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⢰⠏⠁⠀⠀⠀⠀⢐⣿⣿⣀⣰⣿⣶⣾⣿⣥⠤⠴⠖⠒⠒⠚⣿⡿⠶⠿⠿⣿⣿⠋⠉⠉⣿⣏⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢀⡟⠀⠀⠀⣀⣠⣴⣾⣿⠿⠛⠛⠋⢹⡿⠀⠀⠀⠀⠀⠀⠀⢰⣿⠁⠀⠀⢰⣿⠇⠀⠀⢸⡿⠀⠀⠀⠀⠀⠉⢹⣿⠀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣼⣁⣤⣶⣿⠿⠟⢻⣿⡟⠀⠀⠀⢀⣿⣁⣀⣤⣴⡶⠀⠀⠀⣾⣇⣀⣀⣤⣾⡟⠀⠀⢀⣿⠷⠶⠶⠶⠆⠀⠀⣾⡿⠋⠁⠀⢀⠉⠑⢦⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢠⡿⠟⠋⠁⠀⠀⠀⣾⣿⠁⠀⠀⠀⣼⠟⠛⠉⠉⠀⠀⠀⠀⣸⣿⠿⠿⠿⠛⠋⠀⠀⠀⣸⣯⣤⣤⣀⡀⠀⠀⢰⡏⠀⣼⠏⠀⣾⣧⠀⠈⣇⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⡟⠀⠀⠀⠀⠀⠀⢰⣿⠇⠀⠀⠀⢰⡟⠀⣀⣀⣤⠀⠀⠀⢀⡿⠁⠀⠀⠀⠀⠀⠀⠀⣰⡿⠁⠀⠈⠉⠀⠀⢀⣿⡄⠀⠋⢀⣾⠟⠁⠀⣰⡟⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⣸⠁⠀⠀⠀⣀⣤⣶⣿⡏⠀⠀⠀⠀⣾⠿⠛⠛⠉⠁⠀⠀⢀⣾⠇⠀⢀⣀⣀⣀⣀⣤⣾⣿⣇⣀⣀⣀⣠⣤⣴⡿⣏⣻⣦⣴⣿⣷⣀⣠⣴⣿⣁⣀⣠⣤⣀⠀⠀⠀
-⠀⠀⠀⠀⢠⠇⣀⣴⣶⣿⣿⠿⠛⠉⠀⠀⠀⠀⣼⠇⠀⠀⠀⠀⢀⣠⣴⣿⣿⣩⠭⠭⠖⠲⣬⣭⢡⣶⢰⢿⣧⣶⣰⢿⡏⠁⢠⡟⡽⣭⣭⣭⣭⡽⢭⣽⢿⣿⣍⣵⣶⣜⢷⣄⠀
-⠀⠀⠀⠀⠾⢿⣿⠿⠛⠉⠀⠀⠀⠀⠀⠀⢀⣼⡿⢀⣠⣤⣶⡾⠿⠛⠉⣿⡕⣿⣣⡴⠲⣼⣿⣵⣟⣳⣶⣿⣿⣿⡟⣾⣥⣤⣿⣸⠁⣿⣷⣶⡗⢠⣿⣿⣿⣯⣋⠾⣽⣾⣗⣽⠇
-⠀⠀⠀⣴⠞⠉⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⡿⠛⠻⠟⠛⠉⠀⠀⠀⠀⣼⠇⣿⣿⣿⣿⡟⢻⢿⣿⣿⣿⣿⣿⡿⣿⣴⣷⣌⣛⣣⠿⢿⣿⣿⡿⢿⣿⣟⣽⣿⣷⡿⣞⣿⣇⡾⠁⠀
-⠀⠀⢠⠇⠀⠀⠀⠀⠀⠀⠀⣠⣴⣿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣸⢿⣻⣹⣿⢃⡏⢸⠛⡿⣻⣭⢹⣿⢋⣿⣋⣿⣟⡟⢠⣿⣿⣿⠃⡾⡿⣿⣿⣿⣿⢣⣿⡟⣼⠃⠀⠀
-⠀⠀⡟⠀⠀⠀⠀⠀⣀⣴⣾⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡾⣣⡿⠿⣿⣻⡏⣾⣟⣩⣴⣇⡽⣷⠿⣷⣿⣾⣿⡞⡿⠁⣾⣿⣿⠏⣸⣽⣧⣿⡿⣞⡿⣎⢣⣻⡇⠀⠀⠀
-⠀⣸⠀⠀⠀⣀⣴⣾⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣟⣽⠷⣖⣒⣒⡲⢼⣛⣯⣷⣘⣿⣯⣵⠧⠽⣦⣭⣿⣙⣓⣚⣿⣿⣓⣒⣋⣛⣃⣘⣻⡽⢾⣝⠾⣽⠃⠀⠀⠀
-⢠⠇⣀⣴⣾⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣯⡼⠞⠛⠉⠁⠉⠙⠷⠟⠀⠘⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠀⠀⠀⠙⠿⠏⠀⠀⠀⠀*/
-
 package org.firstinspires.ftc.teamcode;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
@@ -62,39 +13,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subsystem.ShooterSubsystem;
 
-/*
- *
- * Nicu Nicu Very Nice Ceaser-Chan
- * This file includes a teleop (driver-controlled) file for the goBILDA® StarterBot for the
- * 2025-2026 FIRST® Tech Challenge season DECODE™. It leverages a differential/Skid-Steer
- * system for robot mobility, one high-speed motor driving two "launcher wheels", and two servos
- * which feed that launcher.
- *
- * Likely the most niche concept we'll use in this example is closed-loop motor velocity control.
- * This control method reads the current speed as reported by the motor's encoder and applies a varying
- * amount of power to reach, and then hold a target velocity. The FTC SDK calls this control method
- * "RUN_USING_ENCODER". This contrasts to the default "RUN_WITHOUT_ENCODER" where you control the power
- * applied to the motor directly.
- * Since the dynamics of a launcher wheel system varies greatly from those of most other FTC mechanisms,
- * we will also need to adjust the "PDiddy" coefficients with some that are a better fit for our application.
- *
- */
-
 @TeleOp(name = "32313 TeleOp", group = "StarterBot")
 //@Disabled
 public class Team_TeleOp extends OpMode {
-    final double FEED_TIME_SECONDS = 0.20; //The feeder servos run this long when a shot is requested.
-    final double STOP_SPEED = 0.5; //We send this power to the servos when we want them to stop.
+    final double FEED_TIME_SECONDS = 0.20;
+    final double STOP_SPEED = 0.5;
     final double FULL_SPEED = 1.0;
 
-    /*
-     * When we control our launcher motor, we are using encoders. These allow the control system
-     * to read the current speed of the motor and apply more or less power to keep it at a constant
-     * velocity. Here we are setting the target, and minimum velocity that the launcher should run
-     * at. The minimum velocity is a threshold for determining when to fire.
-     * YES! YES! YES! YES!
-     */
-    final double LAUNCHER_TARGET_VELOCITY = 2125; //Green Wheel Speed DO NOT CHANGE IT ISNT THE LAUNCHER
+    final double LAUNCHER_TARGET_VELOCITY = 2125;
     final double LAUNCHER_MIN_VELOCITY = 1075;
 
     // Declare OpMode members.
@@ -120,25 +46,10 @@ public class Team_TeleOp extends OpMode {
     double[] StepSizes = {10, 1, 0.1, 0.01, 0};
     int StepIndex = 1;
     boolean SlowOn = false;
-
+    private boolean stepperkeydown = false;
+    private int launchVelo = 1550;
     ElapsedTime feederTimer = new ElapsedTime();
 
-    /*
-     * TECH TIP: State Machines
-     * We use a "state machine" to control our launcher motor and feeder servos in this program.
-     * The first step of a state machine is creating an enum that captures the different "states"
-     * that our code can be in.
-     * The core advantage of a state machine is that it allows us to continue to loop through all
-     * of our code while only running specific code when it's necessary. We can continuously check
-     * what "State" our machine is in, run the associated code, and when we are done with that step
-     * move on to the next state.
-     * This enum is called the "LaunchState". It reflects the current condition of the shooter
-     * motor and we move through the enum when the user asks our code to fire a shot.
-     * It starts at idle, when the user requests a launch, we enter SPIN_UP where we get the
-     * motor up to speed, once it meets a minimum speed then it starts and then ends the launch process.
-     * We can use higher level code to cycle through these states. But this allows us to write
-     * functions and autonomous routines in a way that avoids loops within loops, and "waits".
-     */
     private enum LaunchState {
         IDLE,
         SPIN_UP,
@@ -251,45 +162,33 @@ public class Team_TeleOp extends OpMode {
         axial = -gamepad1.left_stick_y;
         lateral = gamepad1.left_stick_x;
         yaw = gamepad1.right_stick_x;
-        /*
-         * Here we call a function called arcadeDrive. The arcadeDrive function takes the input from
-         * the joysticks, and applies power to the left and right drive motor to move the robot
-         * as requested by the driver. "arcade" refers to the control style we're using here.
-         * Much like a classic arcade game, when you move the left joystick forward both motors
-         * work to drive the robot forward, and when you move the right joystick left and right
-         * both motors work to rotate the robot. Combinations of these inputs can be used to create
-         * more complex maneuvers.
-         *
-         *  /\_______/\
-         * /           \
-         * | <O>   <O> |
-         * |           |
-         * |    ___    |
-         * \           /
-         *  |         |
-         */
-
-        /*
-         * Here we give the user control of the speed of the launcher motor without automatically
-         * queuing a shot. */
-
 
         // Pressing the Y button makes the Launcher turn on
         // Pressing the Y button again makes the Launcher turn off
         // lastYstate is whether or not the launcher is on
 
+        boolean stepup = gamepad2.right_bumper;
+        boolean stepdown = gamepad2.left_bumper;
+
+
+        if (stepup && !stepperkeydown){
+            this.launchVelo=1800;
+        }
+        else if (stepdown && !stepperkeydown){
+            this.launchVelo=1550;
+        }
+
         if (gamepad2.right_trigger > 0.5) {
-            launcher.setVelocity(1600);
+            launcher.setVelocity(launchVelo);
         } else {
             launcher.setVelocity(STOP_SPEED);
-
         }
             if (gamepad2.left_trigger > 0.02) {
                 intakeMotor.setPower(-gamepad2.left_trigger);
-            } else if (gamepad1.right_trigger > 0.02) {
-                intakeMotor.setPower(-gamepad1.right_trigger);
             } else if (gamepad2.x) {
                 intakeMotor.setPower(1);
+            } else if (gamepad1.right_trigger > 0.02) {
+                intakeMotor.setPower(-gamepad1.right_trigger);
             } else {
                 intakeMotor.setPower(0);
             }
@@ -314,10 +213,12 @@ public class Team_TeleOp extends OpMode {
             telemetry.addData("Last a state", lastAState2);
             telemetry.addData("Step Index:", StepIndex);
             telemetry.addData("StepSizes:", StepSizes);
+            telemetry.addData("Launch Velo", launchVelo);
 
 
             lastAState2 = gamepad2.a;
             lastYstate = gamepad2.right_bumper;
+            stepperkeydown = stepdown || stepup;
             telemetry.update();
         }
 
@@ -390,7 +291,7 @@ public class Team_TeleOp extends OpMode {
                 }
                 break;
             case SPIN_UP:
-                launcher.setVelocity(1000);
+                launcher.setVelocity(15);
                 if (launcher.getVelocity() > LAUNCHER_MIN_VELOCITY) {
                     launchState = LaunchState.LAUNCH;
                 }
@@ -411,18 +312,3 @@ public class Team_TeleOp extends OpMode {
         }
     }
 }
-/*⣿⣿⣿⣿⣿⣿⣿⡿⡛⠟⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠿⠨⡀⠄⠄⡘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⠿⢁⠼⠊⣱⡃⠄⠈⠹⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⡿⠛⡧⠁⡴⣦⣔⣶⣄⢠⠄⠄⠹⣿⣿⣿⣿⣿⣿⣿⣤⠭⠏⠙⢿⣿⣿⣿⣿⣿
-⣿⡧⠠⠠⢠⣾⣾⣟⠝⠉⠉⠻⡒⡂⠄⠙⠻⣿⣿⣿⣿⣿⡪⠘⠄⠉⡄⢹⣿⣿⣿⣿
-⣿⠃⠁⢐⣷⠉⠿⠐⠑⠠⠠⠄⣈⣿⣄⣱⣠⢻⣿⣿⣿⣿⣯⠷⠈⠉⢀⣾⣿⣿⣿⣿
-⣿⣴⠤⣬⣭⣴⠂⠇⡔⠚⠍⠄⠄⠁⠘⢿⣷⢈⣿⣿⣿⣿⡧⠂⣠⠄⠸⡜⡿⣿⣿⣿
-⣿⣇⠄⡙⣿⣷⣭⣷⠃⣠⠄⠄⡄⠄⠄⠄⢻⣿⣿⣿⣿⣿⣧⣁⣿⡄⠼⡿⣦⣬⣰⣿
-⣿⣷⣥⣴⣿⣿⣿⣿⠷⠲⠄⢠⠄⡆⠄⠄⠄⡨⢿⣿⣿⣿⣿⣿⣎⠐⠄⠈⣙⣩⣿⣿
-⣿⣿⣿⣿⣿⣿⢟⠕⠁⠈⢠⢃⢸⣿⣿⣶⡘⠑⠄⠸⣿⣿⣿⣿⣿⣦⡀⡉⢿⣧⣿⣿
-⣿⣿⣿⣿⡿⠋⠄⠄⢀⠄⠐⢩⣿⣿⣿⣿⣦⡀⠄⠄⠉⠿⣿⣿⣿⣿⣿⣷⣨⣿⣿⣿
-⣿⣿⣿⡟⠄⠄⠄⠄⠄⠋⢀⣼⣿⣿⣿⣿⣿⣿⣿⣶⣦⣀⢟⣻⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⡆⠆⠄⠠⡀⡀⠄⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⡿⡅⠄⠄⢀⡰⠂⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿*/
-/*TO BE CONTINUED*/
