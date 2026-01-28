@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.subsystem.AutoSS;
 public class ShootCommand implements Command{
     public Command.CommandType t = CommandType.SHOOT;
     boolean runAlready = false;
+    public int targetVelo;
     public enum ShootState {
         PRIME_SHOOTER,
         SHOOT_BALL,
@@ -16,8 +17,9 @@ public class ShootCommand implements Command{
     public AutoSS ss;
 
     public Timer shootTimer = new Timer();
-    public ShootCommand(AutoSS ss){
+    public ShootCommand(AutoSS ss, int targetVelo){
         this.ss = ss;
+        this.targetVelo = targetVelo;
     }
 
     public boolean run() {
@@ -36,7 +38,7 @@ public class ShootCommand implements Command{
     public boolean shootUpdate(){
         switch (shootState){
             case PRIME_SHOOTER:
-                ss.shooterSubsystem.setShooter(1525);
+                ss.shooterSubsystem.setShooter(this.targetVelo);
                 setShootState(ShootState.SHOOT_BALL);
                 break;
             case SHOOT_BALL:
