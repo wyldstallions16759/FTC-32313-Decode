@@ -8,7 +8,7 @@ import com.pedropathing.paths.PathChain;
 
 public class RedCommandAutoConstants {
     public static final Pose START_POSE = new Pose(121.575, 122.773, Math.toRadians(45));
-    public static final Pose SHOOT_POSE = new Pose(94,92, Math.toRadians(47));
+    public static final Pose SHOOT_POSE = new Pose(94,92, Math.toRadians(50));
     public static final Pose GATHER_POSE_1 = new Pose(88.11996478,85.10895883777242, Math.toRadians(0));
     public static final Pose GATHER_POSE_2 = new Pose(144-19.27358573629768,84.63174114021572,Math.toRadians(0));
     public static final Pose GATHER_POSE_3 = new Pose(144-58.43583535108961,59.38498789346242, Math.toRadians(0));
@@ -39,7 +39,7 @@ public class RedCommandAutoConstants {
                         new BezierCurve(
                                 SHOOT_POSE,
                                 new Pose(102.226, 82.677),
-                                new Pose(134.77, 84.448)
+                                new Pose(136.77, 87.448)
                         )
                 ).setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
 
@@ -47,7 +47,7 @@ public class RedCommandAutoConstants {
 
         LINE1TOSHOOT = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(134.77, 84.448),
+                                new Pose(136.77, 84.448),
 
                                 SHOOT_POSE
                         )
@@ -59,7 +59,7 @@ public class RedCommandAutoConstants {
                         new BezierCurve(
                                 SHOOT_POSE,
                                 new Pose(88.354, 56.283),
-                                new Pose(134.916, 56.620)
+                                new Pose(136.916, 60.620)
                         )
                 ).setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
 

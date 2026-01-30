@@ -30,19 +30,19 @@ public class BlueCommandAuto extends LinearOpMode {
         //I commented the scheduler and commands if you want to see them.
         CommandScheduler commandScheduler = new CommandScheduler(ss,
                 new DriveCommand(ss, constants.DRIVETOSHOOT, true),
-                new ShootCommand(ss),
+                new ShootCommand(ss, 1525),
                 new DriveIntakeCommand(ss, constants.INTAKELINE1, false),
 //                new IntakeCommand(ss),
                 new DriveIntakeCommand(ss, constants.LINE1TOSHOOT, true),
-                new ShootCommand(ss),
+                new ShootCommand(ss, 1525),
                 new DriveIntakeCommand(ss, constants.INTAKELINE2, false),
 //                new IntakeCommand(ss),
                 new DriveIntakeCommand(ss, constants.LINE2TOSHOOT, true),
-                new ShootCommand(ss),
+                new ShootCommand(ss, 1525),
                 new DriveIntakeCommand(ss, constants.INTAKELINE3, false),
 //                new IntakeCommand(ss),
                 new DriveIntakeCommand(ss, constants.LINE3TOSHOOT, true),
-                new ShootCommand(ss)
+                new ShootCommand(ss, 1525)
         );
 
         waitForStart();
