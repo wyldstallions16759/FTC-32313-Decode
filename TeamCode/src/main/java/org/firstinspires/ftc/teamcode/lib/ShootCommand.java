@@ -48,6 +48,11 @@ public class ShootCommand implements Command{
                 }
                 break;
             case STOP_FEED:
+                if (ss.shooterSubsystem.atSpeed()){
+                    ss.shooterSubsystem.feedBall();
+                } else {
+                    ss.shooterSubsystem.stopFeed();
+                }
                 if (shootTimer.getElapsedTimeSeconds() > 4.5){
                     ss.shooterSubsystem.stopFeed();
                     ss.shooterSubsystem.setShooter(0);

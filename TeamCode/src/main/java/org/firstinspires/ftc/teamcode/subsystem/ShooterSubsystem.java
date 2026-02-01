@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -36,6 +37,7 @@ public class ShooterSubsystem {
         rightFeeder = hardwareMap.get(Servo.class, "right_feeder");
         leftFeeder = hardwareMap.get(Servo.class, "left_feeder");
         this.pid = new PIDController(0.001, 0, 0);
+        shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(400, 0, 8.2, 11.49));
     }
 
 
@@ -96,6 +98,8 @@ public class ShooterSubsystem {
 //        shooter.setPower(power);
 //        telemetry.addData("Shooter velocity", shooter.getVelocity(AngleUnit.RADIANS));
         shooter.setVelocity(targetVelo);
+        telemetry.addData("Shooter Speed", shooter.getVelocity());
+        telemetry.addData("Target Velocity", targetVelo);
     }
 
     public boolean atSpeed(){

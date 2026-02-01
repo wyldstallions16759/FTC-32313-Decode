@@ -16,7 +16,6 @@ public class RedCommandAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
         AutoSS ss = new AutoSS(hardwareMap, telemetry);
-
         //This builds the paths in the constants file
         RedCommandAutoConstants constants = new RedCommandAutoConstants(ss.follower);
         ss.follower.setStartingPose(RedCommandAutoConstants.START_POSE);
@@ -34,9 +33,9 @@ public class RedCommandAuto extends LinearOpMode {
                 new DriveIntakeCommand(ss, constants.INTAKELINE2, false),
 //                new IntakeCommand(ss),
                 new DriveIntakeCommand(ss, constants.LINE2TOSHOOT, true),
-                new ShootCommand(ss,1500)
-                /*new DriveIntakeCommand(ss, constants.INTAKELINE3, false),
-//                new IntakeCommand(ss),
+                new ShootCommand(ss,1500),
+                new DriveIntakeCommand(ss, constants.INTAKELINE3, false)
+              /*  new IntakeCommand(ss),
                 new DriveIntakeCommand(ss, constants.LINE3TOSHOOT, true),
                 new ShootCommand(ss,1500)*/
         );

@@ -10,19 +10,19 @@ import org.firstinspires.ftc.teamcode.lib.DriveIntakeCommand;
 import org.firstinspires.ftc.teamcode.lib.ShootCommand;
 import org.firstinspires.ftc.teamcode.lib.TurnCommand;
 import org.firstinspires.ftc.teamcode.opmodes.AutoConstants.BlueTriangleAutoConstants;
-import org.firstinspires.ftc.teamcode.opmodes.AutoConstants.RedCommandAutoConstants;
+import org.firstinspires.ftc.teamcode.opmodes.AutoConstants.RedTriangleAutoConstants;
 import org.firstinspires.ftc.teamcode.subsystem.AutoSS;
 
-@Autonomous(name="Blue Triangle Auto")
-public class BlueTriangleAuto extends LinearOpMode {
+@Autonomous(name="Red Triangle Auto")
+public class RedTriangleAuto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         AutoSS ss = new AutoSS(hardwareMap, telemetry);
-        ss.follower.setStartingPose(new Pose(56,8, Math.toRadians(90)));
+        ss.follower.setStartingPose(new Pose(88,8, Math.toRadians(90)));
 
-        BlueTriangleAutoConstants constants = new BlueTriangleAutoConstants(ss.follower);
+        RedTriangleAutoConstants constants = new RedTriangleAutoConstants(ss.follower);
         CommandScheduler commandScheduler = new CommandScheduler(ss,
-                new TurnCommand(ss, 113),
+                new TurnCommand(ss, 67),
                 new ShootCommand(ss, 1800),
                 new DriveIntakeCommand(ss, constants.INTAKELINE1, false),
                 new DriveCommand(ss, constants.LINE1TOSHOOT, true),

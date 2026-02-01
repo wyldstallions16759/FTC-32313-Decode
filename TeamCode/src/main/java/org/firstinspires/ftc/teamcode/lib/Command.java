@@ -6,7 +6,9 @@ public interface Command {
         NONE,
         DRIVE,
         SHOOT,
-        DRIVE_INTAKE
+        DRIVE_INTAKE,
+        TURN,
+        INTAKE
     }
     public boolean run();
 }

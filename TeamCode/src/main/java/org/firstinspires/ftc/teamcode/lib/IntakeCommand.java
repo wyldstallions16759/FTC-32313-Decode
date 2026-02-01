@@ -5,6 +5,7 @@ import com.pedropathing.util.Timer;
 import org.firstinspires.ftc.teamcode.subsystem.AutoSS;
 
 public class IntakeCommand implements Command {
+    public CommandType t = CommandType.INTAKE;
     AutoSS ss;
     public Timer intakeTimer = new Timer();
     boolean runAlready = false;

@@ -8,7 +8,7 @@ import com.pedropathing.paths.PathChain;
 
 public class BlueCommandAutoConstants {
     public static final Pose START_POSE = new Pose(22.425, 122.773, Math.toRadians(135));
-    public static final Pose SHOOT_POSE = new Pose(50,92, Math.toRadians(135));
+    public static final Pose SHOOT_POSE = new Pose(50,92, Math.toRadians(130));
     public static final Pose GATHER_POSE_1 = new Pose(55.88003521901827,85.10895883777242, Math.toRadians(180));
     public static final Pose GATHER_POSE_2 = new Pose(19.27358573629768,84.63174114021572,Math.toRadians(180));
     public static final Pose GATHER_POSE_3 = new Pose(58.43583535108961,59.38498789346242, Math.toRadians(180));
@@ -31,7 +31,7 @@ public class BlueCommandAutoConstants {
 
                                 SHOOT_POSE
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(135))
+                ).setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(130))
 
                 .build();
 
@@ -81,7 +81,7 @@ public class BlueCommandAutoConstants {
                                 new Pose(68.067, 29.723),
                                 new Pose(14.143, 35.579)
                         )
-                ).setTangentHeadingInterpolation()
+                ).setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(180))
 
                 .build();
 
